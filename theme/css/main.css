@@ -6,31 +6,25 @@
 	License: MIT <http://opensource.org/licenses/MIT>
 	Licensed by: Smashing Media GmbH <http://www.smashingmagazine.com/>
 	Original author: Enrique Ramírez <http://enrique-ramirez.com/>
+
+	Edited for use with bitstream.io
 */
 
 /* Imports */
 @import url("reset.css");
 @import url("pygment.css");
 @import url("typogrify.css");
-@import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz&subset=latin);
+/* @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz&subset=latin); */
 
-/* bitstream.io changes */
-#content {
-    font-size: 120% !important;
-}
-td {
-    vertical-align: middle;
-    padding: 3px;
-    border-bottom: 1px solid black;
-}
 
 /***** Global *****/
 /* Body */
 body {
-    background: #F5F4EF;
-    color: #000305;
+    background: #FDF6E3; /* bitstream.io: switch to solarized colors */
+    color: #657B83;      /* bitstream.io: switch to solarized colors */
     font-size: 87.5%; /* Base font size: 14px */
-    font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    font-family: "Helvetica Neue", sans-serif; /* bitstream.io change */
     line-height: 1.429;
     margin: 0;
     padding: 0;
@@ -49,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 	line-height: 1.1;
 	margin-bottom: .8em;
-    font-family: 'Yanone Kaffeesatz', arial, serif;
+    font-family: monospace; /* bitstream.io change */
 }
 
 h3, h4, h5, h6 { margin-top: .8em; }
@@ -60,13 +54,13 @@ hr { border: 2px solid #EEEEEE; }
 a {outline: 0;}
 a img {border: 0px; text-decoration: none;}
 a:link, a:visited {
-	color: #C74350;
+	color: #B58900; /* bitstream.io: switch to solarized colors */
 	padding: 0 1px;
 	text-decoration: underline;
 }
 a:hover, a:active {
-	background-color: #C74350;
-	color: #fff;
+	background-color: #EEE8D5; /* bitstream.io: switch to solarized colors */
+	/*color: #fff;*/           /* bitstream.io: switch to solarized colors */
 	text-decoration: none;
 	/* text-shadow: 1px 1px 1px #333; */
 }
@@ -139,7 +133,10 @@ table {margin: .5em auto 1.5em auto; width: 98%;}
 	thead td {}
 
 	/* Tbody */
-	tbody td {padding: .5em .4em;}
+	tbody td {
+	    padding: .5em .4em;
+	    border-bottom: 1px solid #657B83; /* bitstream.io changes */
+	}
 	tbody th {}
 
 	tbody .alt td {}
@@ -171,7 +168,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	/* Banner */
 	#banner h1 {font-size: 3.571em; line-height: 0;}
 	#banner h1 a:link, #banner h1 a:visited {
-		color: #000305;
+		color: #B58900;         /* bitstream.io: switch to solarized colors */
 		display: block;
 		font-weight: bold;
 		margin: 0 0 .6em .2em;
@@ -179,7 +176,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	}
 	#banner h1 a:hover, #banner h1 a:active {
 		background: none;
-		color: #C74350;
+		color: #D33682;         /* bitstream.io: switch to solarized colors */
 		text-shadow: none;
 	}
 
@@ -187,7 +184,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 
 	/* Main Nav */
 	#banner nav {
-		background: #000305;
+		background: #93A1A1;    /* bitstream.io: switch to solarized colors */
 		font-size: 1.143em;
 		height: 40px;
 		line-height: 30px;
@@ -205,7 +202,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	#banner nav li {float: left; display: inline; margin: 0;}
 
 	#banner nav a:link, #banner nav a:visited {
-		color: #fff;
+		color: #586E75;         /* bitstream.io: switch to solarized colors */
 		display: inline-block;
 		height: 30px;
 		padding: 5px 1.5em;
@@ -213,8 +210,9 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	}
 	#banner nav a:hover, #banner nav a:active,
 	#banner nav .active a:link, #banner nav .active a:visited {
-		background: #C74451;
-		color: #fff;
+		/* background: #C74451; */
+		background: none repeat scroll 0 0 transparent; /* bitstream.io: switch to solarized colors */
+		color: #EEE8D5;                                 /* bitstream.io: switch to solarized colors */
 		text-shadow: none !important;
 	}
 
@@ -261,15 +259,19 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	Body
 *****************/
 #content {
-	background: #fff;
+	background: #FDF6E3; /* bitstream.io: switch to solarized colors */
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px 20px;
 	width: 760px;
 
+	font-size: 120%; /* bitstream.io */
+
+    /*
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	*/
 }
 
 /*
@@ -280,7 +282,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 #extras ul {list-style: none; margin: 0;}
 #extras li {border-bottom: 1px solid #fff;}
 #extras h2 {
-	color: #C74350;
+	color: #B58900;         /* bitstream.io: switch to solarized colors */
 	font-size: 1.429em;
 	margin-bottom: .25em;
 	padding: 0 3px;
@@ -289,7 +291,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 #extras a:link, #extras a:visited {
 	color: #444;
 	display: block;
-	border-bottom: 1px solid #F4E3E3;
+	border-bottom: 1px solid #657B83;   /* bitstream.io: switch to solarized colors */
 	text-decoration: none;
 	padding: .3em .25em;
 }
