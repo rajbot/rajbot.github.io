@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h3, h4, h5, h6 { margin-top: .8em; }
 
-hr { border: 2px solid #EEEEEE; }
+hr { border: 1px solid #657B83; } /* bitstream.io: switch to solarized colors */
 
 /* Anchors */
 a {outline: 0;}
@@ -67,6 +67,7 @@ a:hover, a:active {
 
 h1 a:hover {
     background-color: inherit
+    color: #D33682;         /* bitstream.io: switch to solarized colors */
 }
 
 /* Paragraphs */
@@ -94,6 +95,7 @@ li { margin-top: 0.5em;}
     float:right;
     margin:10px;
     padding:5px;
+    font-size: 14px;   /* bitstream.io change */
 }
 
 .post-info p{
@@ -230,15 +232,17 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	Featured
 *****************/
 #featured {
-	background: #fff;
+	background: #FDF6E3; /* bitstream.io: switch to solarized colors */
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px;
 	width: 760px;
 
+    /*
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	*/
 }
 
 #featured figure {
@@ -401,7 +405,8 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 	#posts-list footer {
 		left: 10px;
 		position: relative;
-        float: left;
+        float: right;           /* bitstream.io change */
+        font-size: 87.5%;       /* bitstream.io change */
 		top: 0.5em;
 		width: 190px;
 	}
