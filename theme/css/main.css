@@ -238,6 +238,8 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	padding: 20px;
 	width: 760px;
 
+	font-size: 120%; /* bitstream.io */
+
     /*
 	border-radius: 10px;
 	-moz-border-radius: 10px;
