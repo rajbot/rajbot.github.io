@@ -198,8 +198,6 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 		text-align: center;
 		width: 800px;
 
-		border-radius: 5px 10px 5px 10px; /* bitstream.io change, broken in chrome */
-
 	}
 
 	#banner nav ul {list-style: none; margin: 0 auto; width: 800px;}
