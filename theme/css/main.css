@@ -25,7 +25,7 @@ body {
     font-size: 87.5%; /* Base font size: 14px */
     /* font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
     font-family: "Helvetica Neue", sans-serif; /* bitstream.io change */
-    line-height: 1.429;
+    line-height: 1.2; /* bitstream.io change */
     margin: 0;
     padding: 0;
     text-align: left;
@@ -241,9 +241,9 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px;
-	width: 760px;
+	width: 800px; /* bitstream.io */
 
-	font-size: 120%; /* bitstream.io */
+	font-size: 14pt; /* bitstream.io */
 
     /*
 	border-radius: 10px;
@@ -274,9 +274,9 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px 20px;
-	width: 760px;
+	width: 800px; /* bitstream.io */
 
-	font-size: 120%; /* bitstream.io */
+	font-size: 14pt; /* bitstream.io */
 
     /*
 	border-radius: 10px;
