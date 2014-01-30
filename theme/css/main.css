@@ -20,12 +20,16 @@
 /***** Global *****/
 /* Body */
 body {
-    background: #FDF6E3; /* bitstream.io: switch to solarized colors */
-    color: #586E75;      /* bitstream.io: switch to solarized colors */
+    /*background: #FDF6E3;*/ /* bitstream.io: switch to solarized colors */
+    background: #FFFFFF;     /* bitstream.io: giving up on solarized */
+
+    /*color: #586E75;*/      /* bitstream.io: switch to solarized colors */
+    color: #4D4D4D;          /* bitstream.io: give up on solarized, use higher-contrast colors */
+
     font-size: 87.5%; /* Base font size: 14px */
     /* font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
     font-family: "Helvetica Neue", sans-serif; /* bitstream.io change */
-    line-height: 1.2; /* bitstream.io change */
+    line-height: 1.25; /* bitstream.io change */
     margin: 0;
     padding: 0;
     text-align: left;
@@ -54,12 +58,15 @@ hr { border: 1px solid #657B83; } /* bitstream.io: switch to solarized colors */
 a {outline: 0;}
 a img {border: 0px; text-decoration: none;}
 a:link, a:visited {
-	color: #B58900; /* bitstream.io: switch to solarized colors */
+	/*color: #B58900;*/ /* bitstream.io: switch to solarized colors */
+	color: #333333;     /* bitstream.io: globally changing #B58900 to #333333 */
 	padding: 0 1px;
 	text-decoration: underline;
 }
 a:hover, a:active {
-	background-color: #EEE8D5; /* bitstream.io: switch to solarized colors */
+	/*background-color: #EEE8D5;*/ /* bitstream.io: switch to solarized colors */
+	background-color: #EEEEEE;     /* bitstream.io: give up on solarized */
+
 	/*color: #fff;*/           /* bitstream.io: switch to solarized colors */
 	text-decoration: none;
 	/* text-shadow: 1px 1px 1px #333; */
@@ -70,7 +77,8 @@ h1 a:link, a:visited {
 }
 
 h1 a:hover {
-    color: #D33682;         /* bitstream.io: switch to solarized colors */
+    /*color: #D33682;*/     /* bitstream.io: switch to solarized colors */
+    color: #999999;         /* bitstream.io: give up on solarized */
 }
 
 /* Paragraphs */
@@ -137,10 +145,13 @@ table {margin: .5em auto 1.5em auto; width: 98%;}
 	thead th {padding: .5em .4em; text-align: left;}
 	thead td {}
 
+	thead th {text-align: center; border-bottom: 1px solid #657B83;} /* bitstream.io changes */
+    thead img {vertical-align: middle;}                              /* bitstream.io changes */
+
 	/* Tbody */
 	tbody td {
 	    padding: .5em .4em;
-	    border-bottom: 1px solid #657B83; /* bitstream.io changes */
+	    border: 1px solid #657B83; /* bitstream.io changes */
 	}
 	tbody th {}
 
@@ -173,7 +184,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	/* Banner */
 	#banner h1 {font-size: 3.571em; line-height: 0;}
 	#banner h1 a:link, #banner h1 a:visited {
-		color: #B58900;         /* bitstream.io: switch to solarized colors */
+		color: #333333;         /* bitstream.io: switch to solarized colors */
 		display: block;
 		font-weight: bold;
 		margin: 0 0 .6em .2em;
@@ -181,7 +192,8 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	}
 	#banner h1 a:hover, #banner h1 a:active {
 		background: none;
-		color: #D33682;         /* bitstream.io: switch to solarized colors */
+		/*color: #D33682;*/         /* bitstream.io: switch to solarized colors */
+		color: #666666;             /* bitstream.io: give up on solarized */
 		text-shadow: none;
 	}
 
@@ -189,7 +201,8 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 
 	/* Main Nav */
 	#banner nav {
-		background: #073642;    /* bitstream.io: switch to solarized colors */
+		/*background: #073642;*/    /* bitstream.io: switch to solarized colors */
+	     background: #dddddd;       /* bitstream.io: give up on solarized */
 		font-size: 1.143em;
 		height: 40px;
 		line-height: 30px;
@@ -205,11 +218,12 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	    float: left;
 	    display: inline;
 	    margin: 0;
-	    background-color: #073642;  /* bitstream.io: fix for safari */
+	    background-color: #dddddd;  /* bitstream.io: fix for safari */
 	}
 
 	#banner nav a:link, #banner nav a:visited {
-		color: #839496;         /* bitstream.io: switch to solarized colors */
+		/*color: #839496;*/         /* bitstream.io: switch to solarized colors */
+		color: #000;                /* bitstream.io: give up on solarized */
 		display: inline-block;
 		height: 30px;
 		padding: 5px 1.5em;
@@ -219,7 +233,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	#banner nav .active a:link, #banner nav .active a:visited {
 		/* background: #C74451; */
 		background: none repeat scroll 0 0 transparent; /* bitstream.io: switch to solarized colors */
-		color: #D33682;                                 /* bitstream.io: switch to solarized colors */
+		color: #666666;                                 /* bitstream.io */
 		text-shadow: none !important;
 	}
 
@@ -237,7 +251,9 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	Featured
 *****************/
 #featured {
-	background: #FDF6E3; /* bitstream.io: switch to solarized colors */
+	/*background: #FDF6E3;*/ /* bitstream.io: switch to solarized colors */
+	background: #FFFFFF;     /* bitstream.io: give up on solarized, use higher-contrast colors */
+
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px;
@@ -260,7 +276,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 }
 #featured figure img {display: block; float: right;}
 
-#featured h2 {color: #B58900; font-size: 1.714em; margin-bottom: 0.333em;} /* bitstream.io: switch to solarized colors */
+#featured h2 {color: #333333; font-size: 1.714em; margin-bottom: 0.333em;} /* bitstream.io: switch to solarized colors */
 #featured h3 {font-size: 1.429em; margin-bottom: .5em;}
 
 #featured h3 a:link, #featured h3 a:visited {color: #000305; text-decoration: none;}
@@ -270,7 +286,9 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	Body
 *****************/
 #content {
-	background: #FDF6E3; /* bitstream.io: switch to solarized colors */
+	/*background: #FDF6E3;*/ /* bitstream.io: switch to solarized colors */
+	background: #FFFFFF;     /* bitstream.io: give up on solarized */
+
 	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 20px 20px;
@@ -293,7 +311,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 #extras ul {list-style: none; margin: 0;}
 #extras li {border-bottom: 1px solid #fff;}
 #extras h2 {
-	color: #B58900;         /* bitstream.io: switch to solarized colors */
+	color: #333333;         /* bitstream.io: switch to solarized colors */
 	font-size: 1.429em;
 	margin-bottom: .25em;
 	padding: 0 3px;
@@ -307,7 +325,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 	padding: .3em .25em;
 }
 
-#extras a:hover, #extras a:active {color: #fff;}
+#extras a:hover, #extras a:active {/*color: #fff;*/} /* bitstream.io */
 
 	/* Blogroll */
 	#extras .blogroll {

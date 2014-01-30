@@ -21,7 +21,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	outline: 0;
 	padding: 0;
-	vertical-align: middle; /* bitstream.io */
+	/*vertical-align: baseline;*/ /* bitstream.io */
 }
 
 body {line-height: 1;}
