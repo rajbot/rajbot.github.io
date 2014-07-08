@@ -17,6 +17,7 @@
                 <nav><ul>
                                                     <li><a href="/">bitstream.io</a></li>
                                                                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                                    <li ><a href="/category/commandline.html">commandline</a></li>
                                     <li ><a href="/category/links.html">links</a></li>
                                                 </ul></nav>
         </header><!-- /#banner -->
@@ -25,8 +26,44 @@
 
                             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/adding-gphoto-support-for-the-canon-5d.html">Adding gphoto support for the Canon 5D</a></h1> 
+                    <h1 class="entry-title"><a href="/adding-a-git-hub-alias.html">Adding a `git hub` alias</a></h1> 
                     <footer class="post-info">
+        <abbr class="published" title="2014-07-07T22:38:08">
+                Mon 07 July 2014
+        </abbr>
+
+                <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+        in <a href="/category/commandline.html">commandline</a>.
+Tags:
+    <a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+</footer><!-- /.post-info --><p>This git alias will open a web browser and take you to a project's github page when you
+type <code>git hub</code> in a checked-out project directory.</p>
+<p>For OS X:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</pre></div>
+
+
+<p>For Linux:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</pre></div>                </article>
+                            </aside><!-- /#featured -->
+                            <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+                                                
+
+                 
+                        <li><article class="hentry">    
+                <header>
+                    <h1><a href="/adding-gphoto-support-for-the-canon-5d.html" rel="bookmark"
+                           title="Permalink to Adding gphoto support for the Canon 5D">Adding gphoto support for the Canon 5D</a></h1>
+                </header>
+                
+                <div class="entry-content">
+                <footer class="post-info">
         <abbr class="published" title="2008-08-09T16:23:00">
                 Sat 09 August 2008
         </abbr>
@@ -37,98 +74,17 @@
         in <a href="/category/bookscanning.html">bookscanning</a>.
 Tags:
     <a href="/tag/gphoto.html">gphoto</a>, <a href="/tag/canon.html">canon</a>, <a href="/tag/5d.html">5D</a>
-</footer><!-- /.post-info --><h3>gphoto for Canon EOS 5D compilation instructions</h3>
+</footer><!-- /.post-info -->                <h3>gphoto for Canon EOS 5D compilation instructions</h3>
 <h4>you MUST use svn rev 10595 or greater. We tested with 10597</h4>
 <p>Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)</p>
-<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory</span>
-svn co https://gphoto.svn.sourceforge.net/svnroot/gphoto/trunk gphoto
-<span class="nb">cd </span>gphoto
-<span class="c">#fix broken checkout:</span>
-svn up bindings/ gphoto2/ gphoto2-manual/ gphotofs/ gphoto-import/ gphoto-suite/ gtkam/ libgphoto2/ m4/ playground/ project-3/ website/
-
-<span class="c">#build libgphoto2</span>
-<span class="nb">cd </span>libgphoto2
-autoreconf -is
-./configure --with-camlibs<span class="o">=</span>canon --prefix<span class="o">=</span>/scribe
-make
-sudo make install
-
-<span class="c">#build gphoto2</span>
-<span class="nb">cd</span> ../gphoto2
-autoreconf -is
-./configure --with-libgphoto2<span class="o">=</span>/scribe --prefix<span class="o">=</span>/scribe
-make
-sudo make install
-</pre></div>
-
-
-<h3>linux kernel issues</h3>
-<p>The kernel used by default in Ubuntu 7.04 (feisty) contains usb autosuspend code. Unfortunately, the Canon EOS 5D does not wake back up properly, which makes capturing images impossible. <a href="http://lkml.org/lkml/2007/8/16/330">A patch has been submitted</a>, but until it is accepted, you will have to compile a kernel with USB autosuspend turned off. <strong>Update</strong>: patch <a href="http://sourceforge.net/mailarchive/message.php?msg_id=20070822220805.GB30603%40kroah.com">accepted</a>, should be in 2.6.23 kernel. Instructions on how we compiled the kernel are below.</p>
-<p>The kernel used by default in Ubuntu 6.10 (edgy) contains a bug that causes a spinlock in the jbd layer. This bug will cause a machine to hang in a completely unresponsive state, although you can use a serial console to see assertions firing in jbd. One workaround is to use a newer version of Ubuntu (7.04) with autosuspend turned off. Another is to use ext2 intead of ext3.</p>
-<h4>Compiling a custom linux kernel</h4>
-<p>We copied the .config file for the 2.6.17 kernel used by Ubuntu and slightly modified it to turn off usb autosuspend and include the nvidia sata driver.</p>
-<div class="highlight"><pre><span class="c"># Install kernel build pre-reqs</span>
-sudo apt-get install linux-kernel-devel initrd-tools libncurses-dev
-
-<span class="nb">cd</span> ~
-mkdir linux
-<span class="nb">cd </span>linux
-
-<span class="c"># Download stable kernel tree from www.kernel.org (&#39;F&#39; link)</span>
-wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.22.2.tar.bz2
-
-tar xjvf linux-2.6.22.2.tar.bz2
-
-<span class="nb">cd </span>linux-2.6.22.2
-
-<span class="c"># Copy the Ubuntu kernel .config file into your source tree:</span>
-cp /usr/src/linux-headers-2.6.17-12-generic/.config .
-
-<span class="c"># Update the .config with any new entries between 2.6.17 and the current kernel</span>
-rev
-<span class="c"># (You just want to wail on the ENTER key here to select all of the defaults)</span>
-yes <span class="s1">&#39;&#39;</span> | make oldconfig
-
-<span class="c"># Edit the .config to disable CONFIG_USB_SUSPEND</span>
-perl -p -i.orig -e <span class="s1">&#39;s/CONFIG_USB_SUSPEND=y/CONFIG_USB_SUSPEND=n/&#39;</span> .config
-
-<span class="c"># Enable the Nvidia SATA driver</span>
-<span class="nb">echo </span><span class="nv">CONFIG_ATA</span><span class="o">=</span>m &gt;&gt; .config
-<span class="nb">echo </span><span class="nv">CONFIG_ATA_ACPI</span><span class="o">=</span>y &gt;&gt; .config
-<span class="nb">echo </span><span class="nv">CONFIG_SATA_NV</span><span class="o">=</span>m &gt;&gt; .config
-
-<span class="c"># Build kernel (dual-cpu system)</span>
-make -j3 all
-
-<span class="c"># Install modules &amp; kernel</span>
-sudo make install modules_install
-
-<span class="c"># Build the boot-time ramdisk of loadable modules, etc.</span>
-sudo mkinitrd -o /boot/initrd.img-2.6.22.2 2.6.22.2
-
-<span class="c"># Add grub boot section</span>
-<span class="nb">echo</span> <span class="s1">&#39;Now edit /boot/grub/menu.lst to add a section for the new kernel&#39;</span>
-</pre></div>
-
-
-<h4>Install custom linux kernel and new nvidia drivers</h4>
-<p>On homeserver:</p>
-<div class="highlight"><pre><span class="nb">cd</span> ~pjw
-sudo ssh root@host <span class="s1">&#39;cd /;tar -xjvf -&#39;</span> &lt; new-kernel.tar.bz2
-sudo ssh root@host <span class="s1">&#39;cd /home/scribe;tar -xzvf -&#39;</span> &lt; new-kernel-source.tar.gz
-scp NVIDIA-Linux-x86-100.14.11-pkg1.run scribe@host:
-</pre></div>
-
-
-<p>Now on the scribe node:</p>
-<div class="highlight"><pre>sudo /etc/init.d/gdm stop
-sudo sh NVIDIA-Linux-x86-100.14.11-pkg1.run
-</pre></div>                </article>
-                                    <p class="paginator">
+<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory ...</span></pre></div>
+                <a class="readmore" href="/adding-gphoto-support-for-the-canon-5d.html">read more</a>
+                                </div><!-- /.entry-content -->
+            </article></li>
+                            </ol><!-- /#posts-list -->
+                            <p class="paginator">
         Page 1 / 1
     </p>
-                            </aside><!-- /#featured -->
-                                                </ol><!-- /#posts-list -->
                         </section><!-- /#content -->
                     <section id="extras" class="body">
                         <div class="blogroll">

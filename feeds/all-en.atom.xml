@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2014-07-03T21:58:09+02:00</updated><entry><title>Tronix Linkdump June 2014</title><link href="/tronix-linkdump-june-2014.html" rel="alternate"></link><updated>2014-07-03T21:58:09+02:00</updated><author><name>tronixchat</name></author><id>tag:,2014-07-03:tronix-linkdump-june-2014.html</id><summary type="html">&lt;ul&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2014-07-07T22:38:08+02:00</updated><entry><title>Adding a `git hub` alias</title><link href="/adding-a-git-hub-alias.html" rel="alternate"></link><updated>2014-07-07T22:38:08+02:00</updated><author><name>raj</name></author><id>tag:,2014-07-07:adding-a-git-hub-alias.html</id><summary type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For Linux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="git"></category><category term="github"></category></entry><entry><title>Tronix Linkdump June 2014</title><link href="/tronix-linkdump-june-2014.html" rel="alternate"></link><updated>2014-07-03T21:58:09+02:00</updated><author><name>tronixchat</name></author><id>tag:,2014-07-03:tronix-linkdump-june-2014.html</id><summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.facebook.com/photo.php?fbid=10152040307727130"&gt;Raj tries OSX 10.9 | Facebook&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Mojibake"&gt;Mojibake - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/540535/managing-large-binary-files-with-git"&gt;version control - Managing large binary files with git - Stack Overflow&lt;/a&gt;&lt;/li&gt;

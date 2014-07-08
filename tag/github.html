@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8">
-        <title>bitstream.io</title>
+        <title>bitstream.io - github</title>
         <link rel="stylesheet" href="/theme/css/main.css">
                 <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
                 
@@ -21,12 +21,40 @@
                                     <li ><a href="/category/links.html">links</a></li>
                                                 </ul></nav>
         </header><!-- /#banner -->
-        <ul>
-    <li><a href="/category/bookscanning.html">bookscanning</a></li>
-    <li><a href="/category/commandline.html">commandline</a></li>
-    <li><a href="/category/links.html">links</a></li>
-</ul>
-        <section id="extras" class="body">
+                
+            
+
+                            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/adding-a-git-hub-alias.html">Adding a `git hub` alias</a></h1> 
+                    <footer class="post-info">
+        <abbr class="published" title="2014-07-07T22:38:08">
+                Mon 07 July 2014
+        </abbr>
+
+                <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+        in <a href="/category/commandline.html">commandline</a>.
+Tags:
+    <a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+</footer><!-- /.post-info --><p>This git alias will open a web browser and take you to a project's github page when you
+type <code>git hub</code> in a checked-out project directory.</p>
+<p>For OS X:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</pre></div>
+
+
+<p>For Linux:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</pre></div>                </article>
+                                    <p class="paginator">
+        Page 1 / 1
+    </p>
+                            </aside><!-- /#featured -->
+                                                </ol><!-- /#posts-list -->
+                        </section><!-- /#content -->
+                    <section id="extras" class="body">
                         <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>
