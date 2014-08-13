@@ -122,6 +122,12 @@ dd {margin-left: 1.5em;}
 
 pre{background-color:  rgb(238, 238, 238); padding: 10px; margin: 10px; overflow: auto;}
 
+
+/* bitstream.io: give <code> elements the same background color as <pre> blocks */
+code {
+    background-color: rgb(238, 238, 238);
+}
+
 /* Quotes */
 blockquote {
     margin: 20px;
