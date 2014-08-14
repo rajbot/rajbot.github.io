@@ -69,7 +69,61 @@ apt keychain. To export the public key to a text file:&lt;/p&gt;
 &lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
 sudo apt-get install foo
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump July 2014</title><link href="/tronix-linkdump-july-2014.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-08-05:tronix-linkdump-july-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;p&gt;&lt;link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
+&lt;style type="text/css"&gt;
+    tbody td {border: 0; font-size: 75%;}
+&lt;/style&gt;&lt;/p&gt;
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;
+    Ubuntu
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10&lt;/td&gt;&lt;td&gt;Intrepid Ibex&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.04&lt;/td&gt;&lt;td&gt;Jaunty Jackalope&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.10&lt;/td&gt;&lt;td&gt;Karmic Koala&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.04 LTS&lt;/td&gt;&lt;td&gt;Lucid Lynx&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.10&lt;/td&gt;&lt;td&gt;Maverick Meerkat&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.04&lt;/td&gt;&lt;td&gt;Natty Narwhal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.10&lt;/td&gt;&lt;td&gt;Oneiric Ocelot&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.04 LTS&lt;/td&gt;&lt;td&gt;Precise Pangolin&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.10&lt;/td&gt;&lt;td&gt;Quantal Quetzal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.04&lt;/td&gt;&lt;td&gt;Raring Ringtail&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.10&lt;/td&gt;&lt;td&gt;Saucy Salamander&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 14.04 LTS&lt;/td&gt;&lt;td&gt;Trusty Tahr&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 14.10&lt;/td&gt;&lt;td&gt;Utopic Unicorn&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;/table&gt;
+    Ubuntu version numbers are also release dates: Ubuntu 14.04 was released in April 2014.
+&lt;/div&gt;
+&lt;div class="col-md-6"&gt;
+    OSX
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.0&lt;/td&gt;&lt;td&gt;Cheetah&lt;/td&gt;&lt;td&gt;March 24, 2001&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.1&lt;/td&gt;&lt;td&gt;Puma&lt;/td&gt;&lt;td&gt;September 25, 2001&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.2&lt;/td&gt;&lt;td&gt;Jaguar&lt;/td&gt;&lt;td&gt;August 24, 2002&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.3&lt;/td&gt;&lt;td&gt;Panther&lt;/td&gt;&lt;td&gt;October 24, 2003&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.4&lt;/td&gt;&lt;td&gt;Tiger&lt;/td&gt;&lt;td&gt;April 29, 2005&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.5&lt;/td&gt;&lt;td&gt;Leopard&lt;/td&gt;&lt;td&gt;October 26, 2007&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.6&lt;/td&gt;&lt;td&gt;Snow Leopard&lt;/td&gt;&lt;td&gt;August 28, 2009&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.7&lt;/td&gt;&lt;td&gt;Lion&lt;/td&gt;&lt;td&gt;July 20, 2011&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.8&lt;/td&gt;&lt;td&gt;Mountain Lion&lt;/td&gt;&lt;td&gt;July 25, 2012&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.9&lt;/td&gt;&lt;td&gt;Mavericks&lt;/td&gt;&lt;td&gt;October 22, 2013&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.10&lt;/td&gt;&lt;td&gt;Yosemite&lt;/td&gt;&lt;td&gt;2014&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</summary><category term="osx"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump July 2014</title><link href="/tronix-linkdump-july-2014.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-08-05:tronix-linkdump-july-2014.html</id><summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://kadrey.tumblr.com/post/90723596427/haruki-murakami-bingo"&gt;Haruki Murakami Bingo • Richard Kadrey's Damn Tumblr&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.mikeash.com/pyblog/friday-qa-2014-07-04-secrets-of-swifts-speed.html"&gt;mikeash.com: Friday Q&amp;amp;A 2014-07-04: Secrets of Swift's Speed&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.theatlantic.com/video/archive/2013/11/the-pimps-and-prostitutes-of-1970s-times-square/281130/"&gt;The Pimps and Prostitutes of 1970s Times Square - The Atlantic&lt;/a&gt;&lt;/li&gt;
