@@ -29,7 +29,7 @@ body {
     font-size: 87.5%; /* Base font size: 14px */
     /* font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
     font-family: "Helvetica Neue", sans-serif; /* bitstream.io change */
-    line-height: 1.25; /* bitstream.io change */
+    line-height: 1.42857143; /* bitstream.io change */
     margin: 0;
     padding: 0;
     text-align: left;
@@ -100,7 +100,9 @@ ol {
 	margin: 0em 0 0 1.5em;
 }
 
-li { margin-top: 0.5em;}
+li {
+    /* margin-top: 0.5em; */ /* bitstream.io change */
+}
 
 .post-info {
     /* float:right; */ /* bitstream.io change */
@@ -120,12 +122,23 @@ dl {margin: 0 0 1.5em 0;}
 dt {font-weight: bold;}
 dd {margin-left: 1.5em;}
 
-pre{background-color:  rgb(238, 238, 238); padding: 10px; margin: 10px; overflow: auto;}
+pre{
+    background-color:  rgb(238, 238, 238);
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+
+    /* bitstream.io: decrease font size of pre blocks */
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 75%;
+}
 
 
 /* bitstream.io: give <code> elements the same background color as <pre> blocks */
 code {
     background-color: rgb(238, 238, 238);
+    padding: 2px 4px;
+    font-size: 90%;
 }
 
 /* Quotes */
