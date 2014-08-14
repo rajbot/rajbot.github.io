@@ -44,10 +44,9 @@ h5 {font-size: 1.143em}	/* 16px */
 h6 {font-size: 1em}		/* 14px */
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 400;
+	font-weight: 500; /* bitstream.io change */
 	line-height: 1.1;
 	/* margin-bottom: .8em; */  /* bitstream.io change */
-    font-family: monospace;     /* bitstream.io change */
 }
 
 h3, h4, h5, h6 { margin-top: .8em; }
@@ -208,6 +207,7 @@ img.left, figure.left {float: left; margin: 0 2em 2em 0;}
 		font-weight: bold;
 		margin: 0 0 .6em .2em;
 		text-decoration: none;
+        font-family: monospace; /* bitstream.io change */
 	}
 	#banner h1 a:hover, #banner h1 a:active {
 		background: none;
