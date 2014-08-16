@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Packaging and Distributing a Kivy application on Linux</title>
+        <link rel="stylesheet" href="/theme/css/main.css">
+                <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+                
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">bitstream.io </a></h1>
+                <nav><ul>
+                                                    <li><a href="/">bitstream.io</a></li>
+                                                                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                                    <li ><a href="/category/commandline.html">commandline</a></li>
+                                    <li ><a href="/category/links.html">links</a></li>
+                                    <li ><a href="/category/ops.html">ops</a></li>
+                                    <li class="active"><a href="/category/python.html">python</a></li>
+                                                </ul></nav>
+        </header><!-- /#banner -->
+        <section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="bookmark"
+           title="Permalink to Packaging and Distributing a Kivy application on Linux">Packaging and Distributing a Kivy application on Linux</a></h1>
+          </header>
+
+    <div class="entry-content">
+      <footer class="post-info">
+        <abbr class="published" title="2014-08-16T00:00:00">
+                Sat 16 August 2014
+        </abbr>
+
+                <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+        in <a href="/category/python.html">python</a>.
+Tags:
+    <a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+</footer><!-- /.post-info -->      <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
+mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
+Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
+<h2>1. Install Kivy using <code>pip</code>, and not from the provided PPA or <code>.deb</code></h2>
+<p>We are going to use PyInstaller to create a linux executable. Kivy provides PyInstaller
+hooks in the <code>kivy.tools</code> package, but PPA does not include <code>kivy.tools</code></p>
+<h2>2. Use a Vagrantfile to bootstrap a development environment</h2>
+<p>There are a lot of dependencies for kivy development, and a lot of different ways to
+install them. In order to help you get started, I made a Vagrantfile to set up a
+Kivy dev environment.</p>
+<p>The Vagrantfile installs <code>python</code>, <code>kivy</code>, and <code>pyinstaller</code> in an Ubuntu VM, and then
+packages a kivy example app into a <code>.deb</code>. You end up with a double-clickable application
+that works like a regular linux desktop app.</p>
+<p>The Vagrantfile and instructions on how to use it are here:
+<a href="https://github.com/rajbot/kivy_pyinstaller_linux_example">https://github.com/rajbot/kivy_pyinstaller_linux_example</a></p>
+<h2>3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable</h2>
+<p>If you follow the setup instructions above, you will end up an executable that works only
+on the machine it was built. If you try to copy it to another linux box, kivy will often
+segfault on startup with this error message:</p>
+<div class="highlight"><pre><span class="n">Fatal</span> <span class="n">Python</span> <span class="n">Error</span><span class="o">:</span> <span class="p">(</span><span class="n">pygame</span> <span class="n">parachute</span><span class="p">)</span> <span class="n">Segmentation</span> <span class="n">Fault</span>
+</pre></div>
+
+
+<p>To ensure the executable can run on as many different flavors of linux as possible, we
+are going to strip out all binaries provided by system packages. We will distribute the
+application in a <code>.deb</code> file and and use <code>.deb</code> dependencies to ensure required libraries
+are installed on the target machine.</p>
+<p>Here is a copy of a PyInstaller <code>.spec</code> file that installs Kivy hooks and strips out all
+binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
+<div class="highlight"><pre><span class="c"># -*- mode: python -*-</span>
+<span class="kn">from</span> <span class="nn">kivy.tools.packaging.pyinstaller_hooks</span> <span class="kn">import</span> <span class="n">install_hooks</span>
+<span class="n">install_hooks</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">filter_binaries</span><span class="p">(</span><span class="n">all_binaries</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Exclude binaries provided by system packages, and rely on .deb dependencies</span>
+<span class="sd">    to ensure these binaries are available on the target machine.</span>
+
+<span class="sd">    We need to remove OpenGL-related libraries so we can distribute the executable</span>
+<span class="sd">    to other linux machines that might have different graphics hardware. If you</span>
+<span class="sd">    bundle system libraries, your application might crash when run on a different</span>
+<span class="sd">    machine with the following error during kivy startup:</span>
+
+<span class="sd">    Fatal Python Error: (pygame parachute) Segmentation Fault</span>
+
+<span class="sd">    If we strip all libraries, then PIL might not be able to find the correct _imaging</span>
+<span class="sd">    module, even if the `python-image` package has been installed on the system. The</span>
+<span class="sd">    easy way to fix this is to not filter binaries from the python-imaging package.</span>
+
+<span class="sd">    We will strip out all binaries, except libpython2.7, which is required for the</span>
+<span class="sd">    pyinstaller-frozen executable to work, and any of the python-* packages.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">print</span> <span class="s">&#39;Excluding system libraries&#39;</span>
+    <span class="kn">import</span> <span class="nn">subprocess</span>
+    <span class="n">excluded_pkgs</span>  <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">excluded_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">whitelist_prefixes</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;libpython2.7&#39;</span><span class="p">,</span> <span class="s">&#39;python-&#39;</span><span class="p">)</span>
+    <span class="n">binaries</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">all_binaries</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;dpkg&#39;</span><span class="p">,</span> <span class="s">&#39;-S&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">))</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">whitelist_prefixes</span><span class="p">):</span>
+                <span class="n">excluded_pkgs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">excluded_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">print</span> <span class="s">&#39; excluding {f} from package {p}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">print</span> <span class="s">&#39;Your exe will depend on the following packages:&#39;</span>
+    <span class="k">print</span> <span class="n">excluded_pkgs</span>
+
+    <span class="n">inc_libs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;libpython2.7.so.1.0&#39;</span><span class="p">])</span>
+    <span class="n">binaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_binaries</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_files</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">binaries</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">([</span><span class="s">&#39;scribe.py&#39;</span><span class="p">],</span>
+             <span class="n">pathex</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;.&#39;</span><span class="p">],</span>
+             <span class="n">hiddenimports</span><span class="o">=</span><span class="p">[],</span>
+            <span class="p">)</span>
+<span class="n">pyz</span> <span class="o">=</span> <span class="n">PYZ</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">pure</span><span class="p">)</span>
+
+<span class="n">binaries</span> <span class="o">=</span> <span class="n">filter_binaries</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">binaries</span><span class="p">)</span>
+
+<span class="n">exe</span> <span class="o">=</span> <span class="n">EXE</span><span class="p">(</span><span class="n">pyz</span><span class="p">,</span>
+          <span class="p">[(</span><span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;DATA&#39;</span><span class="p">)],</span>
+          <span class="n">a</span><span class="o">.</span><span class="n">scripts</span><span class="p">,</span>
+          <span class="n">binaries</span><span class="p">,</span> <span class="c">#a.binaries,</span>
+          <span class="n">a</span><span class="o">.</span><span class="n">zipfiles</span><span class="p">,</span>
+          <span class="n">a</span><span class="o">.</span><span class="n">datas</span><span class="p">,</span>
+          <span class="n">name</span><span class="o">=</span><span class="s">&#39;ia-scribe&#39;</span><span class="p">,</span>
+          <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+          <span class="n">strip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+          <span class="n">upx</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+          <span class="n">console</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+</pre></div>
+
+
+<h2>4. Set up a signed trivial APT repository to distribute your <code>.deb</code></h2>
+<p>Once you make an executable, you can give it a nice icon and <code>.desktop</code> file
+and package it in a <code>.deb</code> for distribution. Steps to create the <code>.deb</code> can be
+found in the <code>bootstrap.sh</code> file, run by the Vagrantfile in step #2 above.</p>
+<p>To distribute your <code>.deb</code> file to end users, you will want to set up an APT
+repository, which must be signed with a GPG key if you want to allow for
+programatic installation or automatic updates.</p>
+<p>Instructions for <a href="/creating-a-trivial-signed-apt-repository.html">setting up a signed trivial repo are provided here</a>.</p>
+    </div><!-- /.entry-content -->
+    
+  </article>
+</section>
+        <section id="extras" class="body">
+                        <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                                                    <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                                                    <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                                                    <li><a href="/archives.html">Archives</a></li>
+                                                </ul>
+                </div><!-- /.blogroll -->
+                                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+                            
+                                                    <li><a href="http://github.com/rajbot">github</a></li>
+                                                    <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                                                    <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                                                </ul>
+                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+        
+</body>
+</html>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/python.atom.xml" rel="self"></link><id>/</id><updated>2014-08-16T00:00:00-07:00</updated><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><updated>2014-08-16T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-16:packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
+Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
+&lt;h2&gt;1. Install Kivy using &lt;code&gt;pip&lt;/code&gt;, and not from the provided PPA or &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;We are going to use PyInstaller to create a linux executable. Kivy provides PyInstaller
+hooks in the &lt;code&gt;kivy.tools&lt;/code&gt; package, but PPA does not include &lt;code&gt;kivy.tools&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;2. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
+&lt;p&gt;There are a lot of dependencies for kivy development, and a lot of different ways to
+install them. In order to help you get started, I made a Vagrantfile to set up a
+Kivy dev environment.&lt;/p&gt;
+&lt;p&gt;The Vagrantfile installs &lt;code&gt;python&lt;/code&gt;, &lt;code&gt;kivy&lt;/code&gt;, and &lt;code&gt;pyinstaller&lt;/code&gt; in an Ubuntu VM, and then
+packages a kivy example app into a &lt;code&gt;.deb&lt;/code&gt;. You end up with a double-clickable application
+that works like a regular linux desktop app.&lt;/p&gt;
+&lt;p&gt;The Vagrantfile and instructions on how to use it are here:
+&lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example"&gt;https://github.com/rajbot/kivy_pyinstaller_linux_example&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable&lt;/h2&gt;
+&lt;p&gt;If you follow the setup instructions above, you will end up an executable that works only
+on the machine it was built. If you try to copy it to another linux box, kivy will often
+segfault on startup with this error message:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Fatal&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pygame&lt;/span&gt; &lt;span class="n"&gt;parachute&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Segmentation&lt;/span&gt; &lt;span class="n"&gt;Fault&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To ensure the executable can run on as many different flavors of linux as possible, we
+are going to strip out all binaries provided by system packages. We will distribute the
+application in a &lt;code&gt;.deb&lt;/code&gt; file and and use &lt;code&gt;.deb&lt;/code&gt; dependencies to ensure required libraries
+are installed on the target machine.&lt;/p&gt;
+&lt;p&gt;Here is a copy of a PyInstaller &lt;code&gt;.spec&lt;/code&gt; file that installs Kivy hooks and strips out all
+binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed library:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# -*- mode: python -*-&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.tools.packaging.pyinstaller_hooks&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_hooks&lt;/span&gt;
+&lt;span class="n"&gt;install_hooks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;globals&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;filter_binaries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;all_binaries&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;Exclude binaries provided by system packages, and rely on .deb dependencies&lt;/span&gt;
+&lt;span class="sd"&gt;    to ensure these binaries are available on the target machine.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    We need to remove OpenGL-related libraries so we can distribute the executable&lt;/span&gt;
+&lt;span class="sd"&gt;    to other linux machines that might have different graphics hardware. If you&lt;/span&gt;
+&lt;span class="sd"&gt;    bundle system libraries, your application might crash when run on a different&lt;/span&gt;
+&lt;span class="sd"&gt;    machine with the following error during kivy startup:&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Fatal Python Error: (pygame parachute) Segmentation Fault&lt;/span&gt;
+
+&lt;span class="sd"&gt;    If we strip all libraries, then PIL might not be able to find the correct _imaging&lt;/span&gt;
+&lt;span class="sd"&gt;    module, even if the `python-image` package has been installed on the system. The&lt;/span&gt;
+&lt;span class="sd"&gt;    easy way to fix this is to not filter binaries from the python-imaging package.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    We will strip out all binaries, except libpython2.7, which is required for the&lt;/span&gt;
+&lt;span class="sd"&gt;    pyinstaller-frozen executable to work, and any of the python-* packages.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Excluding system libraries&amp;#39;&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;subprocess&lt;/span&gt;
+    &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;excluded_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;python-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_output&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dpkg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-S&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/dev/null&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+                &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; excluding {f} from package {p}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;pass&lt;/span&gt;
+
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Your exe will depend on the following packages:&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;
+
+    &lt;span class="n"&gt;inc_libs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7.so.1.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;binaries&lt;/span&gt;
+
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Analysis&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="n"&gt;pathex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="n"&gt;hiddenimports&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[],&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;pyz&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PYZ&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filter_binaries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;EXE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pyz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;DATA&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scripts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;#a.binaries,&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zipfiles&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ia-scribe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;upx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;4. Set up a signed trivial APT repository to distribute your &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Once you make an executable, you can give it a nice icon and &lt;code&gt;.desktop&lt;/code&gt; file
+and package it in a &lt;code&gt;.deb&lt;/code&gt; for distribution. Steps to create the &lt;code&gt;.deb&lt;/code&gt; can be
+found in the &lt;code&gt;bootstrap.sh&lt;/code&gt; file, run by the Vagrantfile in step #2 above.&lt;/p&gt;
+&lt;p&gt;To distribute your &lt;code&gt;.deb&lt;/code&gt; file to end users, you will want to set up an APT
+repository, which must be signed with a GPG key if you want to allow for
+programatic installation or automatic updates.&lt;/p&gt;
+&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</summary><category term="kivy"></category><category term="linux"></category><category term="ubuntu"></category></entry></feed>
