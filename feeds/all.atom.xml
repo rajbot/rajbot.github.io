@@ -172,12 +172,10 @@ apt keychain. To export the public key to a text file:&lt;/p&gt;
 &lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
 sudo apt-get install foo
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;p&gt;&lt;link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"&gt;
-&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
-&lt;style type="text/css"&gt;
-    tbody td {border: 0; font-size: 75%;}
-&lt;/style&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+    tbody td {font-size: 75%;}
+&lt;/style&gt;
+
 &lt;div class="row"&gt;
 &lt;div class="col-md-6"&gt;
     Ubuntu

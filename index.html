@@ -3,12 +3,15 @@
 <head>
         <meta charset="utf-8">
         <title>bitstream.io</title>
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
                 <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
                 
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <script src="/theme/js/jquery.1.11.min.js"></script>
+        <script src="/theme/js/bootstrap.min.js"></script>
 </head>
 
 <body id="index" class="home">
@@ -28,26 +31,26 @@
         <table>
 <thead>
 <tr>
-<th align="center">Video projects</th>
-<th><img alt="QuickTime" src="/static/images/quicktime.png" /> <img alt="KickTam" src="/static/images/kicktam.gif" /> <img alt="iChat" src="/static/images/ichat.png" /> <img alt="TouchEdit" src="/static/images/touchedit.png" /></th>
+<th align="center">&nbsp;</th>
+<th>Video Projects</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Video Compression</td>
-<td>I have been working on video compression algorithms since 1996. Most notably, I worked on Apple's H.264 codec, and represented Apple at the ISO and ITU standards committees for MPEG-4 and H.264. My focus is on algorithm research and SIMD optimization. I am currently working on a series of technical articles on H.265.</td>
+<td align="center"><img alt="KickTam" src="/static/images/kicktam.gif" /></td>
+<td><strong>Video Compression</strong><br/>I have been working on video compression algorithms since 1996. Most notably, I worked on Apple's H.264 codec, and represented Apple at the ISO and ITU standards committees for MPEG-4 and H.264. My focus is on algorithm research and SIMD optimization.</td>
 </tr>
 <tr>
-<td align="center">iOS Development</td>
-<td>I enjoy working on multimedia applications for the iPad using Cocoa and AVFoundation.</td>
+<td align="center"><img alt="TouchEdit" src="/static/images/touchedit.png" /></td>
+<td><strong>iOS Development</strong><br/>I enjoy working on multimedia applications for the iPad using Cocoa and AVFoundation.</td>
 </tr>
 <tr>
-<td align="center">QuickTime</td>
-<td>I worked on QuickTime 5, 6, and 7, mostly on the H.264 and MPEG-4 components.</td>
+<td align="center"><img alt="QuickTime" src="/static/images/quicktime.png" /></td>
+<td><strong>QuickTime</strong><br/>I worked on QuickTime 5, 6, and 7, mostly on the H.264 and MPEG-4 components.</td>
 </tr>
 <tr>
-<td align="center">Video Conferencing</td>
-<td>I worked on 4-way video conferencing for Apple's iChat AV product.</td>
+<td align="center"><img alt="iChat" src="/static/images/ichat.png" /></td>
+<td><strong>Video Conferencing</strong><br/>I worked on 4-way video conferencing for Apple's iChat AV product.</td>
 </tr>
 <tr>
 <td align="center">Research</td>
@@ -59,30 +62,34 @@
 <table>
 <thead>
 <tr>
-<th align="center">archive.org projects</th>
-<th><img alt="BookReader" src="/static/images/bookreader.jpg" /> <img alt="OL" src="/static/images/ol.png" /> <img alt="autocrop" src="/static/images/autocrop.jpg" /> <img alt="wayback" src="/static/images/wayback_logo-sm.gif" /> <img alt="IA" src="/static/images/glogo.png" /></th>
+<th align="center">&nbsp;</th>
+<th>Internet Archive Projects</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center"><a href="http://openlibrary.org/dev/docs/bookreader">BookReader</a></td>
-<td>The IA bookreader allows online viewing of full-resolution archival images of books scanned by the Internet Archive. I rewrote the bookreader in 2007, and Michael Ang, George Oates, and several others provided significant updates and a new design since then. The latest improvements I added were support for <a href="http://openlibrary.org/borrow">online loans through Open Library</a> and text-to-speech. I continue to maintain this project, but further development has stopped. (<a href="https://github.com/openlibrary/bookreader">github</a>)</td>
+<td align="center"><img alt="BookReader" src="/static/images/bookreader.jpg" /></td>
+<td><strong><a href="http://openlibrary.org/dev/docs/bookreader">BookReader</a></strong><br/>The IA bookreader allows online viewing of full-resolution archival images of books scanned by the Internet Archive. I rewrote the bookreader in 2007, and Michael Ang, George Oates, and several others provided significant updates and a new design since then. The latest improvements I added were support for <a href="http://openlibrary.org/borrow">online loans through Open Library</a> and text-to-speech. I continue to maintain this project, but further development has stopped. (<a href="https://github.com/openlibrary/bookreader">github</a>)</td>
 </tr>
 <tr>
-<td align="center"><a href="http://openlibrary.org/">Open Library</a></td>
-<td>Open Library is an online catalog of book metadata, striving to be "one webpage for every book ever published". It was started by Aaron Swartz and is now maintained by Anand Chitipothu. I served as Tech Lead of Open Library for a while. Further developement on OL has stopped. (<a href="https://github.com/internetarchive/openlibrary">github</a>)</td>
+<td align="center"><img alt="OL" src="/static/images/ol.png" /></td>
+<td><strong><a href="http://openlibrary.org/">Open Library</a></strong><br/>Open Library is an online catalog of book metadata, striving to be "one webpage for every book ever published". It was started by Aaron Swartz and is now maintained by Anand Chitipothu. I served as Tech Lead of Open Library after Aaron left the project. (<a href="https://github.com/internetarchive/openlibrary">github</a>)</td>
 </tr>
 <tr>
-<td align="center"><a href="http://archive.org/web/web.php">Wayback Machine</a></td>
-<td>I've worked on the <a href="https://archive.org/web/">Wayback front page</a>, the Save Page Now feature, a <a href="https://github.com/rajbot/surt">Python SURT module</a>, a <a href="https://github.com/rajbot/CDX-Writer">CDX Writer</a>, the <a href="https://github.com/internetarchive/liveweb">liveweb proxy</a> and a few warc upload tools.</td>
+<td align="center"><img alt="wayback" src="/static/images/wayback_logo-sm.gif" /></td>
+<td><strong><a href="http://archive.org/web/web.php">Wayback Machine</a></strong><br/>I've worked on the <a href="https://archive.org/web/">Wayback front page</a>, the Save Page Now feature, a <a href="https://github.com/rajbot/surt">Python SURT module</a>, a <a href="https://github.com/rajbot/CDX-Writer">CDX Writer</a>, the <a href="https://github.com/internetarchive/liveweb">liveweb proxy</a> and a few warc upload tools.</td>
 </tr>
 <tr>
-<td align="center"><a href="https://github.com/rajbot/autocrop">autocrop</a></td>
-<td>C code that automatically crops book images, used in the IA scanning centers. It was originally written as a side project, and I could use help improving the algorithm. (<a href="https://github.com/rajbot/autocrop">github</a>).</td>
+<td align="center"><img alt="autocrop" src="/static/images/autocrop.jpg" /></td>
+<td><strong><a href="https://github.com/rajbot/autocrop">autocrop</a></strong><br/>C code that automatically crops book images, used in the IA scanning centers. It was originally written as a side project, and I could use help improving the algorithm. (<a href="https://github.com/rajbot/autocrop">github</a>).</td>
 </tr>
 <tr>
 <td align="center"><a href="http://www.gphoto.org">gPhoto camera drivers</a></td>
-<td>I got to work with Paul Walmsley when he added gphoto support and <a href="https://lkml.org/lkml/2007/8/16/330">a linux kernel patch</a> for the Canon 5D camera, used in the IA scanning centers. <a href="/tag/gphoto.html">Here are our notes</a> from reverse-engineering Canon drivers.</td>
+<td>I <a href="http://sourceforge.net/p/gphoto/code/14915/">added support</a> for Nikon 1 Series cameras to gPhoto, which allows use of low-cost cameras with long lifespans (1 million+ shots), to complement our high-end Canon cameras. I also worked with Paul Walmsley when he added gphoto support and <a href="https://lkml.org/lkml/2007/8/16/330">a linux kernel patch</a> for the Canon 5D camera. <a href="/tag/gphoto.html">Here are our notes</a> from reverse-engineering Canon drivers.</td>
+</tr>
+<tr>
+<td align="center">Book Digitization Software</td>
+<td>I wrote IA's server-based digitization tool called RePublisher, which is used by the Scribe bookscanners. I am currently working on the scanning software for the IA portable bookscanner.</td>
 </tr>
 <tr>
 <td align="center"><a href="https://github.com/jjjake/ia-wrapper">IA Python Library</a></td>
@@ -93,12 +100,8 @@
 <td>I am currently working on the IA HTML5 Uploader, which was originally developed by Michael Ang.</td>
 </tr>
 <tr>
-<td align="center">Book Digitization Software</td>
-<td>I wrote IA's server-based digitization tool called RePublisher, which is used by the Scribe bookscanners.</td>
-</tr>
-<tr>
-<td align="center">Open Source IA Projects</td>
-<td>There are many other projects available on the <a href="https://github.com/internetarchive/">Internet Archive github organization page</a>.</td>
+<td align="center"><img alt="IA" src="/static/images/glogo.png" /></td>
+<td><strong>Open Source IA Projects</strong><br/>There are many other projects available on the <a href="https://github.com/internetarchive/">Internet Archive github organization page</a>.</td>
 </tr>
 </tbody>
 </table>
