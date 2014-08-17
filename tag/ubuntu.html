@@ -46,10 +46,7 @@ Tags:
 </footer><!-- /.post-info --><p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Install Kivy using <code>pip</code>, and not from the provided PPA or <code>.deb</code></h2>
-<p>We are going to use PyInstaller to create a linux executable. Kivy provides PyInstaller
-hooks in the <code>kivy.tools</code> package, but PPA does not include <code>kivy.tools</code></p>
-<h2>2. Use a Vagrantfile to bootstrap a development environment</h2>
+<h2>1. Use a Vagrantfile to bootstrap a development environment</h2>
 <p>There are a lot of dependencies for kivy development, and a lot of different ways to
 install them. In order to help you get started, I made a Vagrantfile to set up a
 Kivy dev environment.</p>
@@ -58,6 +55,15 @@ packages a kivy example app into a <code>.deb</code>. You end up with a double-c
 that works like a regular linux desktop app.</p>
 <p>The Vagrantfile and instructions on how to use it are here:
 <a href="https://github.com/rajbot/kivy_pyinstaller_linux_example">https://github.com/rajbot/kivy_pyinstaller_linux_example</a></p>
+<p><br/></p>
+<h2>2. Install Kivy using <code>pip</code>, and not from the provided PPA</h2>
+<p>If you don't use the Vagrantfile above and want to install Kivy yourself, do not
+install it using the PPA. This is because we are going to use PyInstaller to
+create a linux executable, and we will need the PyInstaller hooks from the <code>kivy.tools</code>
+package, but the PPA does not include <code>kivy.tools</code>.</p>
+<p>This <a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh">bash script</a>
+will show you how to install Kivy in a virtualenv so that you can use the PyInstaller hooks.</p>
+<p><br/></p>
 <h2>3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable</h2>
 <p>If you follow the setup instructions above, you will end up an executable that works only
 on the machine it was built. If you try to copy it to another linux box, kivy will often
@@ -143,10 +149,70 @@ binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
 </pre></div>
 
 
-<h2>4. Set up a signed trivial APT repository to distribute your <code>.deb</code></h2>
-<p>Once you make an executable, you can give it a nice icon and <code>.desktop</code> file
-and package it in a <code>.deb</code> for distribution. Steps to create the <code>.deb</code> can be
-found in the <code>bootstrap.sh</code> file, run by the Vagrantfile in step #2 above.</p>
+<p><br/></p>
+<h2>4. Package your executable in a <code>.deb</code> file</h2>
+<p>Once you make an executable, you can give it a nice icon and Ubuntu <code>.desktop</code>
+file and package it in a <code>.deb</code> for distribution. Steps to create the <code>.deb</code> can
+be found in <a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh">bootstrap.sh</a>,
+from step #1 above. At minimum, your <code>.deb</code> package should:</p>
+<ul>
+<li>Install your application in a binary directory, such as <code>/usr/local/bin/my-app</code></li>
+<li>Install an icon in <code>/usr/share/pixmaps/my-app.png</code></li>
+<li>Install a <code>.desktop</code> file in <code>/usr/share/applications/my-app.desktop</code></li>
+</ul>
+<p>Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the <code>.deb</code>,
+first create the directory structure below:</p>
+<div class="highlight"><pre><span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app_1</span><span class="mf">.0</span><span class="o">-</span><span class="mi">1</span>
+    <span class="o">-</span> <span class="n">DEBIAN</span>
+        <span class="o">-</span> <span class="n">control</span>
+    <span class="o">-</span> <span class="n">usr</span>
+        <span class="o">-</span> <span class="n">local</span>
+            <span class="o">-</span> <span class="n">bin</span>
+                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
+        <span class="o">-</span> <span class="n">share</span>
+            <span class="o">-</span> <span class="n">applications</span>
+                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">desktop</span>
+            <span class="o">-</span> <span class="n">pixmaps</span>
+                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">png</span>
+</pre></div>
+
+
+<p>Now you can package your app by typing <code>dpkg-deb --build myapp_1.0-0</code>. You can then
+install the resulting package by typing <code>sudo dpkg -i myapp_1.0-0.deb</code>.</p>
+<p>The <code>DEBIAN/control</code> file should look like this:</p>
+<div class="highlight"><pre><span class="n">Source</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
+<span class="n">Priority</span><span class="o">:</span> <span class="n">extra</span>
+<span class="n">Maintainer</span><span class="o">:</span> <span class="n">raj</span> <span class="o">&lt;</span><span class="n">raj</span><span class="err">@</span><span class="n">unknown</span><span class="o">&gt;</span>
+<span class="n">Build</span><span class="o">-</span><span class="n">Depends</span><span class="o">:</span> <span class="n">debhelper</span> <span class="o">(&gt;=</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span>
+<span class="n">Standards</span><span class="o">-</span><span class="n">Version</span><span class="o">:</span> <span class="mf">3.9</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">Package</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
+<span class="n">Version</span><span class="o">:</span> <span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">Architecture</span><span class="o">:</span> <span class="n">i386</span>
+<span class="n">Description</span><span class="o">:</span> <span class="n">Should</span> <span class="n">description</span>
+ <span class="n">Long</span> <span class="n">description</span> <span class="n">string</span> <span class="o">(</span><span class="n">starts</span> <span class="k">with</span> <span class="n">a</span> <span class="n">whitespace</span><span class="o">)</span>
+</pre></div>
+
+
+<p>To give your executable a first-class Ubuntu application, you will need to create a
+<code>.desktop</code> file, which will tell Ubuntu about its icon, version, and name. <code>my-app.desktop</code>
+should look like this:</p>
+<div class="highlight"><pre><span class="k">[Desktop Entry]</span>
+<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">Name</span><span class="o">=</span><span class="s">My Application</span>
+<span class="na">Comment</span><span class="o">=</span><span class="s">Example App</span>
+<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/local/bin/my-app</span>
+<span class="na">Icon</span><span class="o">=</span><span class="s">my-app</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
+<span class="na">Categories</span><span class="o">=</span><span class="s">Utility;Application;</span>
+</pre></div>
+
+
+<p>Note that <code>Version</code> above refers to the version of the <code>.desktop</code> format (and
+not the version of the app), and should always be "1.0". The <code>Icon</code> entry does
+not need a full path or extension. Ubuntu will look for your icon in
+<code>/usr/share/pixmaps</code>.</p>
+<p><br/></p>
+<h2>5. Set up a signed trivial APT repository to distribute your <code>.deb</code></h2>
 <p>To distribute your <code>.deb</code> file to end users, you will want to set up an APT
 repository, which must be signed with a GPG key if you want to allow for
 programatic installation or automatic updates.</p>

@@ -2,10 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2014-08-16T00:00:00-07:00</updated><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><updated>2014-08-16T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-16:packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
-&lt;h2&gt;1. Install Kivy using &lt;code&gt;pip&lt;/code&gt;, and not from the provided PPA or &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;We are going to use PyInstaller to create a linux executable. Kivy provides PyInstaller
-hooks in the &lt;code&gt;kivy.tools&lt;/code&gt; package, but PPA does not include &lt;code&gt;kivy.tools&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;2. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
+&lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
 &lt;p&gt;There are a lot of dependencies for kivy development, and a lot of different ways to
 install them. In order to help you get started, I made a Vagrantfile to set up a
 Kivy dev environment.&lt;/p&gt;
@@ -14,6 +11,15 @@ packages a kivy example app into a &lt;code&gt;.deb&lt;/code&gt;. You end up wit
 that works like a regular linux desktop app.&lt;/p&gt;
 &lt;p&gt;The Vagrantfile and instructions on how to use it are here:
 &lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example"&gt;https://github.com/rajbot/kivy_pyinstaller_linux_example&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;2. Install Kivy using &lt;code&gt;pip&lt;/code&gt;, and not from the provided PPA&lt;/h2&gt;
+&lt;p&gt;If you don't use the Vagrantfile above and want to install Kivy yourself, do not
+install it using the PPA. This is because we are going to use PyInstaller to
+create a linux executable, and we will need the PyInstaller hooks from the &lt;code&gt;kivy.tools&lt;/code&gt;
+package, but the PPA does not include &lt;code&gt;kivy.tools&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This &lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh"&gt;bash script&lt;/a&gt;
+will show you how to install Kivy in a virtualenv so that you can use the PyInstaller hooks.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2&gt;3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable&lt;/h2&gt;
 &lt;p&gt;If you follow the setup instructions above, you will end up an executable that works only
 on the machine it was built. If you try to copy it to another linux box, kivy will often
@@ -99,10 +105,70 @@ binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed libra
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;4. Set up a signed trivial APT repository to distribute your &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;Once you make an executable, you can give it a nice icon and &lt;code&gt;.desktop&lt;/code&gt; file
-and package it in a &lt;code&gt;.deb&lt;/code&gt; for distribution. Steps to create the &lt;code&gt;.deb&lt;/code&gt; can be
-found in the &lt;code&gt;bootstrap.sh&lt;/code&gt; file, run by the Vagrantfile in step #2 above.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;4. Package your executable in a &lt;code&gt;.deb&lt;/code&gt; file&lt;/h2&gt;
+&lt;p&gt;Once you make an executable, you can give it a nice icon and Ubuntu &lt;code&gt;.desktop&lt;/code&gt;
+file and package it in a &lt;code&gt;.deb&lt;/code&gt; for distribution. Steps to create the &lt;code&gt;.deb&lt;/code&gt; can
+be found in &lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh"&gt;bootstrap.sh&lt;/a&gt;,
+from step #1 above. At minimum, your &lt;code&gt;.deb&lt;/code&gt; package should:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install your application in a binary directory, such as &lt;code&gt;/usr/local/bin/my-app&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install an icon in &lt;code&gt;/usr/share/pixmaps/my-app.png&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install a &lt;code&gt;.desktop&lt;/code&gt; file in &lt;code&gt;/usr/share/applications/my-app.desktop&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the &lt;code&gt;.deb&lt;/code&gt;,
+first create the directory structure below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app_1&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;DEBIAN&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;usr&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;share&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;applications&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;desktop&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pixmaps&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can package your app by typing &lt;code&gt;dpkg-deb --build myapp_1.0-0&lt;/code&gt;. You can then
+install the resulting package by typing &lt;code&gt;sudo dpkg -i myapp_1.0-0.deb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;DEBIAN/control&lt;/code&gt; file should look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Source&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+&lt;span class="n"&gt;Priority&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;extra&lt;/span&gt;
+&lt;span class="n"&gt;Maintainer&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;raj&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;raj&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;unknown&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;Build&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Depends&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;debhelper&lt;/span&gt; &lt;span class="o"&gt;(&amp;gt;=&lt;/span&gt; &lt;span class="mf"&gt;8.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Standards&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;3.9&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;Architecture&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;i386&lt;/span&gt;
+&lt;span class="n"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Should&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;
+ &lt;span class="n"&gt;Long&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;starts&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;whitespace&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To give your executable a first-class Ubuntu application, you will need to create a
+&lt;code&gt;.desktop&lt;/code&gt; file, which will tell Ubuntu about its icon, version, and name. &lt;code&gt;my-app.desktop&lt;/code&gt;
+should look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class="na"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1.0&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;My Application&lt;/span&gt;
+&lt;span class="na"&gt;Comment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Example App&lt;/span&gt;
+&lt;span class="na"&gt;Exec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/local/bin/my-app&lt;/span&gt;
+&lt;span class="na"&gt;Icon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;my-app&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Application&lt;/span&gt;
+&lt;span class="na"&gt;Categories&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Utility;Application;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that &lt;code&gt;Version&lt;/code&gt; above refers to the version of the &lt;code&gt;.desktop&lt;/code&gt; format (and
+not the version of the app), and should always be "1.0". The &lt;code&gt;Icon&lt;/code&gt; entry does
+not need a full path or extension. Ubuntu will look for your icon in
+&lt;code&gt;/usr/share/pixmaps&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;5. Set up a signed trivial APT repository to distribute your &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;To distribute your &lt;code&gt;.deb&lt;/code&gt; file to end users, you will want to set up an APT
 repository, which must be signed with a GPG key if you want to allow for
 programatic installation or automatic updates.&lt;/p&gt;
