@@ -5,8 +5,8 @@
         <title>Tronix Linkdump June 2014</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
-                <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
-                
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -29,7 +29,7 @@
                 var url = link.attr('href');
 
                 if (self.hasClass('embed_active')) {
-                    self.html('&#9654; &#10133;');
+                    self.html('&#9654;');
                     self.removeClass('embed_active');
                     link.next('.embed').remove();
 
@@ -37,7 +37,7 @@
                     var embed_div = $('<div class="embed">loading...</div>');
                     embed_div.insertAfter(link);
                     self.addClass('embed_active');
-                    self.html('&#9654; &#10134;');
+                    self.html('&#9660;');
 
                     $.embedly.oembed(url).progress(function(data){
                         if ('html' in data) {
@@ -52,40 +52,48 @@
             });
         });
         </script>
+        <style type="text/css">
+            li > a:link, li > a:visited {
+                text-decoration: none;
+            }
+            .embed_button:hover {
+                color: #aaa;
+            }
+        </style>
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                                                    <li><a href="/">bitstream.io</a></li>
-                                                                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
-                                    <li ><a href="/category/commandline.html">commandline</a></li>
-                                    <li class="active"><a href="/category/links.html">links</a></li>
-                                    <li ><a href="/category/ops.html">ops</a></li>
-                                    <li ><a href="/category/python.html">python</a></li>
-                                                </ul></nav>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li class="active"><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
         </header><!-- /#banner -->
-        <section id="content" class="body">
+<section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
         <a href="/tronix-linkdump-june-2014.html" rel="bookmark"
            title="Permalink to Tronix Linkdump June 2014">Tronix Linkdump June 2014</a></h1>
-          </header>
+    </header>
 
     <div class="entry-content">
-      <footer class="post-info">
-        <abbr class="published" title="2014-07-03T21:58:09">
+<footer class="post-info">
+        <abbr class="published" title="2014-07-03T00:00:00">
                 Thu 03 July 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/tronixchat.html">tronixchat</a>
         </address>
-        in <a href="/category/links.html">links</a>.
+in <a href="/category/links.html">links</a>.
 Tags:
-    <a href="/tag/tronix.html">tronix</a>
+<a href="/tag/tronix.html">tronix</a>
 </footer><!-- /.post-info -->      <ul>
 <li><a href="https://www.facebook.com/photo.php?fbid=10152040307727130">Raj tries OSX 10.9 | Facebook</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Mojibake">Mojibake - Wikipedia, the free encyclopedia</a></li>
@@ -170,30 +178,30 @@ Tags:
 <li><a href="http://djcpi.blogspot.ca/2014/07/cpi-setting-aside-day.html">Caitlyn can rock a todo list.: CPI - Setting Aside The Day</a></li>
 </ul>
     </div><!-- /.entry-content -->
-    
+
   </article>
 </section>
         <section id="extras" class="body">
-                        <div class="blogroll">
+                <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>
-                                                    <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
-                                                    <li><a href="http://tikirobot.net">TikiRobot</a></li>
-                                                    <li><a href="/archives.html">Archives</a></li>
-                                                </ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
                 </div><!-- /.blogroll -->
-                                <div class="social">
+                <div class="social">
                         <h2>social</h2>
                         <ul>
                             <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-                            
-                                                    <li><a href="http://github.com/rajbot">github</a></li>
-                                                    <li><a href="http://twitter.com/rajbot">twitter</a></li>
-                                                    <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
-                                                </ul>
-                </div><!-- /.social -->
-                </section><!-- /#extras -->
 
-        
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
 </body>
 </html>

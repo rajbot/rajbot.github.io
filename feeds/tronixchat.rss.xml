@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/links.atom.xml" rel="self"></link><id>/</id><updated>2014-09-04T00:00:00-07:00</updated><entry><title>Tronix Linkdump August 2014</title><link href="/tronix-linkdump-august-2014.html" rel="alternate"></link><updated>2014-09-04T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-09-04:tronix-linkdump-august-2014.html</id><summary type="html">&lt;ul&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/tronixchat.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 04 Sep 2014 00:00:00 -0700</lastBuildDate><item><title>Tronix Linkdump August 2014</title><link>/tronix-linkdump-august-2014.html</link><description>&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.takehitch.com"&gt;rideshare thing that pairs you with other passengers going to the same place as you&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://python-rq.org"&gt;RQ: Simple job queues for Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/binarydud/pyres"&gt;binarydud/pyres · GitHub&lt;/a&gt;&lt;/li&gt;
@@ -81,7 +81,7 @@
 &lt;li&gt;&lt;a href="http://www.nature.com/srep/2014/140904/srep06196/full/srep06196.html"&gt;"Here we describe a new and gigantic titanosaur, Dreadnoughtus schrani, from Upper Cretaceous sediments in southern Patagonia, Argentina… despite its estimated mass of about 59.3 metric tons, the bone histology of the Dreadnoughtus type specimen reveals that this individual was still growing at the time of death."&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=rSlEbsBxuIE&amp;amp;list=TLhk0qIAy0uW5P-EQL-Qz4YDv6CMysCoQe"&gt;木のクレーン車2006 Wooden truck crane - YouTube&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=GR9MpJy0E6g&amp;amp;list=TLZAiU7-d3U_lmpU9csfiq5KV9u3vR5P6P&amp;amp;index=1"&gt;木のショベルカー2007　Wooden excavator - YouTube&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Tronix Linkdump July 2014</title><link href="/tronix-linkdump-july-2014.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-08-05:tronix-linkdump-july-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tronixchat</dc:creator><pubDate>Thu, 04 Sep 2014 00:00:00 -0700</pubDate><guid>tag:,2014-09-04:tronix-linkdump-august-2014.html</guid><category>tronix</category></item><item><title>Tronix Linkdump July 2014</title><link>/tronix-linkdump-july-2014.html</link><description>&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://kadrey.tumblr.com/post/90723596427/haruki-murakami-bingo"&gt;Haruki Murakami Bingo • Richard Kadrey's Damn Tumblr&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.mikeash.com/pyblog/friday-qa-2014-07-04-secrets-of-swifts-speed.html"&gt;mikeash.com: Friday Q&amp;amp;A 2014-07-04: Secrets of Swift's Speed&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.theatlantic.com/video/archive/2013/11/the-pimps-and-prostitutes-of-1970s-times-square/281130/"&gt;The Pimps and Prostitutes of 1970s Times Square - The Atlantic&lt;/a&gt;&lt;/li&gt;
@@ -155,7 +155,7 @@
 &lt;li&gt;&lt;a href="http://www.sanfrancisco.travel/sf-essentials/Oldest-Bars-in-San-Francisco-by-Neighborhood.html"&gt;Oldest Bars by Neighborhood | San Francisco, CA | sanfrancisco.travel&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://reclaimingquarterly.org/web/redwoodmagic/"&gt;Redwood Magic Family Camp&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/rhettg/dmc"&gt;dmc is python library for date and time manipulation.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Tronix Linkdump June 2014</title><link href="/tronix-linkdump-june-2014.html" rel="alternate"></link><updated>2014-07-03T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-07-03:tronix-linkdump-june-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tronixchat</dc:creator><pubDate>Tue, 05 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-05:tronix-linkdump-july-2014.html</guid><category>tronix</category></item><item><title>Tronix Linkdump June 2014</title><link>/tronix-linkdump-june-2014.html</link><description>&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.facebook.com/photo.php?fbid=10152040307727130"&gt;Raj tries OSX 10.9 | Facebook&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Mojibake"&gt;Mojibake - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/540535/managing-large-binary-files-with-git"&gt;version control - Managing large binary files with git - Stack Overflow&lt;/a&gt;&lt;/li&gt;
@@ -237,4 +237,4 @@
 &lt;li&gt;&lt;a href="https://www.kickstarter.com/projects/612530753/gitchain"&gt;Gitchain by Yurii Rashkovskii — Kickstarter&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/gitchain/gitchain"&gt;gitchain/gitchain · GitHub&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://djcpi.blogspot.ca/2014/07/cpi-setting-aside-day.html"&gt;Caitlyn can rock a todo list.: CPI - Setting Aside The Day&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry></feed>
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tronixchat</dc:creator><pubDate>Thu, 03 Jul 2014 00:00:00 -0700</pubDate><guid>tag:,2014-07-03:tronix-linkdump-june-2014.html</guid><category>tronix</category></item></channel></rss>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/raj.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 05 Sep 2014 10:38:47 -0700</lastBuildDate><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For Linux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 05 Sep 2014 10:38:47 -0700</pubDate><guid>tag:,2014-09-05:adding-a-git-hub-alias.html</guid><category>git</category><category>github</category></item><item><title>Packaging and Distributing a Kivy application on Linux</title><link>/packaging-and-distributing-a-kivy-application-on-linux.html</link><description>&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
+Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
+&lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
+&lt;p&gt;There are a lot of dependencies for kivy development, and a lot of different ways to
+install them. In order to help you get started, I made a Vagrantfile to set up a
+Kivy dev environment.&lt;/p&gt;
+&lt;p&gt;The Vagrantfile installs &lt;code&gt;python&lt;/code&gt;, &lt;code&gt;kivy&lt;/code&gt;, and &lt;code&gt;pyinstaller&lt;/code&gt; in an Ubuntu VM, and then
+packages a kivy example app into a &lt;code&gt;.deb&lt;/code&gt;. You end up with a double-clickable application
+that works like a regular linux desktop app.&lt;/p&gt;
+&lt;p&gt;The Vagrantfile and instructions on how to use it are here:
+&lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example"&gt;https://github.com/rajbot/kivy_pyinstaller_linux_example&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;2. Install Kivy using &lt;code&gt;pip&lt;/code&gt;, and not from the provided PPA&lt;/h2&gt;
+&lt;p&gt;If you don't use the Vagrantfile above and want to install Kivy yourself, do not
+install it using the PPA. This is because we are going to use PyInstaller to
+create a linux executable, and we will need the PyInstaller hooks from the &lt;code&gt;kivy.tools&lt;/code&gt;
+package, but the PPA does not include &lt;code&gt;kivy.tools&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This &lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh"&gt;bash script&lt;/a&gt;
+will show you how to install Kivy in a virtualenv so that you can use the PyInstaller hooks.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable&lt;/h2&gt;
+&lt;p&gt;If you follow the setup instructions above, you will end up an executable that works only
+on the machine it was built. If you try to copy it to another linux box, kivy will often
+segfault on startup with this error message:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Fatal&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pygame&lt;/span&gt; &lt;span class="n"&gt;parachute&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Segmentation&lt;/span&gt; &lt;span class="n"&gt;Fault&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To ensure the executable can run on as many different flavors of linux as possible, we
+are going to strip out all binaries provided by system packages. We will distribute the
+application in a &lt;code&gt;.deb&lt;/code&gt; file and and use &lt;code&gt;.deb&lt;/code&gt; dependencies to ensure required libraries
+are installed on the target machine.&lt;/p&gt;
+&lt;p&gt;Here is a copy of a PyInstaller &lt;code&gt;.spec&lt;/code&gt; file that installs Kivy hooks and strips out all
+binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed library:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# -*- mode: python -*-&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.tools.packaging.pyinstaller_hooks&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_hooks&lt;/span&gt;
+&lt;span class="n"&gt;install_hooks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;globals&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;filter_binaries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;all_binaries&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;Exclude binaries provided by system packages, and rely on .deb dependencies&lt;/span&gt;
+&lt;span class="sd"&gt;    to ensure these binaries are available on the target machine.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    We need to remove OpenGL-related libraries so we can distribute the executable&lt;/span&gt;
+&lt;span class="sd"&gt;    to other linux machines that might have different graphics hardware. If you&lt;/span&gt;
+&lt;span class="sd"&gt;    bundle system libraries, your application might crash when run on a different&lt;/span&gt;
+&lt;span class="sd"&gt;    machine with the following error during kivy startup:&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Fatal Python Error: (pygame parachute) Segmentation Fault&lt;/span&gt;
+
+&lt;span class="sd"&gt;    If we strip all libraries, then PIL might not be able to find the correct _imaging&lt;/span&gt;
+&lt;span class="sd"&gt;    module, even if the `python-image` package has been installed on the system. The&lt;/span&gt;
+&lt;span class="sd"&gt;    easy way to fix this is to not filter binaries from the python-imaging package.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    We will strip out all binaries, except libpython2.7, which is required for the&lt;/span&gt;
+&lt;span class="sd"&gt;    pyinstaller-frozen executable to work, and any of the python-* packages.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Excluding system libraries&amp;#39;&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;subprocess&lt;/span&gt;
+    &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;excluded_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;python-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_output&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dpkg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-S&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/dev/null&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+                &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; excluding {f} from package {p}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;pass&lt;/span&gt;
+
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Your exe will depend on the following packages:&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;
+
+    &lt;span class="n"&gt;inc_libs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7.so.1.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;binaries&lt;/span&gt;
+
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Analysis&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="n"&gt;pathex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="n"&gt;hiddenimports&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[],&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;pyz&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PYZ&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filter_binaries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;EXE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pyz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;DATA&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scripts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;#a.binaries,&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zipfiles&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ia-scribe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;upx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;4. Package your executable in a &lt;code&gt;.deb&lt;/code&gt; file&lt;/h2&gt;
+&lt;p&gt;Once you make an executable, you can give it a nice icon and Ubuntu &lt;code&gt;.desktop&lt;/code&gt;
+file and package it in a &lt;code&gt;.deb&lt;/code&gt; for distribution. Steps to create the &lt;code&gt;.deb&lt;/code&gt; can
+be found in &lt;a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh"&gt;bootstrap.sh&lt;/a&gt;,
+from step #1 above. At minimum, your &lt;code&gt;.deb&lt;/code&gt; package should:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install your application in a binary directory, such as &lt;code&gt;/usr/local/bin/my-app&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install an icon in &lt;code&gt;/usr/share/pixmaps/my-app.png&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install a &lt;code&gt;.desktop&lt;/code&gt; file in &lt;code&gt;/usr/share/applications/my-app.desktop&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the &lt;code&gt;.deb&lt;/code&gt;,
+first create the directory structure below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app_1&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;DEBIAN&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;usr&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;share&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;applications&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;desktop&lt;/span&gt;
+            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pixmaps&lt;/span&gt;
+                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can package your app by typing &lt;code&gt;dpkg-deb --build myapp_1.0-0&lt;/code&gt;. You can then
+install the resulting package by typing &lt;code&gt;sudo dpkg -i myapp_1.0-0.deb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;DEBIAN/control&lt;/code&gt; file should look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Source&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+&lt;span class="n"&gt;Priority&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;extra&lt;/span&gt;
+&lt;span class="n"&gt;Maintainer&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;raj&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;raj&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;unknown&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;Build&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Depends&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;debhelper&lt;/span&gt; &lt;span class="o"&gt;(&amp;gt;=&lt;/span&gt; &lt;span class="mf"&gt;8.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Standards&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;3.9&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;Package&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;Architecture&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;i386&lt;/span&gt;
+&lt;span class="n"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Should&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;
+ &lt;span class="n"&gt;Long&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;starts&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;whitespace&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To give your executable a first-class Ubuntu application, you will need to create a
+&lt;code&gt;.desktop&lt;/code&gt; file, which will tell Ubuntu about its icon, version, and name. &lt;code&gt;my-app.desktop&lt;/code&gt;
+should look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class="na"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1.0&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;My Application&lt;/span&gt;
+&lt;span class="na"&gt;Comment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Example App&lt;/span&gt;
+&lt;span class="na"&gt;Exec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/local/bin/my-app&lt;/span&gt;
+&lt;span class="na"&gt;Icon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;my-app&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Application&lt;/span&gt;
+&lt;span class="na"&gt;Categories&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Utility;Application;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that &lt;code&gt;Version&lt;/code&gt; above refers to the version of the &lt;code&gt;.desktop&lt;/code&gt; format (and
+not the version of the app), and should always be "1.0". The &lt;code&gt;Icon&lt;/code&gt; entry does
+not need a full path or extension. Ubuntu will look for your icon in
+&lt;code&gt;/usr/share/pixmaps&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;5. Set up a signed trivial APT repository to distribute your &lt;code&gt;.deb&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;To distribute your &lt;code&gt;.deb&lt;/code&gt; file to end users, you will want to set up an APT
+repository, which must be signed with a GPG key if you want to allow for
+programatic installation or automatic updates.&lt;/p&gt;
+&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Sat, 16 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-16:packaging-and-distributing-a-kivy-application-on-linux.html</guid><category>kivy</category><category>linux</category><category>ubuntu</category></item><item><title>Creating a Trivial, Signed APT Repository</title><link>/creating-a-trivial-signed-apt-repository.html</link><description>&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+packages to end users. You will want to create a signed repository, so
+that users can perform automated updates of your software (e.g. using
+&lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;There are &lt;a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types"&gt;two kinds of repositories&lt;/a&gt;,
+"official" and "trivial". Trivial repositories are easier to set up than
+the official variety, but setup of &lt;em&gt;signed&lt;/em&gt; trivial repositories is not
+well-documented. Here are instructions on how to set up your own repo:&lt;/p&gt;
+&lt;p&gt;Prerequisites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;.deb&lt;/code&gt; file, unsigned&lt;/li&gt;
+&lt;li&gt;A machine with &lt;code&gt;gpg&lt;/code&gt; installed&lt;/li&gt;
+&lt;li&gt;RSA gpg keys created using &lt;code&gt;gpg --gen-key&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The repository is a simply a directory hierarchy. It can be local (e.g. on a usb stick) or
+published to a web server. Here is what it should look like when we are done:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Packages&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gpg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Start by creating the hierarchy above with empty directories. Place &lt;code&gt;foo.deb&lt;/code&gt; in the
+&lt;code&gt;apt-repo&lt;/code&gt; directory, and then follow these instructions to create the signed files:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#sign the .deb file&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+dpkg-sig --sign builder foo.deb
+&lt;span class="nb"&gt;cd&lt;/span&gt; ..
+
+&lt;span class="c"&gt;#create the Packages.gz file&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+apt-ftparchive packages . &amp;gt; Packages
+&lt;span class="nb"&gt;cd&lt;/span&gt; ..
+
+&lt;span class="c"&gt;#create the Release file&lt;/span&gt;
+apt-ftparchive release apt-repo &amp;gt; apt-repo/Release
+
+&lt;span class="c"&gt;#create a detached ascii signature of the Release file&lt;/span&gt;
+gpg --armor --sign --detach-sign apt-repo/Release.gpg apt-repo/Release
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can upload the &lt;code&gt;apt-repo&lt;/code&gt; directory to a webserver. If the repo
+path is &lt;code&gt;http://example.com/foo/apt-repo&lt;/code&gt;, then end users will have to
+add a file named &lt;code&gt;my-repo.list&lt;/code&gt; to the &lt;code&gt;/etc/apt/sources.list.d&lt;/code&gt; directory
+that contains this line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;deb http://example.com/foo/apt-repo /
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You now need to distribute your public key to end users, who will need to add it to their
+apt keychain. To export the public key to a text file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;gpg --armor --export foo@example.com --output foo-public-key
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then upload &lt;code&gt;foo-public-key&lt;/code&gt; to a webserver. End users can install the key like so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl http://example.com/foo-public-key | sudo apt-key add -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
+sudo apt-get install foo
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:creating-a-trivial-signed-apt-repository.html</guid><category>apt</category><category>debian</category><category>ubuntu</category></item><item><title>OS X and Ubuntu Codenames</title><link>/os-x-and-ubuntu-codenames.html</link><description>&lt;style type="text/css"&gt;
+    tbody td {font-size: 75%;}
+&lt;/style&gt;
+
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;
+    Ubuntu
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10&lt;/td&gt;&lt;td&gt;Intrepid Ibex&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.04&lt;/td&gt;&lt;td&gt;Jaunty Jackalope&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.10&lt;/td&gt;&lt;td&gt;Karmic Koala&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.04 LTS&lt;/td&gt;&lt;td&gt;Lucid Lynx&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.10&lt;/td&gt;&lt;td&gt;Maverick Meerkat&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.04&lt;/td&gt;&lt;td&gt;Natty Narwhal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.10&lt;/td&gt;&lt;td&gt;Oneiric Ocelot&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.04 LTS&lt;/td&gt;&lt;td&gt;Precise Pangolin&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.10&lt;/td&gt;&lt;td&gt;Quantal Quetzal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.04&lt;/td&gt;&lt;td&gt;Raring Ringtail&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.10&lt;/td&gt;&lt;td&gt;Saucy Salamander&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 14.04 LTS&lt;/td&gt;&lt;td&gt;Trusty Tahr&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 14.10&lt;/td&gt;&lt;td&gt;Utopic Unicorn&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;/table&gt;
+    Ubuntu version numbers are also release dates: Ubuntu 14.04 was released in April 2014.
+&lt;/div&gt;
+&lt;div class="col-md-6"&gt;
+    OSX
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.0&lt;/td&gt;&lt;td&gt;Cheetah&lt;/td&gt;&lt;td&gt;March 24, 2001&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.1&lt;/td&gt;&lt;td&gt;Puma&lt;/td&gt;&lt;td&gt;September 25, 2001&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.2&lt;/td&gt;&lt;td&gt;Jaguar&lt;/td&gt;&lt;td&gt;August 24, 2002&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.3&lt;/td&gt;&lt;td&gt;Panther&lt;/td&gt;&lt;td&gt;October 24, 2003&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.4&lt;/td&gt;&lt;td&gt;Tiger&lt;/td&gt;&lt;td&gt;April 29, 2005&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.5&lt;/td&gt;&lt;td&gt;Leopard&lt;/td&gt;&lt;td&gt;October 26, 2007&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.6&lt;/td&gt;&lt;td&gt;Snow Leopard&lt;/td&gt;&lt;td&gt;August 28, 2009&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.7&lt;/td&gt;&lt;td&gt;Lion&lt;/td&gt;&lt;td&gt;July 20, 2011&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.8&lt;/td&gt;&lt;td&gt;Mountain Lion&lt;/td&gt;&lt;td&gt;July 25, 2012&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.9&lt;/td&gt;&lt;td&gt;Mavericks&lt;/td&gt;&lt;td&gt;October 22, 2013&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;OS X 10.10&lt;/td&gt;&lt;td&gt;Yosemite&lt;/td&gt;&lt;td&gt;2014&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</guid><category>osx</category><category>ubuntu</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
+&lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory&lt;/span&gt;
+svn co https://gphoto.svn.sourceforge.net/svnroot/gphoto/trunk gphoto
+&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto
+&lt;span class="c"&gt;#fix broken checkout:&lt;/span&gt;
+svn up bindings/ gphoto2/ gphoto2-manual/ gphotofs/ gphoto-import/ gphoto-suite/ gtkam/ libgphoto2/ m4/ playground/ project-3/ website/
+
+&lt;span class="c"&gt;#build libgphoto2&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;libgphoto2
+autoreconf -is
+./configure --with-camlibs&lt;span class="o"&gt;=&lt;/span&gt;canon --prefix&lt;span class="o"&gt;=&lt;/span&gt;/scribe
+make
+sudo make install
+
+&lt;span class="c"&gt;#build gphoto2&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; ../gphoto2
+autoreconf -is
+./configure --with-libgphoto2&lt;span class="o"&gt;=&lt;/span&gt;/scribe --prefix&lt;span class="o"&gt;=&lt;/span&gt;/scribe
+make
+sudo make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;linux kernel issues&lt;/h3&gt;
+&lt;p&gt;The kernel used by default in Ubuntu 7.04 (feisty) contains usb autosuspend code. Unfortunately, the Canon EOS 5D does not wake back up properly, which makes capturing images impossible. &lt;a href="http://lkml.org/lkml/2007/8/16/330"&gt;A patch has been submitted&lt;/a&gt;, but until it is accepted, you will have to compile a kernel with USB autosuspend turned off. &lt;strong&gt;Update&lt;/strong&gt;: patch &lt;a href="http://sourceforge.net/mailarchive/message.php?msg_id=20070822220805.GB30603%40kroah.com"&gt;accepted&lt;/a&gt;, should be in 2.6.23 kernel. Instructions on how we compiled the kernel are below.&lt;/p&gt;
+&lt;p&gt;The kernel used by default in Ubuntu 6.10 (edgy) contains a bug that causes a spinlock in the jbd layer. This bug will cause a machine to hang in a completely unresponsive state, although you can use a serial console to see assertions firing in jbd. One workaround is to use a newer version of Ubuntu (7.04) with autosuspend turned off. Another is to use ext2 intead of ext3.&lt;/p&gt;
+&lt;h4&gt;Compiling a custom linux kernel&lt;/h4&gt;
+&lt;p&gt;We copied the .config file for the 2.6.17 kernel used by Ubuntu and slightly modified it to turn off usb autosuspend and include the nvidia sata driver.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Install kernel build pre-reqs&lt;/span&gt;
+sudo apt-get install linux-kernel-devel initrd-tools libncurses-dev
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; ~
+mkdir linux
+&lt;span class="nb"&gt;cd &lt;/span&gt;linux
+
+&lt;span class="c"&gt;# Download stable kernel tree from www.kernel.org (&amp;#39;F&amp;#39; link)&lt;/span&gt;
+wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.22.2.tar.bz2
+
+tar xjvf linux-2.6.22.2.tar.bz2
+
+&lt;span class="nb"&gt;cd &lt;/span&gt;linux-2.6.22.2
+
+&lt;span class="c"&gt;# Copy the Ubuntu kernel .config file into your source tree:&lt;/span&gt;
+cp /usr/src/linux-headers-2.6.17-12-generic/.config .
+
+&lt;span class="c"&gt;# Update the .config with any new entries between 2.6.17 and the current kernel&lt;/span&gt;
+rev
+&lt;span class="c"&gt;# (You just want to wail on the ENTER key here to select all of the defaults)&lt;/span&gt;
+yes &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; | make oldconfig
+
+&lt;span class="c"&gt;# Edit the .config to disable CONFIG_USB_SUSPEND&lt;/span&gt;
+perl -p -i.orig -e &lt;span class="s1"&gt;&amp;#39;s/CONFIG_USB_SUSPEND=y/CONFIG_USB_SUSPEND=n/&amp;#39;&lt;/span&gt; .config
+
+&lt;span class="c"&gt;# Enable the Nvidia SATA driver&lt;/span&gt;
+&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_ATA&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
+&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_ATA_ACPI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;y &amp;gt;&amp;gt; .config
+&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_SATA_NV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
+
+&lt;span class="c"&gt;# Build kernel (dual-cpu system)&lt;/span&gt;
+make -j3 all
+
+&lt;span class="c"&gt;# Install modules &amp;amp; kernel&lt;/span&gt;
+sudo make install modules_install
+
+&lt;span class="c"&gt;# Build the boot-time ramdisk of loadable modules, etc.&lt;/span&gt;
+sudo mkinitrd -o /boot/initrd.img-2.6.22.2 2.6.22.2
+
+&lt;span class="c"&gt;# Add grub boot section&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Now edit /boot/grub/menu.lst to add a section for the new kernel&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Install custom linux kernel and new nvidia drivers&lt;/h4&gt;
+&lt;p&gt;On homeserver:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~pjw
+sudo ssh root@host &lt;span class="s1"&gt;&amp;#39;cd /;tar -xjvf -&amp;#39;&lt;/span&gt; &amp;lt; new-kernel.tar.bz2
+sudo ssh root@host &lt;span class="s1"&gt;&amp;#39;cd /home/scribe;tar -xzvf -&amp;#39;&lt;/span&gt; &amp;lt; new-kernel-source.tar.gz
+scp NVIDIA-Linux-x86-100.14.11-pkg1.run scribe@host:
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now on the scribe node:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo /etc/init.d/gdm stop
+sudo sh NVIDIA-Linux-x86-100.14.11-pkg1.run
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Sat, 09 Aug 2008 16:23:00 -0700</pubDate><guid>tag:,2008-08-09:adding-gphoto-support-for-the-canon-5d.html</guid><category>gphoto</category><category>canon</category><category>5D</category></item></channel></rss>

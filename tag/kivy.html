@@ -5,84 +5,44 @@
         <title>bitstream.io - kivy</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
-                <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
-                
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="/theme/js/jquery.1.11.min.js"></script>
         <script src="/theme/js/bootstrap.min.js"></script>
-        <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $.embedly.defaults = {
-              key:'eff17fb52ea9496c921df25a0d15af32',
-              query: {
-                maxwidth:530,
-              },
-              display: $.noop
-            }
-
-            $('.embed_button').on('click', function(){
-                var self = $(this);
-                var link = self.next();
-                var url = link.attr('href');
-
-                if (self.hasClass('embed_active')) {
-                    self.html('&#9654; &#10133;');
-                    self.removeClass('embed_active');
-                    link.next('.embed').remove();
-
-                } else {
-                    var embed_div = $('<div class="embed">loading...</div>');
-                    embed_div.insertAfter(link);
-                    self.addClass('embed_active');
-                    self.html('&#9654; &#10134;');
-
-                    $.embedly.oembed(url).progress(function(data){
-                        if ('html' in data) {
-                            embed_div.html(data.html);
-                        } else if (data.type == 'photo') {
-                            var img = $('<img>').attr('src', data.url);
-                            embed_div.empty().append(img);
-                        }
-                    });
-                }
-
-            });
-        });
-        </script>
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                                                    <li><a href="/">bitstream.io</a></li>
-                                                                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
-                                    <li ><a href="/category/commandline.html">commandline</a></li>
-                                    <li ><a href="/category/links.html">links</a></li>
-                                    <li ><a href="/category/ops.html">ops</a></li>
-                                    <li ><a href="/category/python.html">python</a></li>
-                                                </ul></nav>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li ><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
         </header><!-- /#banner -->
-                
-            
+        
+        
 
-                            <aside id="featured" class="body">
+            <aside id="featured" class="body">
                 <article>
                     <h1 class="entry-title"><a href="/packaging-and-distributing-a-kivy-application-on-linux.html">Packaging and Distributing a Kivy application on Linux</a></h1> 
-                    <footer class="post-info">
+<footer class="post-info">
         <abbr class="published" title="2014-08-16T00:00:00">
                 Sat 16 August 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/python.html">python</a>.
+in <a href="/category/python.html">python</a>.
 Tags:
-    <a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+<a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
 </footer><!-- /.post-info --><p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
@@ -257,33 +217,33 @@ not need a full path or extension. Ubuntu will look for your icon in
 repository, which must be signed with a GPG key if you want to allow for
 programatic installation or automatic updates.</p>
 <p>Instructions for <a href="/creating-a-trivial-signed-apt-repository.html">setting up a signed trivial repo are provided here</a>.</p>                </article>
-                                    <p class="paginator">
-        Page 1 / 1
-    </p>
-                            </aside><!-- /#featured -->
-                                                </ol><!-- /#posts-list -->
-                        </section><!-- /#content -->
-                    <section id="extras" class="body">
-                        <div class="blogroll">
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </aside><!-- /#featured -->
+            </ol><!-- /#posts-list -->
+            </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>
-                                                    <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
-                                                    <li><a href="http://tikirobot.net">TikiRobot</a></li>
-                                                    <li><a href="/archives.html">Archives</a></li>
-                                                </ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
                 </div><!-- /.blogroll -->
-                                <div class="social">
+                <div class="social">
                         <h2>social</h2>
                         <ul>
                             <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-                            
-                                                    <li><a href="http://github.com/rajbot">github</a></li>
-                                                    <li><a href="http://twitter.com/rajbot">twitter</a></li>
-                                                    <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
-                                                </ul>
-                </div><!-- /.social -->
-                </section><!-- /#extras -->
 
-        
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
 </body>
 </html>

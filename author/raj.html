@@ -5,84 +5,44 @@
         <title>bitstream.io - raj</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
-                <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
-                
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="/theme/js/jquery.1.11.min.js"></script>
         <script src="/theme/js/bootstrap.min.js"></script>
-        <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $.embedly.defaults = {
-              key:'eff17fb52ea9496c921df25a0d15af32',
-              query: {
-                maxwidth:530,
-              },
-              display: $.noop
-            }
-
-            $('.embed_button').on('click', function(){
-                var self = $(this);
-                var link = self.next();
-                var url = link.attr('href');
-
-                if (self.hasClass('embed_active')) {
-                    self.html('&#9654; &#10133;');
-                    self.removeClass('embed_active');
-                    link.next('.embed').remove();
-
-                } else {
-                    var embed_div = $('<div class="embed">loading...</div>');
-                    embed_div.insertAfter(link);
-                    self.addClass('embed_active');
-                    self.html('&#9654; &#10134;');
-
-                    $.embedly.oembed(url).progress(function(data){
-                        if ('html' in data) {
-                            embed_div.html(data.html);
-                        } else if (data.type == 'photo') {
-                            var img = $('<img>').attr('src', data.url);
-                            embed_div.empty().append(img);
-                        }
-                    });
-                }
-
-            });
-        });
-        </script>
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                                                    <li><a href="/">bitstream.io</a></li>
-                                                                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
-                                    <li ><a href="/category/commandline.html">commandline</a></li>
-                                    <li ><a href="/category/links.html">links</a></li>
-                                    <li ><a href="/category/ops.html">ops</a></li>
-                                    <li ><a href="/category/python.html">python</a></li>
-                                                </ul></nav>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li ><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
         </header><!-- /#banner -->
-                
-            
+        
+        
 
-                            <aside id="featured" class="body">
+            <aside id="featured" class="body">
                 <article>
                     <h1 class="entry-title"><a href="/adding-a-git-hub-alias.html">Adding a `git hub` alias</a></h1> 
-                    <footer class="post-info">
-        <abbr class="published" title="2014-07-07T22:38:08">
-                Mon 07 July 2014
+<footer class="post-info">
+        <abbr class="published" title="2014-09-05T10:38:47">
+                Fri 05 September 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/commandline.html">commandline</a>.
+in <a href="/category/commandline.html">commandline</a>.
 Tags:
-    <a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
 </footer><!-- /.post-info --><p>This git alias will open a web browser and take you to a project's github page when you
 type <code>git hub</code> in a checked-out project directory.</p>
 <p>For OS X:</p>
@@ -93,60 +53,60 @@ type <code>git hub</code> in a checked-out project directory.</p>
 <p>For Linux:</p>
 <div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
 </pre></div>                </article>
-                            </aside><!-- /#featured -->
-                            <section id="content" class="body">
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
-                                                
+        
 
-                 
-                        <li><article class="hentry">    
+ 
+            <li><article class="hentry">    
                 <header>
-                    <h1><a href="/adding-gphoto-support-for-the-canon-5d.html" rel="bookmark"
-                           title="Permalink to Adding gphoto support for the Canon 5D">Adding gphoto support for the Canon 5D</a></h1>
+                    <h1><a href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="bookmark"
+                           title="Permalink to Packaging and Distributing a Kivy application on Linux">Packaging and Distributing a Kivy application on Linux</a></h1>
                 </header>
                 
                 <div class="entry-content">
-                <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00">
-                Sat 09 August 2008
+<footer class="post-info">
+        <abbr class="published" title="2014-08-16T00:00:00">
+                Sat 16 August 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/bookscanning.html">bookscanning</a>.
+in <a href="/category/python.html">python</a>.
 Tags:
-    <a href="/tag/gphoto.html">gphoto</a>, <a href="/tag/canon.html">canon</a>, <a href="/tag/5d.html">5D</a>
-</footer><!-- /.post-info -->                <h3>gphoto for Canon EOS 5D compilation instructions</h3>
-<h4>you MUST use svn rev 10595 or greater. We tested with 10597</h4>
-<p>Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)</p>
-<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory ...</span></pre></div>
-                <a class="readmore" href="/adding-gphoto-support-for-the-canon-5d.html">read more</a>
-                                </div><!-- /.entry-content -->
+<a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+</footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
+mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
+Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
+<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
+                <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
+                </div><!-- /.entry-content -->
             </article></li>
-                            
+        
 
-                 
-                        <li><article class="hentry">    
+ 
+            <li><article class="hentry">    
                 <header>
                     <h1><a href="/creating-a-trivial-signed-apt-repository.html" rel="bookmark"
                            title="Permalink to Creating a Trivial, Signed APT Repository">Creating a Trivial, Signed APT Repository</a></h1>
                 </header>
                 
                 <div class="entry-content">
-                <footer class="post-info">
+<footer class="post-info">
         <abbr class="published" title="2014-08-13T00:00:00">
                 Wed 13 August 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/ops.html">ops</a>.
+in <a href="/category/ops.html">ops</a>.
 Tags:
-    <a href="/tag/apt.html">apt</a>, <a href="/tag/debian.html">debian</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+<a href="/tag/apt.html">apt</a>, <a href="/tag/debian.html">debian</a>, <a href="/tag/ubuntu.html">ubuntu</a>
 </footer><!-- /.post-info -->                <p>Setting up an APT repository is a reasonable way to distribute <code>.deb</code>
 packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
@@ -154,29 +114,29 @@ that users can perform automated updates of your software (e.g. using
 <p>There are <a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types">two kinds of repositories</a>,
 "official" and "trivial". Trivial ...</p>
                 <a class="readmore" href="/creating-a-trivial-signed-apt-repository.html">read more</a>
-                                </div><!-- /.entry-content -->
+                </div><!-- /.entry-content -->
             </article></li>
-                            
+        
 
-                 
-                        <li><article class="hentry">    
+ 
+            <li><article class="hentry">    
                 <header>
                     <h1><a href="/os-x-and-ubuntu-codenames.html" rel="bookmark"
                            title="Permalink to OS X and Ubuntu Codenames">OS X and Ubuntu Codenames</a></h1>
                 </header>
                 
                 <div class="entry-content">
-                <footer class="post-info">
+<footer class="post-info">
         <abbr class="published" title="2014-08-13T00:00:00">
                 Wed 13 August 2014
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/ops.html">ops</a>.
+in <a href="/category/ops.html">ops</a>.
 Tags:
-    <a href="/tag/osx.html">osx</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+<a href="/tag/osx.html">osx</a>, <a href="/tag/ubuntu.html">ubuntu</a>
 </footer><!-- /.post-info -->                <style type="text/css">
     tbody td {font-size: 75%;}
 </style>
@@ -196,62 +156,62 @@ Tags:
         <tr><td>Ubuntu 8.04 LTS</td><td>Hardy Heron</td></tr>
         <tr><td>Ubuntu 8.10 ...</td></tr></tbody></table></div></div>
                 <a class="readmore" href="/os-x-and-ubuntu-codenames.html">read more</a>
-                                </div><!-- /.entry-content -->
+                </div><!-- /.entry-content -->
             </article></li>
-                            
+        
 
-                 
-                        <li><article class="hentry">    
+ 
+            <li><article class="hentry">    
                 <header>
-                    <h1><a href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="bookmark"
-                           title="Permalink to Packaging and Distributing a Kivy application on Linux">Packaging and Distributing a Kivy application on Linux</a></h1>
+                    <h1><a href="/adding-gphoto-support-for-the-canon-5d.html" rel="bookmark"
+                           title="Permalink to Adding gphoto support for the Canon 5D">Adding gphoto support for the Canon 5D</a></h1>
                 </header>
                 
                 <div class="entry-content">
-                <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
-                Sat 16 August 2014
+<footer class="post-info">
+        <abbr class="published" title="2008-08-09T16:23:00">
+                Sat 09 August 2008
         </abbr>
 
-                <address class="vcard author">
+        <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-        in <a href="/category/python.html">python</a>.
+in <a href="/category/bookscanning.html">bookscanning</a>.
 Tags:
-    <a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
-mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
-Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
-                <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
-                                </div><!-- /.entry-content -->
+<a href="/tag/gphoto.html">gphoto</a>, <a href="/tag/canon.html">canon</a>, <a href="/tag/5d.html">5D</a>
+</footer><!-- /.post-info -->                <h3>gphoto for Canon EOS 5D compilation instructions</h3>
+<h4>you MUST use svn rev 10595 or greater. We tested with 10597</h4>
+<p>Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)</p>
+<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory ...</span></pre></div>
+                <a class="readmore" href="/adding-gphoto-support-for-the-canon-5d.html">read more</a>
+                </div><!-- /.entry-content -->
             </article></li>
-                            </ol><!-- /#posts-list -->
-                            <p class="paginator">
-        Page 1 / 1
-    </p>
-                        </section><!-- /#content -->
-                    <section id="extras" class="body">
-                        <div class="blogroll">
+            </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>
-                                                    <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
-                                                    <li><a href="http://tikirobot.net">TikiRobot</a></li>
-                                                    <li><a href="/archives.html">Archives</a></li>
-                                                </ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
                 </div><!-- /.blogroll -->
-                                <div class="social">
+                <div class="social">
                         <h2>social</h2>
                         <ul>
                             <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-                            
-                                                    <li><a href="http://github.com/rajbot">github</a></li>
-                                                    <li><a href="http://twitter.com/rajbot">twitter</a></li>
-                                                    <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
-                                                </ul>
-                </div><!-- /.social -->
-                </section><!-- /#extras -->
 
-        
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
 </body>
 </html>
