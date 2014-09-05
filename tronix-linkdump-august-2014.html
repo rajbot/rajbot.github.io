@@ -12,6 +12,46 @@
         <![endif]-->
         <script src="/theme/js/jquery.1.11.min.js"></script>
         <script src="/theme/js/bootstrap.min.js"></script>
+        <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.embedly.defaults = {
+              key:'eff17fb52ea9496c921df25a0d15af32',
+              query: {
+                maxwidth:530,
+              },
+              display: $.noop
+            }
+
+            $('.embed_button').on('click', function(){
+                var self = $(this);
+                var link = self.next();
+                var url = link.attr('href');
+
+                if (self.hasClass('embed_active')) {
+                    self.html('&#9654; &#10133;');
+                    self.removeClass('embed_active');
+                    link.next('.embed').remove();
+
+                } else {
+                    var embed_div = $('<div class="embed">loading...</div>');
+                    embed_div.insertAfter(link);
+                    self.addClass('embed_active');
+                    self.html('&#9654; &#10134;');
+
+                    $.embedly.oembed(url).progress(function(data){
+                        if ('html' in data) {
+                            embed_div.html(data.html);
+                        } else if (data.type == 'photo') {
+                            var img = $('<img>').attr('src', data.url);
+                            embed_div.empty().append(img);
+                        }
+                    });
+                }
+
+            });
+        });
+        </script>
 </head>
 
 <body id="index" class="home">
@@ -54,11 +94,10 @@ Tags:
 <li><a href="http://www.vox.com/xpress/2014/8/6/5974989/kale-cauliflower-cabbage-broccoli-same-plant">Kale, cauliflower, cabbage, and Brussels sprouts are all the same species of plant - Vox</a></li>
 <li><a href="https://bernalwood.wordpress.com/2014/08/08/bernal-rockstar-dan-the-automator-talks-with-npr-about-got-a-girl-his-new-musical-collaboration/">Bernal Rockstar Dan The Automator Talks with NPR About “Got a Girl,” His New Musical Collaboration  | Bernalwood</a></li>
 <li><a href="http://www.sfgate.com/politics/article/Tax-to-brake-S-F-real-estate-speculation-headed-5558857.php">Tax to brake S.F. real estate speculation headed to voters - SFGate</a></li>
-<li><a href="https://atomtm.bandcamp.com/album/dropshadow-disease">Dropshadow Disease | Atom™</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://atomtm.bandcamp.com/album/dropshadow-disease">Dropshadow Disease | Atom™</a></li>
 <li><a href="http://4dsound.net/overview/">4DSOUND «  4DSOUND</a></li>
 <li><a href="https://news.ycombinator.com/item?id=8152714">Domoticz – Open source Home Automation System | Hacker News</a></li>
 <li><a href="https://github.com/Russell91/pythonpy">python one-liner helper: "python -c, with tab completion and shorthand"</a></li>
-<li><a href="http://boingboing.net/2014/08/11/turning-standard-first-person.html">Turning standard first-person footage into hyperlapse - Boing Boing</a></li>
 <li><a href="http://www.bayviewboom.org">The BAYVIEW BOOM is an Engineering School-of-the-Streets</a></li>
 <li><a href="https://twitter.com/search?v=stream&amp;q=%23Ferguson&amp;mode=photos">Twitter / Search - #Ferguson</a></li>
 <li><a href="http://geer.tinho.net/geer.blackhat.6viii14.txt">No Title</a></li>
@@ -70,37 +109,37 @@ Tags:
 <li><a href="https://github.com/samuelinsf/lazytable">samuelinsf/lazytable · GitHub</a></li>
 <li><a href="https://noisebridge.net/wiki/Noisebridge_Grand_Re-Opening_Party">Noisebridge Grand Re-Opening Party - Noisebridge</a></li>
 <li><a href="http://www.sfgate.com/crime/article/Vigil-planned-for-San-Francisco-beating-victim-5686690.php">S.F. attack victim dies; friends grieve in the Castro - SFGate</a></li>
-<li><a href="https://soundcloud.com/decibelfestival/lusine-db-mix/s-PL1l8">[dB2014 Exclusive Mix #6: LUSINE] by DecibelFestival - Hear the world’s sounds</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://soundcloud.com/decibelfestival/lusine-db-mix/s-PL1l8">[dB2014 Exclusive Mix #6: LUSINE] by DecibelFestival - Hear the world’s sounds</a></li>
 <li><a href="http://pxlnv.com/blog/tech-company-diversity-stats/">Diversity of Various Tech Companies By the Numbers —  Pixel Envy</a></li>
 <li><a href="https://mail.python.org/pipermail/python-ideas/2014-August/028618.html">[Python-ideas] Proposal: Use mypy syntax for function annotations (for python 3.5)</a></li>
 <li><a href="https://github.com/rajbot/musescore_color_notes_high_contrast">A MuseScore plugin for young learners</a></li>
 <li><a href="http://gigs.gigatools.com/gig/289176">GigaTools : ATOM™ &amp; TOBIAS//Live, Berlin, Sat 16. August, 2014</a></li>
 <li><a href="http://www.nme.com/news/aphex-twin--2/79205">NME News Blimp bearing Aphex Twin logo appears over London | NME.COM</a></li>
 <li><a href="https://github.com/LuminosoInsight/python-ftfy">Python library for fixing mojibake</a></li>
-<li><a href="https://www.youtube.com/vicenews">VICE News - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/vicenews">VICE News - YouTube</a></li>
 <li><a href="http://www.stereogum.com/1699431/aphex-twin-announces-new-album-syro-via-deep-web/news/">Aphex Twin Announces New Album SYRO Via Deep Web | Stereogum</a></li>
 <li><a href="http://reason.com/blog/2014/08/15/cops-shoot-19-year-old-san-jose-woman-af">"And yesterday a 19-year-old woman in San Jose was shot and killed by police after they mistook a power drill she was brandishing for an Uzi."</a></li>
-<li><a href="https://www.youtube.com/watch?v=CmqHVKNZkhM">RAW COVERAGE: Ferguson, Missouri Round Five - YouTube</a></li>
-<li><a href="http://new.livestream.com/timcast/news">Live on Livestream</a></li>
-<li><a href="http://new.livestream.com/accounts/9035483/events/3271930">I am Mike Brown Live from Ferguson, MO on Livestream</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=CmqHVKNZkhM">RAW COVERAGE: Ferguson, Missouri Round Five - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="http://new.livestream.com/timcast/news">Live on Livestream</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="http://new.livestream.com/accounts/9035483/events/3271930">I am Mike Brown Live from Ferguson, MO on Livestream</a></li>
 <li><a href="http://borealexpat.blogspot.com/2014/08/deconstructing-finnish.html">Boreal Expat: Deconstructing Finnish</a></li>
-<li><a href="http://new.livestream.com/ktvi/live">KTVI Live News on Livestream</a></li>
-<li><a href="http://www.youtube.com/watch?v=c1RpjTum9nU">Jungle Brothers - True Blue (Aphrodite Remix) - YouTube</a></li>
-<li><a href="https://www.youtube.com/watch?v=dUDGAVNegwk">Aphrodite - Superman (dnb) - YouTube</a></li>
-<li><a href="https://www.facebook.com/groups/195082833944478/">Redirecting...</a></li>
-<li><a href="https://www.youtube.com/watch?v=vAvMWbHuFZI">Dj Aphrodite (Urban Jungle) - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="http://new.livestream.com/ktvi/live">KTVI Live News on Livestream</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="http://www.youtube.com/watch?v=c1RpjTum9nU">Jungle Brothers - True Blue (Aphrodite Remix) - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=dUDGAVNegwk">Aphrodite - Superman (dnb) - YouTube</a></li>
+<li><a href="https://www.facebook.com/groups/195082833944478/">Facebook Link</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=vAvMWbHuFZI">Dj Aphrodite (Urban Jungle) - YouTube</a></li>
 <li><a href="https://www.facebook.com/photo.php?v=201390293229094&amp;set=vb.100000743737441&amp;type=2&amp;theater">Meditation (Remix) by DJ Crystl</a></li>
-<li><a href="https://www.youtube.com/watch?v=5eszLJxfHfI">fuckparade 2013 - YouTube</a></li>
-<li><a href="https://www.youtube.com/watch?v=ttVdEF4cZJA">fuckparade, berlin 2013 - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=5eszLJxfHfI">fuckparade 2013 - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=ttVdEF4cZJA">fuckparade, berlin 2013 - YouTube</a></li>
 <li><a href="https://github.com/internetarchive/wayback/tree/master/wayback-core/src/main">wayback/wayback-core/src/main at master · internetarchive/wayback · GitHub</a></li>
 <li><a href="https://github.com/blog/1877-folder-jumping">Folder Jumping · GitHub</a></li>
 <li><a href="http://fastled.io/">"Fast, easy LED library for Arduino/Teensy", can push 20Mbps to SPI</a></li>
 <li><a href="http://www.coolneon.com/tutorials-2/total-control-lighting/total-control-lighting-faq/">TCL pixels: individually-addressable LEDs from coolneon that can support 3000 leds @ 30fps from a beaglebone</a></li>
-<li><a href="https://www.flickr.com/photos/mangtronix/14327288250">Wellenfresser | Flickr - Photo Sharing!</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.flickr.com/photos/mangtronix/14327288250">Wellenfresser | Flickr - Photo Sharing!</a></li>
 <li><a href="https://github.com/scanlime/fadecandy">scanlime/fadecandy · GitHub</a></li>
-<li><a href="https://www.youtube.com/watch?v=GLoNTKWWPkc">Burial - "Prophecy"</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=GLoNTKWWPkc">Burial - "Prophecy"</a></li>
 <li><a href="https://twitter.com/rajbot/status/503684081616306177">rajbot on Twitter: "After @cmrstudios eviction, we've set up part of RanchTronix in my garage. First KidTronix @shapeoko project: http://t.co/dep1yYZH4k"</a></li>
-<li><a href="http://www.ustream.tv/burningman">burning man live stream</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="http://www.ustream.tv/burningman">burning man live stream</a></li>
 <li><a href="http://www.socketsite.com/archives/2014/08/endups-building-now-market-well.html">Could It Be End Of Days For The Iconic EndUp Nightclub? - SocketSite™</a></li>
 <li><a href="https://www.indiegogo.com/projects/noisebridge-reboot-2014#home">Noisebridge Reboot 2014 | Indiegogo</a></li>
 <li><a href="https://www.noisebridge.net/pipermail/noisebridge-discuss/2013-June/037528.html">[Noisebridge-discuss] It has come to my attention that...</a></li>
@@ -108,9 +147,9 @@ Tags:
 <li><a href="http://www.fatkidonfire.com/mixtapes/30-minutes-mala/">30 minutes of Mala | FatKidOnFire</a></li>
 <li><a href="http://stoneyroads.com/2014/08/has-aphex-twins-new-album-syro-been-streaming-for-a-whole-year">Has Aphex Twin's New Album 'Syro' Been Streaming For a Whole Year? · Stoney Roads</a></li>
 <li><a href="http://www.stampthewax.com/2014/08/11/monday-morning-mixtape-045-summer-road-trip-special-part-2/">Monday Morning Mixtape 045 (SUMMER ROAD TRIP SPECIAL Part 2) |</a></li>
-<li><a href="https://powderedheartsrecords.bandcamp.com/album/sack-und-sheffield-s-t-cassette">Sack und Sheffield "s/t" Cassette | Powdered Hearts Records</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://powderedheartsrecords.bandcamp.com/album/sack-und-sheffield-s-t-cassette">Sack und Sheffield "s/t" Cassette | Powdered Hearts Records</a></li>
 <li><a href="http://logicaltypes.blogspot.com/2014/08/dylan-harsh-realities-of-market.html">Typed Logic: Dylan: the harsh realities of the market</a></li>
-<li><a href="https://www.youtube.com/watch?v=fPMmsUICHNE">The Coup - Wear Clean Draws</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=fPMmsUICHNE">The Coup - Wear Clean Draws</a></li>
 <li><a href="http://www.sfgate.com/crime/article/San-Francisco-police-investigate-death-in-Bernal-5713806.php?cmpid=twitter-mobile">San Francisco police investigate death in Bernal Heights - SFGate</a></li>
 <li><a href="http://bernalwood.wordpress.com/2014/08/27/boyfriend-arrested-in-connection-with-womans-death-on-peralta-avenue/">UPDATED: Boyfriend Arrested in Connection with Woman’s Death on Peralta Avenue | Bernalwood</a></li>
 <li><a href="https://github.com/soundcloud/roshi">soundcloud/roshi · GitHub</a></li>
@@ -120,15 +159,15 @@ Tags:
 <li><a href="http://www.paragon-re.com/Market_overview/">San Francisco Real Estate Market Overview | Home Value &amp; Price Trends</a></li>
 <li><a href="http://www.washingtonpost.com/blogs/wonkblog/wp/2014/08/29/what-your-1st-grade-life-says-about-the-rest-of-it">What your 1st-grade life says about the rest of it - The Washington Post</a></li>
 <li><a href="http://colour-science.org/">Colour is a Python colour science package implementing a comprehensive number of colour theory transformations and algorithms.</a></li>
-<li><a href="https://soundcloud.com/greedheadmusic/sets/swet-shop-ep">Swet Shop EP - new music from Heems</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://soundcloud.com/greedheadmusic/sets/swet-shop-ep">Swet Shop EP - new music from Heems</a></li>
 <li><a href="https://archive.org/details/cassette-test-tascam-dr60d-trim">cassette-test-tascam-dr60d-trim : Free Download &amp; Streaming : Internet Archive</a></li>
 <li><a href="http://blogs.kqed.org/newsfix/2014/08/28/fundriasing-underway-for-new-organ-castro-theatre/">New Organ Planned For Castro Theatre Will Be Among Largest in the World | KQED News Fix</a></li>
 <li><a href="http://www.thejadedreview.com/">The Jaded Review</a></li>
 <li><a href="http://jfly.iam.u-tokyo.ac.jp/color/">How to make figures and presentations that are friendly to Colorblind people</a></li>
 <li><a href="https://code.google.com/p/pywinauto/">pywinauto - windows gui automation in python</a></li>
 <li><a href="http://www.nature.com/srep/2014/140904/srep06196/full/srep06196.html">"Here we describe a new and gigantic titanosaur, Dreadnoughtus schrani, from Upper Cretaceous sediments in southern Patagonia, Argentina… despite its estimated mass of about 59.3 metric tons, the bone histology of the Dreadnoughtus type specimen reveals that this individual was still growing at the time of death."</a></li>
-<li><a href="https://www.youtube.com/watch?v=rSlEbsBxuIE&amp;list=TLhk0qIAy0uW5P-EQL-Qz4YDv6CMysCoQe">木のクレーン車2006 Wooden truck crane - YouTube</a></li>
-<li><a href="https://www.youtube.com/watch?v=GR9MpJy0E6g&amp;list=TLZAiU7-d3U_lmpU9csfiq5KV9u3vR5P6P&amp;index=1">木のショベルカー2007　Wooden excavator - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=rSlEbsBxuIE&amp;list=TLhk0qIAy0uW5P-EQL-Qz4YDv6CMysCoQe">木のクレーン車2006 Wooden truck crane - YouTube</a></li>
+<li><span class='embed_button'>&#9654; &#10133;</span> <a href="https://www.youtube.com/watch?v=GR9MpJy0E6g&amp;list=TLZAiU7-d3U_lmpU9csfiq5KV9u3vR5P6P&amp;index=1">木のショベルカー2007　Wooden excavator - YouTube</a></li>
 </ul>
     </div><!-- /.entry-content -->
     
