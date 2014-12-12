@@ -1,5 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/raj.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 16 Aug 2014 00:00:00 -0700</lastBuildDate><item><title>Packaging and Distributing a Kivy application on Linux</title><link>/packaging-and-distributing-a-kivy-application-on-linux.html</link><description>&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/raj.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 12 Dec 2014 14:45:00 -0800</lastBuildDate><item><title>Compiling and installing gphoto</title><link>/compiling-and-installing-gphoto.html</link><description>&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir gphoto
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto
+
+&lt;span class="c"&gt;# compile libphoto2 and install into /usr/local/lib&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;libgphoto2/
+&lt;span class="nv"&gt;$ &lt;/span&gt;autoreconf --install --symlink
+&lt;span class="nv"&gt;$ &lt;/span&gt;./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
+&lt;span class="nv"&gt;$ &lt;/span&gt;make
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo make install
+
+&lt;span class="c"&gt;# compile gphoto2 and install into /usr/local/bin&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ..
+&lt;span class="nv"&gt;$ &lt;/span&gt;svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto2/
+&lt;span class="nv"&gt;$ &lt;/span&gt;autoreconf --install --symlink
+&lt;span class="nv"&gt;$ PKG_CONFIG_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/pkgconfig ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
+&lt;span class="nv"&gt;$ &lt;/span&gt;make
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
+and libgphoto2_port:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib /usr/local/bin/gphoto2 --version
+gphoto2 2.5.5.1
+
+Copyright &lt;span class="o"&gt;(&lt;/span&gt;c&lt;span class="o"&gt;)&lt;/span&gt; 2000-2014 Lutz Mueller and others
+
+gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
+redistribute copies of gphoto2 under the terms of the GNU General Public
+License. For more information about these matters, see the files named COPYING.
+
+This version of gphoto2 is using the following software versions and options:
+gphoto2         2.5.5.1        gcc, popt&lt;span class="o"&gt;(&lt;/span&gt;m&lt;span class="o"&gt;)&lt;/span&gt;, exif, no cdk, no aa, jpeg, no readline
+libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
+libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 12 Dec 2014 14:45:00 -0800</pubDate><guid>tag:,2014-12-12:compiling-and-installing-gphoto.html</guid><category>gphoto</category></item><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For Linux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 05 Sep 2014 10:38:47 -0700</pubDate><guid>tag:,2014-09-05:adding-a-git-hub-alias.html</guid><category>git</category><category>github</category></item><item><title>Packaging and Distributing a Kivy application on Linux</title><link>/packaging-and-distributing-a-kivy-application-on-linux.html</link><description>&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
 &lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
@@ -290,16 +342,7 @@ sudo apt-get install foo
     &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</guid><category>osx</category><category>ubuntu</category></item><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
-type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
-&lt;p&gt;For OS X:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;For Linux:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Mon, 07 Jul 2014 22:38:08 -0700</pubDate><guid>tag:,2014-07-07:adding-a-git-hub-alias.html</guid><category>git</category><category>github</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</guid><category>osx</category><category>ubuntu</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
 &lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
 &lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory&lt;/span&gt;

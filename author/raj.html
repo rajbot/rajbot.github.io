@@ -31,9 +31,107 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/packaging-and-distributing-a-kivy-application-on-linux.html">Packaging and Distributing a Kivy application on Linux</a></h1> 
+                    <h1 class="entry-title"><a href="/compiling-and-installing-gphoto.html">Compiling and installing gphoto</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
+        <abbr class="published" title="2014-12-12T14:45:00-08:00">
+                Fri 12 December 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/bookscanning.html">bookscanning</a>.
+Tags:
+<a href="/tag/gphoto.html">gphoto</a>
+</footer><!-- /.post-info --><p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
+<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
+<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+<span class="nv">$ </span>mkdir gphoto
+<span class="nv">$ </span><span class="nb">cd </span>gphoto
+
+<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
+<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
+<span class="nv">$ </span><span class="nb">cd </span>libgphoto2/
+<span class="nv">$ </span>autoreconf --install --symlink
+<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/usr/local
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+
+<span class="c"># compile gphoto2 and install into /usr/local/bin</span>
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
+<span class="nv">$ </span><span class="nb">cd </span>gphoto2/
+<span class="nv">$ </span>autoreconf --install --symlink
+<span class="nv">$ PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig ./configure --prefix<span class="o">=</span>/usr/local
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+</pre></div>
+
+
+<p>Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
+and libgphoto2_port:</p>
+<div class="highlight"><pre><span class="nv">$ LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/lib /usr/local/bin/gphoto2 --version
+gphoto2 2.5.5.1
+
+Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2014 Lutz Mueller and others
+
+gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
+redistribute copies of gphoto2 under the terms of the GNU General Public
+License. For more information about these matters, see the files named COPYING.
+
+This version of gphoto2 is using the following software versions and options:
+gphoto2         2.5.5.1        gcc, popt<span class="o">(</span>m<span class="o">)</span>, exif, no cdk, no aa, jpeg, no readline
+libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
+libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
+</pre></div>
+
+
+<p>These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. </p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article class="hentry">    
+                <header>
+                    <h1><a href="/adding-a-git-hub-alias.html" rel="bookmark"
+                           title="Permalink to Adding a `git hub` alias">Adding a `git hub` alias</a></h1>
+                </header>
+                
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-09-05T10:38:47-07:00">
+                Fri 05 September 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/commandline.html">commandline</a>.
+Tags:
+<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+</footer><!-- /.post-info -->                <p>This git alias will open a web browser and take you to a project's github page when you
+type <code>git hub</code> in a checked-out project directory.</p>
+<p>For OS X:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https ...</span></pre></div>
+                <a class="readmore" href="/adding-a-git-hub-alias.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article class="hentry">    
+                <header>
+                    <h1><a href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="bookmark"
+                           title="Permalink to Packaging and Distributing a Kivy application on Linux">Packaging and Distributing a Kivy application on Linux</a></h1>
+                </header>
+                
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-16T00:00:00-07:00">
                 Sat 16 August 2014
         </abbr>
 
@@ -43,185 +141,13 @@
 in <a href="/category/python.html">python</a>.
 Tags:
 <a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info --><p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
+</footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Use a Vagrantfile to bootstrap a development environment</h2>
-<p>There are a lot of dependencies for kivy development, and a lot of different ways to
-install them. In order to help you get started, I made a Vagrantfile to set up a
-Kivy dev environment.</p>
-<p>The Vagrantfile installs <code>python</code>, <code>kivy</code>, and <code>pyinstaller</code> in an Ubuntu VM, and then
-packages a kivy example app into a <code>.deb</code>. You end up with a double-clickable application
-that works like a regular linux desktop app.</p>
-<p>The Vagrantfile and instructions on how to use it are here:
-<a href="https://github.com/rajbot/kivy_pyinstaller_linux_example">https://github.com/rajbot/kivy_pyinstaller_linux_example</a></p>
-<p><br/></p>
-<h2>2. Install Kivy using <code>pip</code>, and not from the provided PPA</h2>
-<p>If you don't use the Vagrantfile above and want to install Kivy yourself, do not
-install it using the PPA. This is because we are going to use PyInstaller to
-create a linux executable, and we will need the PyInstaller hooks from the <code>kivy.tools</code>
-package, but the PPA does not include <code>kivy.tools</code>.</p>
-<p>This <a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh">bash script</a>
-will show you how to install Kivy in a virtualenv so that you can use the PyInstaller hooks.</p>
-<p><br/></p>
-<h2>3. Strip system libraries from the pyinstaller executable to ensure your app is relocatable</h2>
-<p>If you follow the setup instructions above, you will end up an executable that works only
-on the machine it was built. If you try to copy it to another linux box, kivy will often
-segfault on startup with this error message:</p>
-<div class="highlight"><pre><span class="n">Fatal</span> <span class="n">Python</span> <span class="n">Error</span><span class="o">:</span> <span class="p">(</span><span class="n">pygame</span> <span class="n">parachute</span><span class="p">)</span> <span class="n">Segmentation</span> <span class="n">Fault</span>
-</pre></div>
-
-
-<p>To ensure the executable can run on as many different flavors of linux as possible, we
-are going to strip out all binaries provided by system packages. We will distribute the
-application in a <code>.deb</code> file and and use <code>.deb</code> dependencies to ensure required libraries
-are installed on the target machine.</p>
-<p>Here is a copy of a PyInstaller <code>.spec</code> file that installs Kivy hooks and strips out all
-binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
-<div class="highlight"><pre><span class="c"># -*- mode: python -*-</span>
-<span class="kn">from</span> <span class="nn">kivy.tools.packaging.pyinstaller_hooks</span> <span class="kn">import</span> <span class="n">install_hooks</span>
-<span class="n">install_hooks</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
-
-<span class="k">def</span> <span class="nf">filter_binaries</span><span class="p">(</span><span class="n">all_binaries</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Exclude binaries provided by system packages, and rely on .deb dependencies</span>
-<span class="sd">    to ensure these binaries are available on the target machine.</span>
-
-<span class="sd">    We need to remove OpenGL-related libraries so we can distribute the executable</span>
-<span class="sd">    to other linux machines that might have different graphics hardware. If you</span>
-<span class="sd">    bundle system libraries, your application might crash when run on a different</span>
-<span class="sd">    machine with the following error during kivy startup:</span>
-
-<span class="sd">    Fatal Python Error: (pygame parachute) Segmentation Fault</span>
-
-<span class="sd">    If we strip all libraries, then PIL might not be able to find the correct _imaging</span>
-<span class="sd">    module, even if the `python-image` package has been installed on the system. The</span>
-<span class="sd">    easy way to fix this is to not filter binaries from the python-imaging package.</span>
-
-<span class="sd">    We will strip out all binaries, except libpython2.7, which is required for the</span>
-<span class="sd">    pyinstaller-frozen executable to work, and any of the python-* packages.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="k">print</span> <span class="s">&#39;Excluding system libraries&#39;</span>
-    <span class="kn">import</span> <span class="nn">subprocess</span>
-    <span class="n">excluded_pkgs</span>  <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">excluded_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">whitelist_prefixes</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;libpython2.7&#39;</span><span class="p">,</span> <span class="s">&#39;python-&#39;</span><span class="p">)</span>
-    <span class="n">binaries</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">all_binaries</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;dpkg&#39;</span><span class="p">,</span> <span class="s">&#39;-S&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">))</span>
-            <span class="n">p</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">whitelist_prefixes</span><span class="p">):</span>
-                <span class="n">excluded_pkgs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-                <span class="n">excluded_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">print</span> <span class="s">&#39; excluding {f} from package {p}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-    <span class="k">print</span> <span class="s">&#39;Your exe will depend on the following packages:&#39;</span>
-    <span class="k">print</span> <span class="n">excluded_pkgs</span>
-
-    <span class="n">inc_libs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;libpython2.7.so.1.0&#39;</span><span class="p">])</span>
-    <span class="n">binaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_binaries</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_files</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">binaries</span>
-
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">([</span><span class="s">&#39;scribe.py&#39;</span><span class="p">],</span>
-             <span class="n">pathex</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;.&#39;</span><span class="p">],</span>
-             <span class="n">hiddenimports</span><span class="o">=</span><span class="p">[],</span>
-            <span class="p">)</span>
-<span class="n">pyz</span> <span class="o">=</span> <span class="n">PYZ</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">pure</span><span class="p">)</span>
-
-<span class="n">binaries</span> <span class="o">=</span> <span class="n">filter_binaries</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">binaries</span><span class="p">)</span>
-
-<span class="n">exe</span> <span class="o">=</span> <span class="n">EXE</span><span class="p">(</span><span class="n">pyz</span><span class="p">,</span>
-          <span class="p">[(</span><span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;DATA&#39;</span><span class="p">)],</span>
-          <span class="n">a</span><span class="o">.</span><span class="n">scripts</span><span class="p">,</span>
-          <span class="n">binaries</span><span class="p">,</span> <span class="c">#a.binaries,</span>
-          <span class="n">a</span><span class="o">.</span><span class="n">zipfiles</span><span class="p">,</span>
-          <span class="n">a</span><span class="o">.</span><span class="n">datas</span><span class="p">,</span>
-          <span class="n">name</span><span class="o">=</span><span class="s">&#39;ia-scribe&#39;</span><span class="p">,</span>
-          <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-          <span class="n">strip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-          <span class="n">upx</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-          <span class="n">console</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
-</pre></div>
-
-
-<p><br/></p>
-<h2>4. Package your executable in a <code>.deb</code> file</h2>
-<p>Once you make an executable, you can give it a nice icon and Ubuntu <code>.desktop</code>
-file and package it in a <code>.deb</code> for distribution. Steps to create the <code>.deb</code> can
-be found in <a href="https://github.com/rajbot/kivy_pyinstaller_linux_example/blob/master/bootstrap.sh">bootstrap.sh</a>,
-from step #1 above. At minimum, your <code>.deb</code> package should:</p>
-<ul>
-<li>Install your application in a binary directory, such as <code>/usr/local/bin/my-app</code></li>
-<li>Install an icon in <code>/usr/share/pixmaps/my-app.png</code></li>
-<li>Install a <code>.desktop</code> file in <code>/usr/share/applications/my-app.desktop</code></li>
-</ul>
-<p>Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the <code>.deb</code>,
-first create the directory structure below:</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app_1</span><span class="mf">.0</span><span class="o">-</span><span class="mi">1</span>
-    <span class="o">-</span> <span class="n">DEBIAN</span>
-        <span class="o">-</span> <span class="n">control</span>
-    <span class="o">-</span> <span class="n">usr</span>
-        <span class="o">-</span> <span class="n">local</span>
-            <span class="o">-</span> <span class="n">bin</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
-        <span class="o">-</span> <span class="n">share</span>
-            <span class="o">-</span> <span class="n">applications</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">desktop</span>
-            <span class="o">-</span> <span class="n">pixmaps</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">png</span>
-</pre></div>
-
-
-<p>Now you can package your app by typing <code>dpkg-deb --build myapp_1.0-0</code>. You can then
-install the resulting package by typing <code>sudo dpkg -i myapp_1.0-0.deb</code>.</p>
-<p>The <code>DEBIAN/control</code> file should look like this:</p>
-<div class="highlight"><pre><span class="n">Source</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="n">Priority</span><span class="o">:</span> <span class="n">extra</span>
-<span class="n">Maintainer</span><span class="o">:</span> <span class="n">raj</span> <span class="o">&lt;</span><span class="n">raj</span><span class="err">@</span><span class="n">unknown</span><span class="o">&gt;</span>
-<span class="n">Build</span><span class="o">-</span><span class="n">Depends</span><span class="o">:</span> <span class="n">debhelper</span> <span class="o">(&gt;=</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span>
-<span class="n">Standards</span><span class="o">-</span><span class="n">Version</span><span class="o">:</span> <span class="mf">3.9</span><span class="o">.</span><span class="mi">2</span>
-<span class="n">Package</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="n">Version</span><span class="o">:</span> <span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span>
-<span class="n">Architecture</span><span class="o">:</span> <span class="n">i386</span>
-<span class="n">Description</span><span class="o">:</span> <span class="n">Should</span> <span class="n">description</span>
- <span class="n">Long</span> <span class="n">description</span> <span class="n">string</span> <span class="o">(</span><span class="n">starts</span> <span class="k">with</span> <span class="n">a</span> <span class="n">whitespace</span><span class="o">)</span>
-</pre></div>
-
-
-<p>To give your executable a first-class Ubuntu application, you will need to create a
-<code>.desktop</code> file, which will tell Ubuntu about its icon, version, and name. <code>my-app.desktop</code>
-should look like this:</p>
-<div class="highlight"><pre><span class="k">[Desktop Entry]</span>
-<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span>
-<span class="na">Name</span><span class="o">=</span><span class="s">My Application</span>
-<span class="na">Comment</span><span class="o">=</span><span class="s">Example App</span>
-<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/local/bin/my-app</span>
-<span class="na">Icon</span><span class="o">=</span><span class="s">my-app</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
-<span class="na">Categories</span><span class="o">=</span><span class="s">Utility;Application;</span>
-</pre></div>
-
-
-<p>Note that <code>Version</code> above refers to the version of the <code>.desktop</code> format (and
-not the version of the app), and should always be "1.0". The <code>Icon</code> entry does
-not need a full path or extension. Ubuntu will look for your icon in
-<code>/usr/share/pixmaps</code>.</p>
-<p><br/></p>
-<h2>5. Set up a signed trivial APT repository to distribute your <code>.deb</code></h2>
-<p>To distribute your <code>.deb</code> file to end users, you will want to set up an APT
-repository, which must be signed with a GPG key if you want to allow for
-programatic installation or automatic updates.</p>
-<p>Instructions for <a href="/creating-a-trivial-signed-apt-repository.html">setting up a signed trivial repo are provided here</a>.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
+                <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  
@@ -233,7 +159,7 @@ programatic installation or automatic updates.</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -263,7 +189,7 @@ that users can perform automated updates of your software (e.g. using
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -299,41 +225,13 @@ Tags:
  
             <li><article class="hentry">    
                 <header>
-                    <h1><a href="/adding-a-git-hub-alias.html" rel="bookmark"
-                           title="Permalink to Adding a `git hub` alias">Adding a `git hub` alias</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-07T22:38:08">
-                Mon 07 July 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/commandline.html">commandline</a>.
-Tags:
-<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
-</footer><!-- /.post-info -->                <p>This git alias will open a web browser and take you to a project's github page when you
-type <code>git hub</code> in a checked-out project directory.</p>
-<p>For OS X:</p>
-<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https ...</span></pre></div>
-                <a class="readmore" href="/adding-a-git-hub-alias.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
                     <h1><a href="/adding-gphoto-support-for-the-canon-5d.html" rel="bookmark"
                            title="Permalink to Adding gphoto support for the Canon 5D">Adding gphoto support for the Canon 5D</a></h1>
                 </header>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00">
+        <abbr class="published" title="2008-08-09T16:23:00-07:00">
                 Sat 09 August 2008
         </abbr>
 

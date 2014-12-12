@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Compiling and installing gphoto</title>
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/theme/css/main.css">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="/theme/js/jquery.1.11.min.js"></script>
+        <script src="/theme/js/bootstrap.min.js"></script>
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">bitstream.io </a></h1>
+                <nav><ul>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li class="active"><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li ><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/compiling-and-installing-gphoto.html" rel="bookmark"
+           title="Permalink to Compiling and installing gphoto">Compiling and installing gphoto</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-12-12T14:45:00-08:00">
+                Fri 12 December 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/bookscanning.html">bookscanning</a>.
+Tags:
+<a href="/tag/gphoto.html">gphoto</a>
+</footer><!-- /.post-info -->      <p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
+<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
+<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+<span class="nv">$ </span>mkdir gphoto
+<span class="nv">$ </span><span class="nb">cd </span>gphoto
+
+<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
+<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
+<span class="nv">$ </span><span class="nb">cd </span>libgphoto2/
+<span class="nv">$ </span>autoreconf --install --symlink
+<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/usr/local
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+
+<span class="c"># compile gphoto2 and install into /usr/local/bin</span>
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
+<span class="nv">$ </span><span class="nb">cd </span>gphoto2/
+<span class="nv">$ </span>autoreconf --install --symlink
+<span class="nv">$ PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig ./configure --prefix<span class="o">=</span>/usr/local
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+</pre></div>
+
+
+<p>Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
+and libgphoto2_port:</p>
+<div class="highlight"><pre><span class="nv">$ LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/lib /usr/local/bin/gphoto2 --version
+gphoto2 2.5.5.1
+
+Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2014 Lutz Mueller and others
+
+gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
+redistribute copies of gphoto2 under the terms of the GNU General Public
+License. For more information about these matters, see the files named COPYING.
+
+This version of gphoto2 is using the following software versions and options:
+gphoto2         2.5.5.1        gcc, popt<span class="o">(</span>m<span class="o">)</span>, exif, no cdk, no aa, jpeg, no readline
+libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
+libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
+</pre></div>
+
+
+<p>These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. </p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
+</body>
+</html>
