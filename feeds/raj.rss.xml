@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/raj.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 12 Dec 2014 14:45:00 -0800</lastBuildDate><item><title>Compiling and installing gphoto</title><link>/compiling-and-installing-gphoto.html</link><description>&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bitstream.io</title><link>/</link><description></description><atom:link href="/feeds/raj.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 14 Jan 2015 00:00:00 -0800</lastBuildDate><item><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link>/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</link><description>&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+device. In our case, we had a devicemanager device that had hung (which you could see by
+running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard reset the
+machine if needed. &lt;code&gt;softdog&lt;/code&gt; will hard reset the machine if it doesn't receive
+data every 60 seconds, so we open &lt;code&gt;/dev/watchdog&lt;/code&gt; for write and then issue a
+&lt;code&gt;shutdown -r&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;modprobe softdog
+sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quot;&lt;/span&gt; &amp;amp;
+shutdown -r now
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Thanks, Sam!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 14 Jan 2015 00:00:00 -0800</pubDate><guid>tag:,2015-01-14:rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</guid><category>linux</category><category>watchdog</category><category>softdog</category><category>ubuntu</category></item><item><title>Compiling and installing gphoto</title><link>/compiling-and-installing-gphoto.html</link><description>&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
 &lt;span class="nv"&gt;$ &lt;/span&gt;mkdir gphoto
@@ -42,16 +55,7 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 12 Dec 2014 14:45:00 -0800</pubDate><guid>tag:,2014-12-12:compiling-and-installing-gphoto.html</guid><category>gphoto</category></item><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
-type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
-&lt;p&gt;For OS X:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;For Linux:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 05 Sep 2014 10:38:47 -0700</pubDate><guid>tag:,2014-09-05:adding-a-git-hub-alias.html</guid><category>git</category><category>github</category></item><item><title>Packaging and Distributing a Kivy application on Linux</title><link>/packaging-and-distributing-a-kivy-application-on-linux.html</link><description>&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Fri, 12 Dec 2014 14:45:00 -0800</pubDate><guid>tag:,2014-12-12:compiling-and-installing-gphoto.html</guid><category>gphoto</category></item><item><title>Packaging and Distributing a Kivy application on Linux</title><link>/packaging-and-distributing-a-kivy-application-on-linux.html</link><description>&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
 &lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
@@ -342,7 +346,16 @@ sudo apt-get install foo
     &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</guid><category>osx</category><category>ubuntu</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</guid><category>osx</category><category>ubuntu</category></item><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For Linux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Mon, 07 Jul 2014 22:38:08 -0700</pubDate><guid>tag:,2014-07-07:adding-a-git-hub-alias.html</guid><category>git</category><category>github</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
 &lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
 &lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory&lt;/span&gt;

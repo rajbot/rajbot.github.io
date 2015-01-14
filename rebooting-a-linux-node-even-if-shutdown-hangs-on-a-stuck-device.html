@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8">
-        <title>bitstream.io - linux</title>
+        <title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
@@ -22,16 +22,19 @@
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
-                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li class="active"><a href="/category/ops.html">ops</a></li>
                     <li ><a href="/category/python.html">python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-        
-        
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="bookmark"
+           title="Permalink to Rebooting a linux node, even if shutdown hangs on a stuck device.">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1> 
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-01-14T00:00:00">
                 Wed 14 January 2015
@@ -43,7 +46,7 @@
 in <a href="/category/ops.html">ops</a>.
 Tags:
 <a href="/tag/linux.html">linux</a>, <a href="/tag/watchdog.html">watchdog</a>, <a href="/tag/softdog.html">softdog</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info --><p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+</footer><!-- /.post-info -->      <p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running <code>iostat -xm 1</code>)</p>
 <p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard reset the
@@ -56,45 +59,11 @@ shutdown -r now
 </pre></div>
 
 
-<p>Thanks, Sam!</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-        
+<p>Thanks, Sam!</p>
+    </div><!-- /.entry-content -->
 
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="bookmark"
-                           title="Permalink to Packaging and Distributing a Kivy application on Linux">Packaging and Distributing a Kivy application on Linux</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
-                Sat 16 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/python.html">python</a>.
-Tags:
-<a href="/tag/kivy.html">kivy</a>, <a href="/tag/linux.html">linux</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
-mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
-Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
-                <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

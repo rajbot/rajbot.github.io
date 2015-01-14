@@ -31,62 +31,32 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/compiling-and-installing-gphoto.html">Compiling and installing gphoto</a></h1> 
+                    <h1 class="entry-title"><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2014-12-12T14:45:00-08:00">
-                Fri 12 December 2014
+        <abbr class="published" title="2015-01-14T00:00:00">
+                Wed 14 January 2015
         </abbr>
 
         <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-in <a href="/category/bookscanning.html">bookscanning</a>.
+in <a href="/category/ops.html">ops</a>.
 Tags:
-<a href="/tag/gphoto.html">gphoto</a>
-</footer><!-- /.post-info --><p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
-<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
-<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
-<span class="nv">$ </span>mkdir gphoto
-<span class="nv">$ </span><span class="nb">cd </span>gphoto
-
-<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
-<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
-<span class="nv">$ </span><span class="nb">cd </span>libgphoto2/
-<span class="nv">$ </span>autoreconf --install --symlink
-<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/usr/local
-<span class="nv">$ </span>make
-<span class="nv">$ </span>sudo make install
-
-<span class="c"># compile gphoto2 and install into /usr/local/bin</span>
-<span class="nv">$ </span><span class="nb">cd</span> ..
-<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
-<span class="nv">$ </span><span class="nb">cd </span>gphoto2/
-<span class="nv">$ </span>autoreconf --install --symlink
-<span class="nv">$ PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig ./configure --prefix<span class="o">=</span>/usr/local
-<span class="nv">$ </span>make
-<span class="nv">$ </span>sudo make install
+<a href="/tag/linux.html">linux</a>, <a href="/tag/watchdog.html">watchdog</a>, <a href="/tag/softdog.html">softdog</a>, <a href="/tag/ubuntu.html">ubuntu</a>
+</footer><!-- /.post-info --><p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+device. In our case, we had a devicemanager device that had hung (which you could see by
+running <code>iostat -xm 1</code>)</p>
+<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard reset the
+machine if needed. <code>softdog</code> will hard reset the machine if it doesn't receive
+data every 60 seconds, so we open <code>/dev/watchdog</code> for write and then issue a
+<code>shutdown -r</code>:</p>
+<div class="highlight"><pre>modprobe softdog
+sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> &amp;
+shutdown -r now
 </pre></div>
 
 
-<p>Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
-and libgphoto2_port:</p>
-<div class="highlight"><pre><span class="nv">$ LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/lib /usr/local/bin/gphoto2 --version
-gphoto2 2.5.5.1
-
-Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2014 Lutz Mueller and others
-
-gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
-redistribute copies of gphoto2 under the terms of the GNU General Public
-License. For more information about these matters, see the files named COPYING.
-
-This version of gphoto2 is using the following software versions and options:
-gphoto2         2.5.5.1        gcc, popt<span class="o">(</span>m<span class="o">)</span>, exif, no cdk, no aa, jpeg, no readline
-libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
-libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
-</pre></div>
-
-
-<p>These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. </p>                </article>
+<p>Thanks, Sam!</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
@@ -97,27 +67,31 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
  
             <li><article class="hentry">    
                 <header>
-                    <h1><a href="/adding-a-git-hub-alias.html" rel="bookmark"
-                           title="Permalink to Adding a `git hub` alias">Adding a `git hub` alias</a></h1>
+                    <h1><a href="/compiling-and-installing-gphoto.html" rel="bookmark"
+                           title="Permalink to Compiling and installing gphoto">Compiling and installing gphoto</a></h1>
                 </header>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-09-05T10:38:47-07:00">
-                Fri 05 September 2014
+        <abbr class="published" title="2014-12-12T14:45:00">
+                Fri 12 December 2014
         </abbr>
 
         <address class="vcard author">
                 by <a class="url fn" href="/author/raj.html">raj</a>
         </address>
-in <a href="/category/commandline.html">commandline</a>.
+in <a href="/category/bookscanning.html">bookscanning</a>.
 Tags:
-<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
-</footer><!-- /.post-info -->                <p>This git alias will open a web browser and take you to a project's github page when you
-type <code>git hub</code> in a checked-out project directory.</p>
-<p>For OS X:</p>
-<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https ...</span></pre></div>
-                <a class="readmore" href="/adding-a-git-hub-alias.html">read more</a>
+<a href="/tag/gphoto.html">gphoto</a>
+</footer><!-- /.post-info -->                <p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
+<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
+<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+<span class="nv">$ </span>mkdir gphoto
+<span class="nv">$ </span><span class="nb">cd </span>gphoto
+
+<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
+<span class="nv">$ </span>svn co https://svn.code.sf ...</pre></div>
+                <a class="readmore" href="/compiling-and-installing-gphoto.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
         
@@ -131,7 +105,7 @@ type <code>git hub</code> in a checked-out project directory.</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00-07:00">
+        <abbr class="published" title="2014-08-16T00:00:00">
                 Sat 16 August 2014
         </abbr>
 
@@ -159,7 +133,7 @@ Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00-07:00">
+        <abbr class="published" title="2014-08-13T00:00:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -189,7 +163,7 @@ that users can perform automated updates of your software (e.g. using
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00-07:00">
+        <abbr class="published" title="2014-08-13T00:00:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -225,13 +199,41 @@ Tags:
  
             <li><article class="hentry">    
                 <header>
+                    <h1><a href="/adding-a-git-hub-alias.html" rel="bookmark"
+                           title="Permalink to Adding a `git hub` alias">Adding a `git hub` alias</a></h1>
+                </header>
+                
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-07-07T22:38:08">
+                Mon 07 July 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/commandline.html">commandline</a>.
+Tags:
+<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+</footer><!-- /.post-info -->                <p>This git alias will open a web browser and take you to a project's github page when you
+type <code>git hub</code> in a checked-out project directory.</p>
+<p>For OS X:</p>
+<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https ...</span></pre></div>
+                <a class="readmore" href="/adding-a-git-hub-alias.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article class="hentry">    
+                <header>
                     <h1><a href="/adding-gphoto-support-for-the-canon-5d.html" rel="bookmark"
                            title="Permalink to Adding gphoto support for the Canon 5D">Adding gphoto support for the Canon 5D</a></h1>
                 </header>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00-07:00">
+        <abbr class="published" title="2008-08-09T16:23:00">
                 Sat 09 August 2008
         </abbr>
 
