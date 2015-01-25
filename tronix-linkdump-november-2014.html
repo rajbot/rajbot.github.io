@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Tronix Linkdump November 2014</title>
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/theme/css/main.css">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="/theme/js/jquery.1.11.min.js"></script>
+        <script src="/theme/js/bootstrap.min.js"></script>
+        <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.embedly.defaults = {
+              key:'eff17fb52ea9496c921df25a0d15af32',
+              query: {
+                maxwidth:530,
+              },
+              display: $.noop
+            }
+
+            $('.embed_button').on('click', function(){
+                var self = $(this);
+                var link = self.next();
+                var url = link.attr('href');
+
+                if (self.hasClass('embed_active')) {
+                    self.html('&#9654;');
+                    self.removeClass('embed_active');
+                    link.next('.embed').remove();
+
+                } else {
+                    var embed_div = $('<div class="embed">loading...</div>');
+                    embed_div.insertAfter(link);
+                    self.addClass('embed_active');
+                    self.html('&#9660;');
+
+                    $.embedly.oembed(url).progress(function(data){
+                        if ('html' in data) {
+                            embed_div.html(data.html);
+                        } else if (data.type == 'photo') {
+                            var img = $('<img>').attr('src', data.url);
+                            embed_div.empty().append(img);
+                        }
+                    });
+                }
+
+            });
+        });
+        </script>
+        <style type="text/css">
+            li > a:link, li > a:visited {
+                text-decoration: none;
+            }
+            .embed_button:hover {
+                color: #aaa;
+            }
+        </style>
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">bitstream.io </a></h1>
+                <nav><ul>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li class="active"><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/tronix-linkdump-november-2014.html" rel="bookmark"
+           title="Permalink to Tronix Linkdump November 2014">Tronix Linkdump November 2014</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-30T00:00:00">
+                Sun 30 November 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/tronixchat.html">tronixchat</a>
+        </address>
+in <a href="/category/links.html">links</a>.
+Tags:
+<a href="/tag/tronix.html">tronix</a>
+</footer><!-- /.post-info -->      <ul>
+<li><a href="https://en.wikipedia.org/wiki/Vaporwave">Vaporwave - Wikipedia, the free encyclopedia</a></li>
+<li><a href="http://www.discogs.com/Macintosh-Plus-Floral-Shoppe/release/3469351">Macintosh Plus - Floral Shoppe (Cassette, Album) at Discogs</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://beerontherug.bandcamp.com/album/floral-shoppe">FLORAL SHOPPE | BEER ON THE RUG</a></li>
+<li><a href="http://vektroid.net">PrismCorp™ | Vektroid</a></li>
+<li><a href="http://graphics.latimes.com/finding-marlowe/">Finding Marlowe: Did this man inspire two of noir's iconic fictional detectives?  - Los Angeles Times</a></li>
+<li><a href="http://rr-project.org/">rr aspires to be your primary debugging tool, replacing — well, enhancing — gdb.. rr records nondeterministic executions and debugs them deterministically</a></li>
+<li><a href="https://pay.reddit.com/r/pics/comments/2lanwc/just_found_out_that_my_crvs_sparetire_cover_is_a/">Just found out that my CRV's spare-tire cover is a fucking table. : pics</a></li>
+<li><a href="http://googlecloudplatform.blogspot.com/2014/11/google-cloud-platform-live-introducing-container-engine-cloud-networking-and-much-more.html">Google Container Engine: run Docker containers in compute clusters, powered by Kubernetes</a></li>
+<li><a href="https://cloud.google.com/container-engine/">Google Container Engine — Google Cloud Platform</a></li>
+<li><a href="http://www.citylab.com/design/2014/11/why-banksy-is-probably-a-woman/382202/">Why Banksy Is (Probably) a Woman - CityLab</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://cdn.theatlantic.com/assets/media/img/posts/2014/11/RTX14JYS/d90e28f0b.jpg">Banksy's Everything but the Kitchen Sphinx</a></li>
+<li><a href="http://www.pestcontroloffice.com/">Pest Control is a handling service acting on behalf of the artist BANKSY.</a></li>
+<li><a href="http://blog.michaelhamrah.com/2014/06/setting-up-a-multi-node-mesos-cluster-running-docker-haproxy-and-marathon-with-ansible/">Setting up a Multi-Node Mesos Cluster running Docker, HAProxy and Marathon with Ansible | Adventures in HttpContext</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://eurosys2013.tudos.org/wp-content/uploads/2013/paper/Schwarzkopf.pdf">Google Omega paper</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/kubernetes">GoogleCloudPlatform/kubernetes · GitHub</a></li>
+<li><a href="http://flynn.io">Flynn - The product that ops provides to developers</a></li>
+<li><a href="https://github.com/coreos/fleet">coreos/fleet · GitHub</a></li>
+<li><a href="http://mesos.apache.org/">Apache Mesos</a></li>
+<li><a href="http://deis.io/overview/">Deis Overview | Your Paas. Your Rules.</a></li>
+<li><a href="http://www.clickhole.com/article/10-surprisingly-effective-2-pm-pick-me-ups-1310">10 Surprisingly Effective 2 P.M. Pick-Me-Ups  | ClickHole</a></li>
+<li><a href="http://www.ebay.com/itm/ATARI-TEMPEST-ARCADE-GAME-/181576830753?pt=LH_DefaultDomain_0&amp;hash=item2a46d28f21">Atari Tempest Arcade Game | eBay</a></li>
+<li><a href="https://archive.org/details/TurnsInTheSouth">Turns in the South : Quiet American : Free Download &amp; Streaming : Internet Archive</a></li>
+<li><a href="http://audiokit.io/">AudioKit</a></li>
+<li><a href="http://jsfiddle.net/thebeebs/NKtGM/1/">Edit fiddle - JSFiddle</a></li>
+<li><a href="https://meh.com/">Meh: A new deal every day at midnight Eastern.</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=kfwGay5MDto">Nils Frahm - live at la Villette Sonique - YouTube</a></li>
+<li><a href="http://emiliegervais.com/">http://emiliegervais.com/</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor">Web Audio Editor - Firefox Developer Tools | MDN</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://new.livestream.com/ESA/cometlanding">Rosetta #CometLanding webcast on Livestream</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=AvkPFXdpOQQ">Preparing for #CometLanding - YouTube</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://soundcloud.com/esaops/a-singing-comet">A Singing Comet by esaoperations</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://i.imgur.com/35kGoTy.jpg">35kGoTy.jpg</a></li>
+<li><a href="http://thenewinquiry.com/essays/the-ladies-vanish/">The Ladies Vanish</a></li>
+<li><a href="http://www.npr.org/blogs/ed/2014/11/11/356357971/common-core-reading-the-new-colossus">Common Core Reading: 'The New Colossus' : NPR Ed : NPR</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://new.livestream.com/esa/cometlanding">Rosetta #CometLanding webcast on Livestream</a></li>
+<li><a href="https://twitter.com/Philae2014/status/532547743206875136">Philae Lander on Twitter: "It’s me… landing on a comet &amp; feeling good! MT @ESA_Rosetta: I see you too!  #CometLanding http://t.co/DjU0J1Ey4H"</a></li>
+<li><a href="http://www.brainpickings.org/2014/02/17/legendary-lands-umberto-eco/">Legendary Lands: Umberto Eco on the Greatest Maps of Imaginary Places and Why They Appeal to Us  |  Brain Pickings</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://static.hired.com/reports/hired-quantifying-the-gender-gap-in-tech.pdf">hired-quantifying-the-gender-gap-in-tech.pdf</a></li>
+<li><a href="https://www.spark.io/">Spark | Open source IoT toolkit</a></li>
+<li><a href="https://xkcd.com/1446/">xkcd 1446</a></li>
+<li><a href="http://www.tanyaharrisonofmars.com/philae.gif">animated gif of all frames thus far of xkcd landing comic</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.flickr.com/photos/europeanspaceagency/sets/72157638315605535/">Rosetta - an album on Flickr</a></li>
+<li><a href="https://github.com/spotify/dh-virtualenv">dh-virtualenv is a tool that aims to combine Debian packaging with self-contained virtualenv based Python deployments.</a></li>
+<li><a href="https://code.facebook.com/posts/360346274145943/introducing-data-center-fabric-the-next-generation-facebook-data-center-network">Introducing data center fabric,  the next-generation Facebook data center network | Engineering Blog | Facebook Code | Facebook</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=NlpjgTKbW_M">live stream of The Lab's 24-hr telethon</a></li>
+<li><a href="https://www.kickstarter.com/projects/buildthelab/build-the-lab">Build The Lab! by The Lab — Kickstarter</a></li>
+<li><a href="http://governor.mo.gov/news/executive-orders/executive-order-14-14">a State of Emergency has been declared in Missouri</a></li>
+<li><a href="https://www.eff.org/deeplinks/2014/11/certificate-authority-encrypt-entire-web">Launching in 2015: A Certificate Authority to Encrypt the Entire Web | Electronic Frontier Foundation</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.flickr.com/photos/mangtronix/15636000090/">Remote printing using OctoPrint | Flickr - Photo Sharing!</a></li>
+<li><a href="http://www.diybookscanner.org/forum/viewtopic.php?f=14&amp;t=2776">full auto bookscanner build</a></li>
+<li><a href="http://phantomterrains.com/">Phantom Terrains</a></li>
+<li><a href="https://www.packtpub.com/books/content/fadecandy-for-large-scale-led-art">FadeCandy - Smooth fades for your large-scale LED art | Packt</a></li>
+<li><a href="https://en.wikipedia.org/wiki/San_Francisco_%28typeface%29">San Francisco (disambiguation) - Wikipedia, the free encyclopedia</a></li>
+<li><a href="http://thenextweb.com/apple/2014/11/18/meet-apples-new-font-designed-watch/">Meet Apple's new font, designed for its smartwatch</a></li>
+<li><a href="https://zulko.github.io/moviepy/">MoviePy is a Python module for video editing</a></li>
+<li><a href="https://gigaom.com/2014/11/20/google-launches-contributor-a-crowdfunding-tool-for-publishers/">Google launches a crowdfunding tool for publishers</a></li>
+<li><a href="http://cube-drone.com/2014_11_16-99_Ingenuity.html">Cube Drone</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=L1rQSrTGSPA">Bugz In The Attic - Blue Note Revisited "Los Alamitos Latinfunklovesong"</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://beerontherug.bandcamp.com/album/-">札幌コンテンポラリー</a></li>
+<li><a href="http://www.mixcloud.com/mixmastermorris/mixmaster-morris-munich-pathos-theatre-2003/">Mixmaster Morris @ Munich Pathos Theatre 2003 by Mixmaster Morris | Mixcloud</a></li>
+<li><a href="http://www.mixcloud.com/ninjatune/uncle-dugs-congo-natty-mix/">Uncle Dugs Congo Natty Mix by Ninja Tune | Mixcloud</a></li>
+<li><a href="http://animatorexpo.com/mememe/">ME!ME!ME! - 日本アニメ（ーター）見本市</a></li>
+<li><a href="http://blog.michaelsu.io/announcing-prophet/"> Prophet, a microframework for analyzing financial markets</a></li>
+<li><a href="http://www.brainpickings.org/2014/11/18/best-childrens-books-2014/">The Best Children’s Books of 2014  |  Brain Pickings</a></li>
+<li><a href="http://blog.onradpad.com/renting-a-1-bedroom-apartment-near-bart-in-san-francisco/">map of 1br rents near bart stations</a></li>
+<li><a href="http://www.nousdecor.com">nousDECOR - Community Curated Decor Ideas and Solutions | nousDECOR.com</a></li>
+<li><a href="https://www.lookout.com">Mobile Security | Lookout, Inc.</a></li>
+<li><a href="https://www.cotap.com">Cotap - Secure Texting for Businesses</a></li>
+<li><a href="http://www.housecanary.com">HouseCanary</a></li>
+<li><a href="https://room.co">Room</a></li>
+<li><a href="http://www.iodine.com">Iodine - Find what works.</a></li>
+<li><a href="http://www.gametime.co">Gametime - Last minute sports tickets delivered straight to your phone</a></li>
+<li><a href="http://www.reddit.com/r/opendirectories">Open Directories</a></li>
+<li><a href="https://twitter.com/hashtag/ferguson">Tweets about #ferguson hashtag on Twitter</a></li>
+<li><a href="https://openlibrary.org/works/OL2910894W/The_other_side">The Other Side, by Istvan Banyai</a></li>
+<li><a href="https://openlibrary.org/books/OL1107897M/Zoom">Zoom, by Istvan Banyai</a></li>
+<li><a href="https://openlibrary.org/subjects/stories_without_words">Stories Without Words</a></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
+</body>
+</html>

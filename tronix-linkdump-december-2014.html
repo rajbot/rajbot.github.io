@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Tronix Linkdump December 2014</title>
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/theme/css/main.css">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="/theme/js/jquery.1.11.min.js"></script>
+        <script src="/theme/js/bootstrap.min.js"></script>
+        <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.embedly.defaults = {
+              key:'eff17fb52ea9496c921df25a0d15af32',
+              query: {
+                maxwidth:530,
+              },
+              display: $.noop
+            }
+
+            $('.embed_button').on('click', function(){
+                var self = $(this);
+                var link = self.next();
+                var url = link.attr('href');
+
+                if (self.hasClass('embed_active')) {
+                    self.html('&#9654;');
+                    self.removeClass('embed_active');
+                    link.next('.embed').remove();
+
+                } else {
+                    var embed_div = $('<div class="embed">loading...</div>');
+                    embed_div.insertAfter(link);
+                    self.addClass('embed_active');
+                    self.html('&#9660;');
+
+                    $.embedly.oembed(url).progress(function(data){
+                        if ('html' in data) {
+                            embed_div.html(data.html);
+                        } else if (data.type == 'photo') {
+                            var img = $('<img>').attr('src', data.url);
+                            embed_div.empty().append(img);
+                        }
+                    });
+                }
+
+            });
+        });
+        </script>
+        <style type="text/css">
+            li > a:link, li > a:visited {
+                text-decoration: none;
+            }
+            .embed_button:hover {
+                color: #aaa;
+            }
+        </style>
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">bitstream.io </a></h1>
+                <nav><ul>
+                    <li><a href="/">bitstream.io</a></li>
+                    <li ><a href="/category/bookscanning.html">bookscanning</a></li>
+                    <li ><a href="/category/commandline.html">commandline</a></li>
+                    <li class="active"><a href="/category/links.html">links</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/python.html">python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/tronix-linkdump-december-2014.html" rel="bookmark"
+           title="Permalink to Tronix Linkdump December 2014">Tronix Linkdump December 2014</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-12-31T00:00:00">
+                Wed 31 December 2014
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/tronixchat.html">tronixchat</a>
+        </address>
+in <a href="/category/links.html">links</a>.
+Tags:
+<a href="/tag/tronix.html">tronix</a>
+</footer><!-- /.post-info -->      <ul>
+<li><a href="https://www.tuleap.org/elasticsearch-dealing-complex-permissions">Elasticsearch: dealing with complex permissions</a></li>
+<li><a href="https://registry.hub.docker.com/u/ximm/audfprint/">ximm/audfprint Repository</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://i.imgur.com/isIyEaV.gif">isIyEaV.gif</a></li>
+<li><a href="http://www.motherjones.com/politics/2014/12/jungle-homeless-camp-san-jose-silicon-valley-video">Hanging Out With the Tech Have-Nots at a Silicon Valley Shantytown | Mother Jones</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://archive.org/~ximm/fpd/testing/raw.jpg">raw.jpg</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://archive.org/~ximm/fpd/testing/cooked.jpg">cooked.jpg</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.flickr.com/photos/k0re/15764214449/in/set-72157649204428398/">IMG_7884 | Flickr - Photo Sharing!</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.flickr.com/photos/k0re/15762830878/in/set-72157649204428398/">IMG_7886 | Flickr - Photo Sharing!</a></li>
+<li><a href="http://spf420.com/">SPF 420</a></li>
+<li><a href="http://web.archive.org/web/20090302025215/http://blog.freebase.com/2008/04/09/a-brief-tour-of-graphd">The Freebase Blog  » Blog Archive   » A Brief Tour of Graphd</a></li>
+<li><a href="https://docs.google.com/forms/d/171c6FPtGznx8fvxMoMH15b552rWGPtQYcKT_22bFzbE/viewform">You're Invited to a Holiday Party!</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="http://youtu.be/9Iz1pCZNKF0?t=42m20s">In Search Of The Valley - YouTube</a></li>
+<li><a href="http://ranchtronix.org">ranchtronix</a></li>
+<li><a href="http://ranchtronix.org/SykesHotSprings.html">SykesHotSprings</a></li>
+<li><a href="http://news.sciencemag.org/space/2014/12/massive-merger-two-giant-blue-stars-are-about-meld">Massive merger: Two giant blue stars are about to meld | Science/AAAS | News</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.flickr.com/photos/madzoy/sets/72157626636252796/">Sno-Tub - an album on Flickr</a></li>
+<li><a href="http://ranchtronix.org/HotTub.html">Hot Tubs</a></li>
+<li><a href="http://www.subcarrier.org/mang/pics/solsticebbq/">Subcarrier.org</a></li>
+<li><a href="http://boingboing.net/2014/12/10/toys-are-more-gendered-now-tha.html">Toys are more gendered now than they were 50 years ago - Boing Boing</a></li>
+<li><a href="https://medium.com/message/playing-with-my-son-e5226ff0a7c3">Playing With My Son — The Message — Medium</a></li>
+<li><a href="http://sigrok.org">The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source signal analysis software suite that supports various device types (e.g. logic analyzers, oscilloscopes, and many more).</a></li>
+<li><a href="http://www.amazon.com/Logic-Analyzer-Device-24MHz-Debug/dp/B00LIU128U">Amazon.com: 1PCS USB Logic Analyzer Device Set 24MHz 8CH MCU ARM Debug Tool: Camera &amp; Photo</a></li>
+<li><a href="https://openlibrary.org/works/OL1888047W/Heavy_weather">Heavy weather (Open Library)</a></li>
+<li><a href="http://www.forbes.com/sites/quora/2012/08/31/what-are-the-most-surprisingly-useful-php-functions/">What Are The Most Surprisingly Useful PHP Functions? - Forbes</a></li>
+<li><a href="http://www.sfgate.com/bayarea/article/Bay-Lights-gets-offer-of-permanence-from-5948555.php">“Bay Lights” gets offer of permanence from bridge officials - SFGate</a></li>
+<li><a href="http://brew.sh">Homebrew — The missing package manager for OS X</a></li>
+<li><a href="http://arstechnica.com/civis/viewtopic.php?t=1207907">Can someone explain  Fink, MacPorts, and Homebrew to me? - Ars Technica OpenForum</a></li>
+<li><a href="https://twitter.com/monkeybrainsnet/status/543113212917714944">MonkeyBrains ISP on Twitter: "Our crews working hard in the rain!! http://t.co/1yfbvFlhBF"</a></li>
+<li><a href="https://www.facebook.com/photo.php?fbid=991943417487126">Monkey Brains - Timeline Photos | Facebook</a></li>
+<li><a href="http://en.wikipedia.org/wiki/We_Live_in_Public">We Live in Public - Wikipedia, the free encyclopedia</a></li>
+<li><a href="https://twitter.com/LiveDoppler7HD/status/543572040935309313">LiveDoppler7HD on Twitter: "Soil washes away under Highway 1 near Muir Beach. Caltrans crews are currently working on a repair plan. #StormWatch http://t.co/xMpSzPJLMO"</a></li>
+<li><a href="http://asofterworld.com/index.php?id=1176">A Softer World: 1176</a></li>
+<li><a href="http://climb-utah.com/SRS/lwh.htm">Little Wild Horse - Bell Canyon - San Rafael Swell</a></li>
+<li><a href="http://climb-utah.com/SRS/dingdang.htm">Ding &amp; Dang Canyons - San Rafael Swell</a></li>
+<li><a href="https://goodformandspectacle.wordpress.com/2014/12/06/if-only-the-grimms-had-known-alice/">If Only The Grimms Had Known Alice | Good, Form &amp; Spectacle</a></li>
+<li><a href="http://goodformandspectacle.com/ifonly/">If Only The Grimms Had Known Alice, a classic collection of fairy tales with a twist</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=tsnAhvfR42k">Robot Dance</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://www.youtube.com/watch?v=_ZcMm4fKCAo">Robot Dance #2</a></li>
+<li><a href="https://groups.google.com/forum/#!msg/freebase-discuss/s_BPoL92edc/Y585r7_2E1YJ">Google Groups</a></li>
+<li><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a></li>
+<li><a href="https://tools.wmflabs.org/reasonator/?q=Q42">Reasonator</a></li>
+<li><a href="http://robertheaton.com/2014/12/12/green-waves-on-an-arbitrary-valencia-street/">Green Waves on an arbitrary Valencia Street | Robert Heaton</a></li>
+<li><a href="https://www.google.com/maps/d/u/0/edit?mid=zi8o8SCkb7HY.kDK_2MVtKNWo">SF Extinct Art Spaces (excluding bayview / hunters point / the ranch)</a></li>
+<li><a href="http://www.nytimes.com/2014/12/07/books/review/100-notable-books-of-2014.html">100 Notable Books of 2014 - NYTimes.com</a></li>
+<li><a href="https://github.com/hughrawlinson/meyda">javascript audio feature extraction library</a></li>
+<li><a href="https://thelonious.io/">Thelonious is not a single blockchain, it is a blockchain design. It is purposely designed not to be one blockchain, but millions of them</a></li>
+<li><a href="http://cl.ly/image/230m0Q2w3f1d">Image 2014-12-17 at 11.07.14 AM.png</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://soundcloud.com/stampthewax/sets/tracks-of-2014-electronic">Tracks of 2014: Electronic by Stamp The Wax</a></li>
+<li><a href="http://www.stampthewax.com/2014/12/16/tracks-of-2014-electronic/">Tracks of 2014: Electronic |</a></li>
+<li><a href="http://www.stampthewax.com/2014/12/15/top-tracks-of-2014-hip-hop/">Top Tracks of 2014: Hip-Hop |</a></li>
+<li><a href="https://noisey.vice.com/read/watch-the-rap-monument-in-full">Watch the Rap Monument in Full | NOISEY</a></li>
+<li><a href="http://www.newegg.com/Network-Bluetooth/SubCategory/ID-295">Bluetooth USB Adapters, Bluetooth Dongle - Newegg.com</a></li>
+<li><a href="http://www.adafruit.com/product/1535">Bluefruit EZ-Key - 12 Input Bluetooth HID Keyboard Controller [v1.2] ID: 1535 - $19.95 : Adafruit Industries, Unique &amp; fun DIY electronics and kits</a></li>
+<li><a href="http://deskthority.net/keyboards-f2/convert-apple-iic-to-usb-t7256.html">Convert Apple IIc to usb • deskthority</a></li>
+<li><a href="http://www.washingtonpost.com/lifestyle/magazine/martine-rothblatt-she-founded-siriusxm-a-religion-and-a-biotech-for-starters/2014/12/11/5a8a4866-71ab-11e4-ad12-3734c461eab6_story.html">Martine Rothblatt: She founded SiriusXM, a religion and a biotech. For starters. - The Washington Post</a></li>
+<li><a href="http://boingboing.net/2014/12/22/the-20-games-you-shouldnt-mi.html">The 20 games you shouldn't miss in 2014 - Boing Boing</a></li>
+<li><span class='embed_button'>&#9654;</span> <a href="https://imgur.com/x0Y1lcF">AmbAmb</a></li>
+<li><a href="http://petapixel.com/2014/12/29/medium-format-camera-made-using-parts-epson-scanner/">This Medium Format Camera Was Made Using Parts from an Epson Scanner</a></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://raj.blog.archive.org">raj.blog.archive.org</a></li>
+                            <li><a href="http://tikirobot.net">TikiRobot</a></li>
+                            <li><a href="/archives.html">Archives</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="http://github.com/rajbot">github</a></li>
+                            <li><a href="http://twitter.com/rajbot">twitter</a></li>
+                            <li><a href="mailto:raj@bitstreamFIXME.eyeoh">email</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+
+</body>
+</html>
