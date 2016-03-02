@@ -104,14 +104,12 @@ an ECS Service for Logspout in your ECS cluster:</p>
 
 <span class="c"># Create ECS Service</span>
 
-<span class="n">service</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">desiredCount</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>    <span class="c">#replace with number of EC2 nodes in your cluster</span>
-    <span class="s">&#39;cluster&#39;</span><span class="p">:</span> <span class="s">&#39;my-cluster-name&#39;</span><span class="p">,</span>
-    <span class="s">&#39;serviceName&#39;</span><span class="p">:</span> <span class="s">&#39;logspout-service&#39;</span><span class="p">,</span>
-    <span class="s">&#39;taskDefinition&#39;</span><span class="p">:</span> <span class="s">&#39;my-task-def&#39;</span>
-<span class="p">}</span>
-
-<span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span><span class="o">**</span><span class="n">service</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span>
+    <span class="n">desiredCount</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="c">#replace with number of EC2 nodes in your cluster</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="s">&#39;my-cluster-name&#39;</span><span class="p">,</span>
+    <span class="n">serviceName</span> <span class="o">=</span> <span class="s">&#39;logspout-service&#39;</span><span class="p">,</span>
+    <span class="n">taskDefinition</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span>
+<span class="p">)</span>
 </pre></div>
 
 
