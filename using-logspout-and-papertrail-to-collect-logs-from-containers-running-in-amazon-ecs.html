@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8">
-        <title>bitstream.io - ops</title>
+        <title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
@@ -26,12 +26,15 @@
                     <li ><a href="/category/python.html">python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-        
-        
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="bookmark"
+           title="Permalink to Using Logspout and Papertrail to collect logs from containers running in Amazon ECS">Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html">Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</a></h1> 
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-03-01T00:00:00">
                 Tue 01 March 2016
@@ -43,7 +46,7 @@
 in <a href="/category/ops.html">ops</a>.
 Tags:
 <a href="/tag/logspout.html">logspout</a>, <a href="/tag/aws.html">aws</a>, <a href="/tag/ecs.html">ecs</a>, <a href="/tag/docker.html">docker</a>, <a href="/tag/papertrail.html">papertrail</a>
-</footer><!-- /.post-info --><p>Amazon <a href="https://aws.amazon.com/ecs/">ECS</a> is a container management service that makes it
+</footer><!-- /.post-info -->      <p>Amazon <a href="https://aws.amazon.com/ecs/">ECS</a> is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.</p>
 <p>Centralized log collection is quite easy to set up with the <a href="https://github.com/gliderlabs/logspout">Logspout</a>
@@ -115,117 +118,11 @@ an ECS Service for Logspout in your ECS cluster:</p>
 </pre></div>
 
 
-<p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-        
+<p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>
+    </div><!-- /.entry-content -->
 
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="bookmark"
-                           title="Permalink to Rebooting a linux node, even if shutdown hangs on a stuck device.">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-01-14T00:00:00">
-                Wed 14 January 2015
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/linux.html">linux</a>, <a href="/tag/watchdog.html">watchdog</a>, <a href="/tag/softdog.html">softdog</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
-device. In our case, we had a devicemanager device that had hung (which you could see by
-running <code>iostat -xm 1</code>)</p>
-<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard ...</p>
-                <a class="readmore" href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/creating-a-trivial-signed-apt-repository.html" rel="bookmark"
-                           title="Permalink to Creating a Trivial, Signed APT Repository">Creating a Trivial, Signed APT Repository</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
-                Wed 13 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/apt.html">apt</a>, <a href="/tag/debian.html">debian</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>Setting up an APT repository is a reasonable way to distribute <code>.deb</code>
-packages to end users. You will want to create a signed repository, so
-that users can perform automated updates of your software (e.g. using
-<code>apt-get install -y</code>).</p>
-<p>There are <a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types">two kinds of repositories</a>,
-"official" and "trivial". Trivial ...</p>
-                <a class="readmore" href="/creating-a-trivial-signed-apt-repository.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/os-x-and-ubuntu-codenames.html" rel="bookmark"
-                           title="Permalink to OS X and Ubuntu Codenames">OS X and Ubuntu Codenames</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
-                Wed 13 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/osx.html">osx</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <style type="text/css">
-    tbody td {font-size: 75%;}
-</style>
-
-<div class="row">
-<div class="col-md-6">
-    Ubuntu
-    <table class="table-striped">
-    <tbody>
-        <tr><td>Ubuntu 4.10</td><td>Warty Warthog</td></tr>
-        <tr><td>Ubuntu 5.04</td><td>Hoary Hedgehog</td></tr>
-        <tr><td>Ubuntu 5.10</td><td>Breezy Badger</td></tr>
-        <tr><td>Ubuntu 6.06 LTS</td><td>Dapper Drake</td></tr>
-        <tr><td>Ubuntu 6.10</td><td>Edgy Eft</td></tr>
-        <tr><td>Ubuntu 7.04</td><td>Feisty Fawn</td></tr>
-        <tr><td>Ubuntu 7.10</td><td>Gutsy Gibbon</td></tr>
-        <tr><td>Ubuntu 8.04 LTS</td><td>Hardy Heron</td></tr>
-        <tr><td>Ubuntu 8.10 ...</td></tr></tbody></table></div></div>
-                <a class="readmore" href="/os-x-and-ubuntu-codenames.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

@@ -31,7 +31,106 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1> 
+                    <h1 class="entry-title"><a href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html">Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</a></h1> 
+<footer class="post-info">
+        <abbr class="published" title="2016-03-01T00:00:00">
+                Tue 01 March 2016
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/ops.html">ops</a>.
+Tags:
+<a href="/tag/logspout.html">logspout</a>, <a href="/tag/aws.html">aws</a>, <a href="/tag/ecs.html">ecs</a>, <a href="/tag/docker.html">docker</a>, <a href="/tag/papertrail.html">papertrail</a>
+</footer><!-- /.post-info --><p>Amazon <a href="https://aws.amazon.com/ecs/">ECS</a> is a container management service that makes it
+easy to deploy Docker containers on AWS. However, once you scale to many containers running
+on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.</p>
+<p>Centralized log collection is quite easy to set up with the <a href="https://github.com/gliderlabs/logspout">Logspout</a>
+Docker container and the <a href="https://papertrailapp.com">Papertrail</a> log management service.</p>
+<p>Logspout is a docker container that attaches to all the other docker containers running
+on a host and forwards the docker logs somewhere.</p>
+<p>Papertrail is a log aggregator that provides a remote syslog endpoint. It has a nice
+web console and a fast search engine that lets you tail logs in realtime and
+filter by syslog priority, machine name, program name, or search string.
+Papertrail also has integrations for sending alerts to many services, such as PagerDuty,
+Amazon SNS, and Slack.</p>
+<p>Log aggregation for ECS is easily achieved by running one Logspout container on
+each EC2 node in your ECS cluster, which will forward logs for all docker containers
+running on the EC2 node to Papertrail using syslog. This lets us see and analyze
+logs in a centralized place, but also leaves the logs on the EC2 nodes in case
+something goes wrong with log forwarding and we need to analyze the logs
+directly on the host.</p>
+<p>We can deploy Logspout in ECS using the standard ECS scheduler, but by default, we can't
+tell ECS to schedule exactly one Logspout container per EC2 node. However, if we launch
+the same number of Logspout containers as EC2 nodes in the cluster, and we tell ECS to
+attach an unused port to Logspout, then the scheduler will launch exactly one Logspout
+container per EC2 node.</p>
+<p>You can use the <code>boto</code> python library with the code below to create a Task Definition and
+an ECS Service for Logspout in your ECS cluster:</p>
+<div class="highlight"><pre><span class="c"># Create ECS Task Definition</span>
+
+<span class="n">task_def</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;image&#39;</span><span class="p">:</span> <span class="s">&#39;gliderlabs/logspout&#39;</span><span class="p">,</span>
+    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;logspout&#39;</span><span class="p">,</span>
+    <span class="s">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>   <span class="c"># trick ECS into only scheduling one container per node</span>
+        <span class="s">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>        <span class="c"># by mapping a dummy port to our logspout container</span>
+        <span class="s">&#39;protocol&#39;</span><span class="p">:</span> <span class="s">&#39;tcp&#39;</span>
+    <span class="p">}],</span>
+    <span class="s">&#39;mountPoints&#39;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s">&#39;containerPath&#39;</span><span class="p">:</span> <span class="s">&#39;/tmp/docker.sock&#39;</span><span class="p">,</span>    <span class="c"># logspout uses the docker unix socket</span>
+        <span class="s">&#39;sourceVolume&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>            <span class="c"># to gather logs from the other containers</span>
+    <span class="p">}],</span>
+    <span class="s">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;syslog://HOST.papertrailapp.com:PORT&quot;</span><span class="p">]</span>     <span class="c">#replace HOST and PORT with your account&#39;s config</span>
+<span class="p">}</span>
+
+<span class="n">volume</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;host&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;sourcePath&#39;</span><span class="p">:</span> <span class="s">&#39;/var/run/docker.sock&#39;</span><span class="p">},</span>
+    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>
+<span class="p">}</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s">&#39;ecs&#39;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span><span class="p">,</span>
+    <span class="n">containerDefinitions</span> <span class="o">=</span> <span class="p">[</span><span class="n">task_def</span><span class="p">],</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">[</span><span class="n">volume</span><span class="p">]</span>
+<span class="p">)</span>
+
+
+<span class="c"># Create ECS Service</span>
+
+<span class="n">service</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">desiredCount</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>    <span class="c">#replace with number of EC2 nodes in your cluster</span>
+    <span class="s">&#39;cluster&#39;</span><span class="p">:</span> <span class="s">&#39;my-cluster-name&#39;</span><span class="p">,</span>
+    <span class="s">&#39;serviceName&#39;</span><span class="p">:</span> <span class="s">&#39;logspout-service&#39;</span><span class="p">,</span>
+    <span class="s">&#39;taskDefinition&#39;</span><span class="p">:</span> <span class="s">&#39;my-task-def&#39;</span>
+<span class="p">}</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span><span class="o">**</span><span class="n">service</span><span class="p">)</span>
+</pre></div>
+
+
+<p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article class="hentry">    
+                <header>
+                    <h1><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="bookmark"
+                           title="Permalink to Rebooting a linux node, even if shutdown hangs on a stuck device.">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1>
+                </header>
+                
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-01-14T00:00:00">
                 Wed 14 January 2015
@@ -43,25 +142,13 @@
 in <a href="/category/ops.html">ops</a>.
 Tags:
 <a href="/tag/linux.html">linux</a>, <a href="/tag/watchdog.html">watchdog</a>, <a href="/tag/softdog.html">softdog</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info --><p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+</footer><!-- /.post-info -->                <p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running <code>iostat -xm 1</code>)</p>
-<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard reset the
-machine if needed. <code>softdog</code> will hard reset the machine if it doesn't receive
-data every 60 seconds, so we open <code>/dev/watchdog</code> for write and then issue a
-<code>shutdown -r</code>:</p>
-<div class="highlight"><pre>modprobe softdog
-sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> &amp;
-shutdown -r now
-</pre></div>
-
-
-<p>Thanks, Sam!</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard ...</p>
+                <a class="readmore" href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  

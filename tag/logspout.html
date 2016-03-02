@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8">
-        <title>bitstream.io - ops</title>
+        <title>bitstream.io - logspout</title>
         <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
         <link rel="stylesheet" href="/theme/css/main.css">
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bitstream.io Atom Feed" />
@@ -22,7 +22,7 @@
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
-                    <li class="active"><a href="/category/ops.html">ops</a></li>
+                    <li ><a href="/category/ops.html">ops</a></li>
                     <li ><a href="/category/python.html">python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
@@ -116,115 +116,11 @@ an ECS Service for Logspout in your ECS cluster:</p>
 
 
 <p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="bookmark"
-                           title="Permalink to Rebooting a linux node, even if shutdown hangs on a stuck device.">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-01-14T00:00:00">
-                Wed 14 January 2015
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/linux.html">linux</a>, <a href="/tag/watchdog.html">watchdog</a>, <a href="/tag/softdog.html">softdog</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
-device. In our case, we had a devicemanager device that had hung (which you could see by
-running <code>iostat -xm 1</code>)</p>
-<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard ...</p>
-                <a class="readmore" href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/creating-a-trivial-signed-apt-repository.html" rel="bookmark"
-                           title="Permalink to Creating a Trivial, Signed APT Repository">Creating a Trivial, Signed APT Repository</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
-                Wed 13 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/apt.html">apt</a>, <a href="/tag/debian.html">debian</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <p>Setting up an APT repository is a reasonable way to distribute <code>.deb</code>
-packages to end users. You will want to create a signed repository, so
-that users can perform automated updates of your software (e.g. using
-<code>apt-get install -y</code>).</p>
-<p>There are <a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types">two kinds of repositories</a>,
-"official" and "trivial". Trivial ...</p>
-                <a class="readmore" href="/creating-a-trivial-signed-apt-repository.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/os-x-and-ubuntu-codenames.html" rel="bookmark"
-                           title="Permalink to OS X and Ubuntu Codenames">OS X and Ubuntu Codenames</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
-                Wed 13 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/ops.html">ops</a>.
-Tags:
-<a href="/tag/osx.html">osx</a>, <a href="/tag/ubuntu.html">ubuntu</a>
-</footer><!-- /.post-info -->                <style type="text/css">
-    tbody td {font-size: 75%;}
-</style>
-
-<div class="row">
-<div class="col-md-6">
-    Ubuntu
-    <table class="table-striped">
-    <tbody>
-        <tr><td>Ubuntu 4.10</td><td>Warty Warthog</td></tr>
-        <tr><td>Ubuntu 5.04</td><td>Hoary Hedgehog</td></tr>
-        <tr><td>Ubuntu 5.10</td><td>Breezy Badger</td></tr>
-        <tr><td>Ubuntu 6.06 LTS</td><td>Dapper Drake</td></tr>
-        <tr><td>Ubuntu 6.10</td><td>Edgy Eft</td></tr>
-        <tr><td>Ubuntu 7.04</td><td>Feisty Fawn</td></tr>
-        <tr><td>Ubuntu 7.10</td><td>Gutsy Gibbon</td></tr>
-        <tr><td>Ubuntu 8.04 LTS</td><td>Hardy Heron</td></tr>
-        <tr><td>Ubuntu 8.10 ...</td></tr></tbody></table></div></div>
-                <a class="readmore" href="/os-x-and-ubuntu-codenames.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 1
 </p>
+            </aside><!-- /#featured -->
+            </ol><!-- /#posts-list -->
             </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
