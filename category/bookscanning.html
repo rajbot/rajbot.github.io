@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li class="active"><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -33,7 +32,7 @@
                 <article>
                     <h1 class="entry-title"><a href="/compiling-and-installing-gphoto.html">Compiling and installing gphoto</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2014-12-12T14:45:00">
+        <abbr class="published" title="2014-12-12T14:45:00-08:00">
                 Fri 12 December 2014
         </abbr>
 
@@ -44,47 +43,45 @@ in <a href="/category/bookscanning.html">bookscanning</a>.
 Tags:
 <a href="/tag/gphoto.html">gphoto</a>
 </footer><!-- /.post-info --><p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
-<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
-<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
-<span class="nv">$ </span>mkdir gphoto
-<span class="nv">$ </span><span class="nb">cd </span>gphoto
+<div class="highlight"><pre><span></span><code><span class="c1"># install dependencies (for Ubuntu 14.04)</span>
+$ sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+$ mkdir gphoto
+$ <span class="nb">cd</span> gphoto
 
-<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
-<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
-<span class="nv">$ </span><span class="nb">cd </span>libgphoto2/
-<span class="nv">$ </span>autoreconf --install --symlink
-<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/usr/local
-<span class="nv">$ </span>make
-<span class="nv">$ </span>sudo make install
+<span class="c1"># compile libphoto2 and install into /usr/local/lib</span>
+$ svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
+$ <span class="nb">cd</span> libgphoto2/
+$ autoreconf --install --symlink
+$ ./configure --prefix<span class="o">=</span>/usr/local
+$ make
+$ sudo make install
 
-<span class="c"># compile gphoto2 and install into /usr/local/bin</span>
-<span class="nv">$ </span><span class="nb">cd</span> ..
-<span class="nv">$ </span>svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
-<span class="nv">$ </span><span class="nb">cd </span>gphoto2/
-<span class="nv">$ </span>autoreconf --install --symlink
-<span class="nv">$ PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig ./configure --prefix<span class="o">=</span>/usr/local
-<span class="nv">$ </span>make
-<span class="nv">$ </span>sudo make install
-</pre></div>
-
+<span class="c1"># compile gphoto2 and install into /usr/local/bin</span>
+$ <span class="nb">cd</span> ..
+$ svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
+$ <span class="nb">cd</span> gphoto2/
+$ autoreconf --install --symlink
+$ <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig ./configure --prefix<span class="o">=</span>/usr/local
+$ make
+$ sudo make install
+</code></pre></div>
 
 <p>Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
 and libgphoto2_port:</p>
-<div class="highlight"><pre><span class="nv">$ LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/lib /usr/local/bin/gphoto2 --version
-gphoto2 2.5.5.1
+<div class="highlight"><pre><span></span><code>$ <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/lib /usr/local/bin/gphoto2 --version
+gphoto2 <span class="m">2</span>.5.5.1
 
-Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2014 Lutz Mueller and others
+Copyright <span class="o">(</span>c<span class="o">)</span> <span class="m">2000</span>-2014 Lutz Mueller and others
 
 gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
 redistribute copies of gphoto2 under the terms of the GNU General Public
 License. For more information about these matters, see the files named COPYING.
 
 This version of gphoto2 is using the following software versions and options:
-gphoto2         2.5.5.1        gcc, popt<span class="o">(</span>m<span class="o">)</span>, exif, no cdk, no aa, jpeg, no readline
-libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
-libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
-</pre></div>
-
+gphoto2         <span class="m">2</span>.5.5.1        gcc, popt<span class="o">(</span>m<span class="o">)</span>, exif, no cdk, no aa, jpeg, no readline
+libgphoto2      <span class="m">2</span>.5.5.3        all camlibs, gcc, ltdl, EXIF
+libgphoto2_port <span class="m">0</span>.12.0         gcc, ltdl, USB, serial without locking
+</code></pre></div>
 
 <p>These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. </p>                </article>
             </aside><!-- /#featured -->
@@ -103,7 +100,7 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00">
+        <abbr class="published" title="2008-08-09T16:23:00-07:00">
                 Sat 09 August 2008
         </abbr>
 
@@ -115,11 +112,9 @@ Tags:
 <a href="/tag/gphoto.html">gphoto</a>, <a href="/tag/canon.html">canon</a>, <a href="/tag/1ds.html">1DS</a>
 </footer><!-- /.post-info -->                <p>Canon 1Ds HackiWiki!!</p>
 <h2>2007 Aug 20: Raj and I discovered some interesting stuff!!!</h2>
-<div class="highlight"><pre><span class="nt">606527</span>  <span class="nt">dest</span><span class="o">=</span><span class="nt">WINDOZE</span><span class="o">,</span> <span class="nt">tl</span><span class="o">=</span><span class="nt">0x39</span><span class="o">,</span> <span class="nt">read_block_request</span><span class="o">,</span> <span class="nt">src</span><span class="o">=</span><span class="nt">CAMERA</span><span class="o">,</span> <span class="nt">offs</span><span class="o">=</span><span class="nt">0x000004da60a8</span><span class="o">,</span> <span class="nt">data_length</span><span class="o">=</span><span class="nt">0x0020</span><span class="o">,</span> <span class="nt">extended_tcode</span><span class="o">=</span><span class="nt">0x0000</span><span class="o">,</span> <span class="nt">ack_pending</span>
+<div class="highlight"><pre><span></span><code><span class="mf">606527</span>  <span class="n">dest</span><span class="o">=</span><span class="n">WINDOZE</span><span class="p">,</span> <span class="n">tl</span><span class="o">=</span><span class="mf">0</span><span class="n">x39</span><span class="p">,</span> <span class="kr">read</span><span class="n">_block_request</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">CAMERA</span><span class="p">,</span> <span class="n">offs</span><span class="o">=</span><span class="mf">0</span><span class="n">x000004da60a8</span><span class="p">,</span> <span class="kd">data</span><span class="n">_length</span><span class="o">=</span><span class="mf">0</span><span class="n">x0020</span><span class="p">,</span> <span class="n">extended_tcode</span><span class="o">=</span><span class="mf">0</span><span class="n">x0000</span><span class="p">,</span> <span class="n">ack_pending</span>
 
-<span class="nt">606554</span>  <span class="nt">dest</span><span class="o">=</span><span class="nt">CAMERA</span><span class="o">,</span> <span class="nt">tl</span><span class="o">=</span><span class="nt">0x39</span><span class="o">,</span> <span class="nt">read_block_response</span><span class="o">,</span> <span class="nt">src</span><span class="o">=</span><span class="nt">WINDOZE</span><span class="o">,</span> <span class="nt">complete</span><span class="o">,</span> <span class="nt">data_length</span><span class="o">=</span><span class="nt">0x0020</span><span class="o">,</span> <span class="nt">extended_tcode</span><span class="o">=</span><span class="nt">0x0000</span><span class="o">,</span> <span class="nt">data</span><span class="o">=</span><span class="cp">[</span>
- <span class="nx">ffffffff</span> <span class="nx">ffffffff</span> <span class="nx">ffc30000</span> <span class="mi">04</span><span class="nx">bf2000</span>
- <span class="mi">8</span><span class="nx">a98000e</span> <span class="mi">28000000 ...</span></pre></div>
+<span class="mf">606554</span>  <span class="n">dest</span><span class="o">=</span><span class="n">CAMERA</span><span class="p">,</span> <span class="n">tl</span><span class="o">=</span><span class="mf">0</span><span class="n">x39</span><span class="p">,</span> <span class="kr">read</span><span class="n">_block_response</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">WINDOZE</span><span class="p">,</span> <span class="n">complete</span><span class="p">,</span> <span class="kd">data …</span></code></pre></div>
                 <a class="readmore" href="/adding-gphoto-support-for-the-canon-1ds.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -134,7 +129,7 @@ Tags:
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00">
+        <abbr class="published" title="2008-08-09T16:23:00-07:00">
                 Sat 09 August 2008
         </abbr>
 
@@ -147,7 +142,7 @@ Tags:
 </footer><!-- /.post-info -->                <h3>gphoto for Canon EOS 5D compilation instructions</h3>
 <h4>you MUST use svn rev 10595 or greater. We tested with 10597</h4>
 <p>Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)</p>
-<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory ...</span></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">#check out trunk. The checkout will fail when trying to pull the libusb directory …</span></code></pre></div>
                 <a class="readmore" href="/adding-gphoto-support-for-the-canon-5d.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>

@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -36,7 +35,7 @@
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2016-03-01T00:00:00">
+        <abbr class="published" title="2016-03-01T00:00:00-08:00">
                 Tue 01 March 2016
         </abbr>
 
@@ -71,50 +70,49 @@ attach an unused port to Logspout, then the scheduler will launch exactly one Lo
 container per EC2 node.</p>
 <p>You can use the <code>boto</code> python library with the code below to create a Task Definition and
 an ECS Service for Logspout in your ECS cluster:</p>
-<div class="highlight"><pre><span class="c"># Create ECS Task Definition</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create ECS Task Definition</span>
 
 <span class="n">task_def</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;image&#39;</span><span class="p">:</span> <span class="s">&#39;gliderlabs/logspout&#39;</span><span class="p">,</span>
-    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;logspout&#39;</span><span class="p">,</span>
-    <span class="s">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-    <span class="s">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="s">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>   <span class="c"># trick ECS into only scheduling one container per node</span>
-        <span class="s">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>        <span class="c"># by mapping a dummy port to our logspout container</span>
-        <span class="s">&#39;protocol&#39;</span><span class="p">:</span> <span class="s">&#39;tcp&#39;</span>
+    <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;gliderlabs/logspout&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;logspout&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;essential&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s1">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>   <span class="c1"># trick ECS into only scheduling one container per node</span>
+        <span class="s1">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>        <span class="c1"># by mapping a dummy port to our logspout container</span>
+        <span class="s1">&#39;protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;tcp&#39;</span>
     <span class="p">}],</span>
-    <span class="s">&#39;mountPoints&#39;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="s">&#39;containerPath&#39;</span><span class="p">:</span> <span class="s">&#39;/tmp/docker.sock&#39;</span><span class="p">,</span>    <span class="c"># logspout uses the docker unix socket</span>
-        <span class="s">&#39;sourceVolume&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>            <span class="c"># to gather logs from the other containers</span>
+    <span class="s1">&#39;mountPoints&#39;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s1">&#39;containerPath&#39;</span><span class="p">:</span> <span class="s1">&#39;/tmp/docker.sock&#39;</span><span class="p">,</span>    <span class="c1"># logspout uses the docker unix socket</span>
+        <span class="s1">&#39;sourceVolume&#39;</span><span class="p">:</span> <span class="s1">&#39;dockersock&#39;</span>            <span class="c1"># to gather logs from the other containers</span>
     <span class="p">}],</span>
-    <span class="s">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;syslog://HOST.papertrailapp.com:PORT&quot;</span><span class="p">]</span>     <span class="c">#replace HOST and PORT with your account&#39;s config</span>
+    <span class="s1">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;syslog://HOST.papertrailapp.com:PORT&quot;</span><span class="p">]</span>     <span class="c1">#replace HOST and PORT with your account&#39;s config</span>
 <span class="p">}</span>
 
 <span class="n">volume</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;host&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;sourcePath&#39;</span><span class="p">:</span> <span class="s">&#39;/var/run/docker.sock&#39;</span><span class="p">},</span>
-    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>
+    <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;sourcePath&#39;</span><span class="p">:</span> <span class="s1">&#39;/var/run/docker.sock&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dockersock&#39;</span>
 <span class="p">}</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s">&#39;ecs&#39;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ecs&#39;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s1">&#39;xxx&#39;</span><span class="p">)</span>
 
 <span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
-    <span class="n">family</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span><span class="p">,</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="s1">&#39;my-task-def&#39;</span><span class="p">,</span>
     <span class="n">containerDefinitions</span> <span class="o">=</span> <span class="p">[</span><span class="n">task_def</span><span class="p">],</span>
     <span class="n">volumes</span> <span class="o">=</span> <span class="p">[</span><span class="n">volume</span><span class="p">]</span>
 <span class="p">)</span>
 
 
-<span class="c"># Create ECS Service</span>
+<span class="c1"># Create ECS Service</span>
 
 <span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span>
-    <span class="n">desiredCount</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="c">#replace with number of EC2 nodes in your cluster</span>
-    <span class="n">cluster</span> <span class="o">=</span> <span class="s">&#39;my-cluster-name&#39;</span><span class="p">,</span>
-    <span class="n">serviceName</span> <span class="o">=</span> <span class="s">&#39;logspout-service&#39;</span><span class="p">,</span>
-    <span class="n">taskDefinition</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span>
+    <span class="n">desiredCount</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="c1">#replace with number of EC2 nodes in your cluster</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;my-cluster-name&#39;</span><span class="p">,</span>
+    <span class="n">serviceName</span> <span class="o">=</span> <span class="s1">&#39;logspout-service&#39;</span><span class="p">,</span>
+    <span class="n">taskDefinition</span> <span class="o">=</span> <span class="s1">&#39;my-task-def&#39;</span>
 <span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>
     </div><!-- /.entry-content -->

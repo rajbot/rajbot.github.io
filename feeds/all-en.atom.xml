@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2016-03-01T00:00:00-08:00</updated><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><updated>2016-03-01T00:00:00-08:00</updated><author><name>raj</name></author><id>tag:,2016-03-01:using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2021-12-26T07:50:41-08:00</updated><entry><title>Adding a `git hub` alias</title><link href="/adding-a-git-hub-alias.html" rel="alternate"></link><published>2021-12-26T07:50:41-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2021-12-26:/adding-a-git-hub-alias.html</id><summary type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
+&lt;p&gt;For OS X:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;For Linux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="commandline"></category><category term="git"></category><category term="github"></category></entry><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><published>2016-03-01T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2016-03-01:/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+easy to deploy Docker containers on AWS. However, once you scale to many containers running
+on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
+&lt;p&gt;Centralized log collection is quite easy to set up …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
 &lt;p&gt;Centralized log collection is quite easy to set up with the &lt;a href="https://github.com/gliderlabs/logspout"&gt;Logspout&lt;/a&gt;
@@ -24,65 +38,77 @@ attach an unused port to Logspout, then the scheduler will launch exactly one Lo
 container per EC2 node.&lt;/p&gt;
 &lt;p&gt;You can use the &lt;code&gt;boto&lt;/code&gt; python library with the code below to create a Task Definition and
 an ECS Service for Logspout in your ECS cluster:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Create ECS Task Definition&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Create ECS Task Definition&lt;/span&gt;
 
 &lt;span class="n"&gt;task_def&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;image&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;gliderlabs/logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;essential&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;memory&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;128&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;portMappings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;containerPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="c"&gt;# trick ECS into only scheduling one container per node&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;hostPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="c"&gt;# by mapping a dummy port to our logspout container&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;protocol&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tcp&amp;#39;&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;image&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gliderlabs/logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;essential&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;memory&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;128&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;portMappings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;containerPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="c1"&gt;# trick ECS into only scheduling one container per node&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;hostPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="c1"&gt;# by mapping a dummy port to our logspout container&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;protocol&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tcp&amp;#39;&lt;/span&gt;
     &lt;span class="p"&gt;}],&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;mountPoints&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;containerPath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/tmp/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="c"&gt;# logspout uses the docker unix socket&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;sourceVolume&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;            &lt;span class="c"&gt;# to gather logs from the other containers&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;mountPoints&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;containerPath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/tmp/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="c1"&gt;# logspout uses the docker unix socket&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;sourceVolume&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;            &lt;span class="c1"&gt;# to gather logs from the other containers&lt;/span&gt;
     &lt;span class="p"&gt;}],&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;command&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;syslog://HOST.papertrailapp.com:PORT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;     &lt;span class="c"&gt;#replace HOST and PORT with your account&amp;#39;s config&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;command&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;syslog://HOST.papertrailapp.com:PORT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;     &lt;span class="c1"&gt;#replace HOST and PORT with your account&amp;#39;s config&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;host&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sourcePath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/var/run/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;host&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sourcePath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/var/run/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;boto3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ecs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;region_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;xxx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;boto3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ecs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;region_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;xxx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_task_definition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="n"&gt;containerDefinitions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;task_def&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
     &lt;span class="n"&gt;volumes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
 
 
-&lt;span class="c"&gt;# Create ECS Service&lt;/span&gt;
+&lt;span class="c1"&gt;# Create ECS Service&lt;/span&gt;
 
 &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_service&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;desiredCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;#replace with number of EC2 nodes in your cluster&lt;/span&gt;
-    &lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-cluster-name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;serviceName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;logspout-service&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;taskDefinition&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;desiredCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c1"&gt;#replace with number of EC2 nodes in your cluster&lt;/span&gt;
+    &lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-cluster-name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;serviceName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;logspout-service&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;taskDefinition&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</summary><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><updated>2015-01-14T00:00:00-08:00</updated><author><name>raj</name></author><id>tag:,2015-01-14:rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</content><category term="ops"></category><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><published>2015-01-14T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2015-01-14:/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+device. In our case, we had a devicemanager device that had hung (which you could see by
+running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
 &lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard reset the
 machine if needed. &lt;code&gt;softdog&lt;/code&gt; will hard reset the machine if it doesn't receive
 data every 60 seconds, so we open &lt;code&gt;/dev/watchdog&lt;/code&gt; for write and then issue a
 &lt;code&gt;shutdown -r&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;modprobe softdog
-sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quot;&lt;/span&gt; &amp;amp;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;modprobe softdog
+sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
 shutdown -r now
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;Thanks, Sam!&lt;/p&gt;</summary><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump December 2014</title><link href="/tronix-linkdump-december-2014.html" rel="alternate"></link><updated>2014-12-31T00:00:00-08:00</updated><author><name>tronixchat</name></author><id>tag:,2014-12-31:tronix-linkdump-december-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;p&gt;Thanks, Sam!&lt;/p&gt;</content><category term="ops"></category><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump December 2014</title><link href="/tronix-linkdump-december-2014.html" rel="alternate"></link><published>2014-12-31T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-12-31:/tronix-linkdump-december-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.tuleap.org/elasticsearch-dealing-complex-permissions"&gt;Elasticsearch: dealing with complex permissions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://registry.hub.docker.com/u/ximm/audfprint/"&gt;ximm/audfprint Repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://i.imgur.com/isIyEaV.gif"&gt;isIyEaV.gif&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.motherjones.com/politics/2014/12/jungle-homeless-camp-san-jose-silicon-valley-video"&gt;Hanging Out With the Tech Have-Nots at a Silicon Valley Shantytown | Mother Jones&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://archive.org/~ximm/fpd/testing/raw.jpg"&gt;raw.jpg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://archive.org/~ximm/fpd/testing/cooked.jpg"&gt;cooked.jpg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.flickr.com/photos/k0re/15764214449/in/set-72157649204428398/"&gt;IMG_7884 | Flickr - Photo Sharing!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.flickr.com/photos/k0re/15762830878/in/set-72157649204428398/"&gt;IMG_7886 | Flickr - Photo Sharing!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://spf420.com/"&gt;SPF 420&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://web.archive.org/web/20090302025215/http://blog.freebase.com/2008/04/09/a-brief-tour-of-graphd"&gt;The Freebase Blog  » Blog Archive   » A Brief Tour of Graphd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.google.com/forms/d/171c6FPtGznx8fvxMoMH15b552rWGPtQYcKT_22bFzbE/viewform"&gt;You're …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.tuleap.org/elasticsearch-dealing-complex-permissions"&gt;Elasticsearch: dealing with complex permissions&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://registry.hub.docker.com/u/ximm/audfprint/"&gt;ximm/audfprint Repository&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://i.imgur.com/isIyEaV.gif"&gt;isIyEaV.gif&lt;/a&gt;&lt;/li&gt;
@@ -141,50 +167,61 @@ shutdown -r now
 &lt;li&gt;&lt;a href="http://boingboing.net/2014/12/22/the-20-games-you-shouldnt-mi.html"&gt;The 20 games you shouldn't miss in 2014 - Boing Boing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://imgur.com/x0Y1lcF"&gt;AmbAmb&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://petapixel.com/2014/12/29/medium-format-camera-made-using-parts-epson-scanner/"&gt;This Medium Format Camera Was Made Using Parts from an Epson Scanner&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Compiling and installing gphoto</title><link href="/compiling-and-installing-gphoto.html" rel="alternate"></link><updated>2014-12-12T14:45:00-08:00</updated><author><name>raj</name></author><id>tag:,2014-12-12:compiling-and-installing-gphoto.html</id><summary type="html">&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
-&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir gphoto
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Compiling and installing gphoto</title><link href="/compiling-and-installing-gphoto.html" rel="alternate"></link><published>2014-12-12T14:45:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-12-12:/compiling-and-installing-gphoto.html</id><summary type="html">&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
+$ sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+$ mkdir gphoto
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; gphoto
 
-&lt;span class="c"&gt;# compile libphoto2 and install into /usr/local/lib&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;libgphoto2/
-&lt;span class="nv"&gt;$ &lt;/span&gt;autoreconf --install --symlink
-&lt;span class="nv"&gt;$ &lt;/span&gt;./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
-&lt;span class="nv"&gt;$ &lt;/span&gt;make
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo make install
+&lt;span class="c1"&gt;# compile libphoto2 and install into /usr/local/lib&lt;/span&gt;
+$ svn co https://svn.code.sf …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
+$ sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+$ mkdir gphoto
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; gphoto
 
-&lt;span class="c"&gt;# compile gphoto2 and install into /usr/local/bin&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ..
-&lt;span class="nv"&gt;$ &lt;/span&gt;svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto2/
-&lt;span class="nv"&gt;$ &lt;/span&gt;autoreconf --install --symlink
-&lt;span class="nv"&gt;$ PKG_CONFIG_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/pkgconfig ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
-&lt;span class="nv"&gt;$ &lt;/span&gt;make
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo make install
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="c1"&gt;# compile libphoto2 and install into /usr/local/lib&lt;/span&gt;
+$ svn co https://svn.code.sf.net/p/gphoto/code/trunk/libgphoto2
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; libgphoto2/
+$ autoreconf --install --symlink
+$ ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
+$ make
+$ sudo make install
 
+&lt;span class="c1"&gt;# compile gphoto2 and install into /usr/local/bin&lt;/span&gt;
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; ..
+$ svn co https://svn.code.sf.net/p/gphoto/code/trunk/gphoto2
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; gphoto2/
+$ autoreconf --install --symlink
+$ &lt;span class="nv"&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/pkgconfig ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
+$ make
+$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Be sure to set LD_LIBRARY_PATH so that gphoto can find the correct version of libgphoto2
 and libgphoto2_port:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib /usr/local/bin/gphoto2 --version
-gphoto2 2.5.5.1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib /usr/local/bin/gphoto2 --version
+gphoto2 &lt;span class="m"&gt;2&lt;/span&gt;.5.5.1
 
-Copyright &lt;span class="o"&gt;(&lt;/span&gt;c&lt;span class="o"&gt;)&lt;/span&gt; 2000-2014 Lutz Mueller and others
+Copyright &lt;span class="o"&gt;(&lt;/span&gt;c&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="m"&gt;2000&lt;/span&gt;-2014 Lutz Mueller and others
 
 gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may
 redistribute copies of gphoto2 under the terms of the GNU General Public
 License. For more information about these matters, see the files named COPYING.
 
 This version of gphoto2 is using the following software versions and options:
-gphoto2         2.5.5.1        gcc, popt&lt;span class="o"&gt;(&lt;/span&gt;m&lt;span class="o"&gt;)&lt;/span&gt;, exif, no cdk, no aa, jpeg, no readline
-libgphoto2      2.5.5.3        all camlibs, gcc, ltdl, EXIF
-libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
-&lt;/pre&gt;&lt;/div&gt;
+gphoto2         &lt;span class="m"&gt;2&lt;/span&gt;.5.5.1        gcc, popt&lt;span class="o"&gt;(&lt;/span&gt;m&lt;span class="o"&gt;)&lt;/span&gt;, exif, no cdk, no aa, jpeg, no readline
+libgphoto2      &lt;span class="m"&gt;2&lt;/span&gt;.5.5.3        all camlibs, gcc, ltdl, EXIF
+libgphoto2_port &lt;span class="m"&gt;0&lt;/span&gt;.12.0         gcc, ltdl, USB, serial without locking
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</summary><category term="gphoto"></category></entry><entry><title>Tronix Linkdump November 2014</title><link href="/tronix-linkdump-november-2014.html" rel="alternate"></link><updated>2014-11-30T00:00:00-08:00</updated><author><name>tronixchat</name></author><id>tag:,2014-11-30:tronix-linkdump-november-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category></entry><entry><title>Tronix Linkdump November 2014</title><link href="/tronix-linkdump-november-2014.html" rel="alternate"></link><published>2014-11-30T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-11-30:/tronix-linkdump-november-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Vaporwave"&gt;Vaporwave - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.discogs.com/Macintosh-Plus-Floral-Shoppe/release/3469351"&gt;Macintosh Plus - Floral Shoppe (Cassette, Album) at Discogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://beerontherug.bandcamp.com/album/floral-shoppe"&gt;FLORAL SHOPPE | BEER ON THE RUG&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://vektroid.net"&gt;PrismCorp™ | Vektroid&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://graphics.latimes.com/finding-marlowe/"&gt;Finding Marlowe: Did this man inspire two of noir's iconic fictional detectives?  - Los Angeles Times&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://rr-project.org/"&gt;rr aspires to be your primary debugging tool, replacing — well, enhancing — gdb.. rr records …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Vaporwave"&gt;Vaporwave - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.discogs.com/Macintosh-Plus-Floral-Shoppe/release/3469351"&gt;Macintosh Plus - Floral Shoppe (Cassette, Album) at Discogs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://beerontherug.bandcamp.com/album/floral-shoppe"&gt;FLORAL SHOPPE | BEER ON THE RUG&lt;/a&gt;&lt;/li&gt;
@@ -262,7 +299,15 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
 &lt;li&gt;&lt;a href="https://openlibrary.org/works/OL2910894W/The_other_side"&gt;The Other Side, by Istvan Banyai&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://openlibrary.org/books/OL1107897M/Zoom"&gt;Zoom, by Istvan Banyai&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://openlibrary.org/subjects/stories_without_words"&gt;Stories Without Words&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Tronix Linkdump October 2014</title><link href="/tronix-linkdump-october-2014.html" rel="alternate"></link><updated>2014-11-08T00:00:00-08:00</updated><author><name>tronixchat</name></author><id>tag:,2014-11-08:tronix-linkdump-october-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Tronix Linkdump October 2014</title><link href="/tronix-linkdump-october-2014.html" rel="alternate"></link><published>2014-11-08T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-11-08:/tronix-linkdump-october-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.thru-you-too.com"&gt;Thru You Too&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.independent.co.uk/environment/35000-walrus-gather-ashore-on-northwest-alaska-beach-for-a-rest-9766616.html"&gt;35,000 walrus gather on north-west Alaska beach 'for a rest' - Environment - The Independent&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=nNHsA4WIFvc"&gt;A special TWIN PEAKS announcement - YouTube&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="http://youtu.be/BL57-9171pk"&gt;Laura Palmer  I'll See You In 25 Years - YouTube&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.newyorker.com/magazine/2014/10/13/scheherazade-3"&gt;“Scheherazade”&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://antirez.com/news/79"&gt;Redis cluster, no longer vaporware. - Antirez weblog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://hackaday.com/2014/10/09/the-triple-delta-robot-arm-and-leg/#more-134361"&gt;The Triple Delta Robot Arm (and Leg)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.thetimes.co.uk/tto/news/world/europe/article4213550.ece"&gt;German universities scrap …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.thru-you-too.com"&gt;Thru You Too&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.independent.co.uk/environment/35000-walrus-gather-ashore-on-northwest-alaska-beach-for-a-rest-9766616.html"&gt;35,000 walrus gather on north-west Alaska beach 'for a rest' - Environment - The Independent&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=nNHsA4WIFvc"&gt;A special TWIN PEAKS announcement - YouTube&lt;/a&gt;&lt;/li&gt;
@@ -333,7 +378,10 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
 &lt;li&gt;&lt;a href="http://www.thebolditalic.com/articles/6191-this-is-our-fav-video-from-last-night"&gt;This Is Our Fav Video From Last Night - The Bold Italic - San Francisco&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hired.com"&gt;Hired - Marketplace for Recruiting Startup &amp;amp; Tech Talent&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://tinyjeanjacketstwitch.blogspot.com/2014/10/on-loss-of-tiny-worlds-and-san-francisco.html"&gt;Tiny Jean Jackets Everywhere Twitching: On the loss of tiny worlds, and San Francisco&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Tronix Linkdump September 2014</title><link href="/tronix-linkdump-september-2014.html" rel="alternate"></link><updated>2014-10-09T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-10-09:tronix-linkdump-september-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Tronix Linkdump September 2014</title><link href="/tronix-linkdump-september-2014.html" rel="alternate"></link><published>2014-10-09T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-10-09:/tronix-linkdump-september-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://code.google.com/p/chromium/issues/detail?id=62435"&gt;Issue 62435 -  chromium -  Emoji does not display in webpage contents on OS X Lion+ -  An open-source project to help move the web forward. - Google Project Hosting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://soundcloud.com/tycho/black-sunrise-sunrise-dj-set-at-burning-man-2014"&gt;Black Sunrise - Sunrise DJ Set at Burning Man 2014 by Tycho&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.flaticon.com/"&gt;Free vector icons - SVG, PSD, PNG, EPS &amp;amp; Icon Font - Thousands of Free Icons …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://code.google.com/p/chromium/issues/detail?id=62435"&gt;Issue 62435 -  chromium -  Emoji does not display in webpage contents on OS X Lion+ -  An open-source project to help move the web forward. - Google Project Hosting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://soundcloud.com/tycho/black-sunrise-sunrise-dj-set-at-burning-man-2014"&gt;Black Sunrise - Sunrise DJ Set at Burning Man 2014 by Tycho&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.flaticon.com/"&gt;Free vector icons - SVG, PSD, PNG, EPS &amp;amp; Icon Font - Thousands of Free Icons&lt;/a&gt;&lt;/li&gt;
@@ -389,7 +437,12 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
 &lt;li&gt;&lt;a href="https://pay.reddit.com/r/blog/comments/2hwpmm/fundraising_for_reddit/ckwph30"&gt;"We are thinking about creating a cryptocurrency and making it exchangeable (backed) by those shares of reddit, and then distributing the currency to the community. The investors have explicitly agreed to this in their investment terms."&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://jobs.lever.co/reddit/6ce6a242-00d1-49c4-9bed-c34f26445ee7"&gt;Cryptocurrency Engineer, reddit.com&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://youarehere.cc/a/ChildrenMap/sf.html"&gt;Children in San Francisco, CA&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Tronix Linkdump August 2014</title><link href="/tronix-linkdump-august-2014.html" rel="alternate"></link><updated>2014-09-04T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-09-04:tronix-linkdump-august-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Tronix Linkdump August 2014</title><link href="/tronix-linkdump-august-2014.html" rel="alternate"></link><published>2014-09-04T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-09-04:/tronix-linkdump-august-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.takehitch.com"&gt;rideshare thing that pairs you with other passengers going to the same place as you&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://python-rq.org"&gt;RQ: Simple job queues for Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/binarydud/pyres"&gt;binarydud/pyres · GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://brokeassstuart.com/sf/2014/07/31/san-franciscos-biggest-homeownership-secret-below-market-rate-housing/"&gt;San Francisco’s Biggest Homeownership Secret: Below Market Rate Housing |  San Francisco&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.vox.com/xpress/2014/8/6/5974989/kale-cauliflower-cabbage-broccoli-same-plant"&gt;Kale, cauliflower, cabbage, and Brussels sprouts are all the same species of plant - Vox …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.takehitch.com"&gt;rideshare thing that pairs you with other passengers going to the same place as you&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://python-rq.org"&gt;RQ: Simple job queues for Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/binarydud/pyres"&gt;binarydud/pyres · GitHub&lt;/a&gt;&lt;/li&gt;
@@ -473,7 +526,10 @@ libgphoto2_port 0.12.0         gcc, ltdl, USB, serial without locking
 &lt;li&gt;&lt;a href="http://www.nature.com/srep/2014/140904/srep06196/full/srep06196.html"&gt;"Here we describe a new and gigantic titanosaur, Dreadnoughtus schrani, from Upper Cretaceous sediments in southern Patagonia, Argentina… despite its estimated mass of about 59.3 metric tons, the bone histology of the Dreadnoughtus type specimen reveals that this individual was still growing at the time of death."&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=rSlEbsBxuIE&amp;amp;list=TLhk0qIAy0uW5P-EQL-Qz4YDv6CMysCoQe"&gt;木のクレーン車2006 Wooden truck crane - YouTube&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class='embed_button'&gt;&amp;#9654;&lt;/span&gt; &lt;a href="https://www.youtube.com/watch?v=GR9MpJy0E6g&amp;amp;list=TLZAiU7-d3U_lmpU9csfiq5KV9u3vR5P6P&amp;amp;index=1"&gt;木のショベルカー2007　Wooden excavator - YouTube&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><updated>2014-08-16T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-16:packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><published>2014-08-16T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-16:/packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
+Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
+&lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
 &lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment&lt;/h2&gt;
@@ -498,9 +554,8 @@ will show you how to install Kivy in a virtualenv so that you can use the PyInst
 &lt;p&gt;If you follow the setup instructions above, you will end up an executable that works only
 on the machine it was built. If you try to copy it to another linux box, kivy will often
 segfault on startup with this error message:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Fatal&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pygame&lt;/span&gt; &lt;span class="n"&gt;parachute&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Segmentation&lt;/span&gt; &lt;span class="n"&gt;Fault&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Fatal Python Error: (pygame parachute) Segmentation Fault
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;To ensure the executable can run on as many different flavors of linux as possible, we
 are going to strip out all binaries provided by system packages. We will distribute the
@@ -508,7 +563,7 @@ application in a &lt;code&gt;.deb&lt;/code&gt; file and and use &lt;code&gt;.deb
 are installed on the target machine.&lt;/p&gt;
 &lt;p&gt;Here is a copy of a PyInstaller &lt;code&gt;.spec&lt;/code&gt; file that installs Kivy hooks and strips out all
 binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed library:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# -*- mode: python -*-&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# -*- mode: python -*-&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.tools.packaging.pyinstaller_hooks&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_hooks&lt;/span&gt;
 &lt;span class="n"&gt;install_hooks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;globals&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 
@@ -531,34 +586,34 @@ binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed libra
 &lt;span class="sd"&gt;    pyinstaller-frozen executable to work, and any of the python-* packages.&lt;/span&gt;
 &lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
 
-    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Excluding system libraries&amp;#39;&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Excluding system libraries&amp;#39;&lt;/span&gt;
     &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;subprocess&lt;/span&gt;
     &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
     &lt;span class="n"&gt;excluded_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;python-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;libpython2.7&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;python-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
 
     &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_output&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dpkg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-S&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/dev/null&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-            &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_output&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;dpkg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;-S&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/dev/null&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
             &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;whitelist_prefixes&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
                 &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
                 &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-                &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; excluding {f} from package {p}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39; excluding &lt;/span&gt;&lt;span class="si"&gt;{f}&lt;/span&gt;&lt;span class="s1"&gt; from package &lt;/span&gt;&lt;span class="si"&gt;{p}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
             &lt;span class="k"&gt;pass&lt;/span&gt;
 
-    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Your exe will depend on the following packages:&amp;#39;&lt;/span&gt;
-    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Your exe will depend on the following packages:&amp;#39;&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="n"&gt;excluded_pkgs&lt;/span&gt;
 
-    &lt;span class="n"&gt;inc_libs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;libpython2.7.so.1.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;inc_libs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;libpython2.7.so.1.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
     &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_binaries&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;excluded_files&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;binaries&lt;/span&gt;
 
 
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Analysis&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-             &lt;span class="n"&gt;pathex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Analysis&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;scribe.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="n"&gt;pathex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
              &lt;span class="n"&gt;hiddenimports&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[],&lt;/span&gt;
             &lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;pyz&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PYZ&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -566,18 +621,17 @@ binaries that &lt;code&gt;dpkg -S&lt;/code&gt; finds in a system-installed libra
 &lt;span class="n"&gt;binaries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filter_binaries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;EXE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pyz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;DATA&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+          &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;scribe.kv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;DATA&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
           &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scripts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;#a.binaries,&lt;/span&gt;
+          &lt;span class="n"&gt;binaries&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c1"&gt;#a.binaries,&lt;/span&gt;
           &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zipfiles&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
           &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ia-scribe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;upx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-          &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+          &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ia-scribe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;upx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2&gt;4. Package your executable in a &lt;code&gt;.deb&lt;/code&gt; file&lt;/h2&gt;
@@ -592,25 +646,24 @@ from step #1 above. At minimum, your &lt;code&gt;.deb&lt;/code&gt; package shoul
 &lt;/ul&gt;
 &lt;p&gt;Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the &lt;code&gt;.deb&lt;/code&gt;,
 first create the directory structure below:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app_1&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;DEBIAN&lt;/span&gt;
-        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;usr&lt;/span&gt;
-        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;
-            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;
-                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
-        &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;share&lt;/span&gt;
-            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;applications&lt;/span&gt;
-                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;desktop&lt;/span&gt;
-            &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pixmaps&lt;/span&gt;
-                &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;- my-app_1.0-1
+    - DEBIAN
+        - control
+    - usr
+        - local
+            - bin
+                - my-app
+        - share
+            - applications
+                - my-app.desktop
+            - pixmaps
+                - my-app.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you can package your app by typing &lt;code&gt;dpkg-deb --build myapp_1.0-0&lt;/code&gt;. You can then
 install the resulting package by typing &lt;code&gt;sudo dpkg -i myapp_1.0-0.deb&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;DEBIAN/control&lt;/code&gt; file should look like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Source&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Source&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;
 &lt;span class="n"&gt;Priority&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;extra&lt;/span&gt;
 &lt;span class="n"&gt;Maintainer&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;raj&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;raj&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;unknown&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;span class="n"&gt;Build&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Depends&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;debhelper&lt;/span&gt; &lt;span class="o"&gt;(&amp;gt;=&lt;/span&gt; &lt;span class="mf"&gt;8.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
@@ -620,13 +673,12 @@ install the resulting package by typing &lt;code&gt;sudo dpkg -i myapp_1.0-0.deb
 &lt;span class="n"&gt;Architecture&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;i386&lt;/span&gt;
 &lt;span class="n"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Should&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;
  &lt;span class="n"&gt;Long&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;starts&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;whitespace&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;To give your executable a first-class Ubuntu application, you will need to create a
 &lt;code&gt;.desktop&lt;/code&gt; file, which will tell Ubuntu about its icon, version, and name. &lt;code&gt;my-app.desktop&lt;/code&gt;
 should look like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Desktop Entry]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[Desktop Entry]&lt;/span&gt;
 &lt;span class="na"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1.0&lt;/span&gt;
 &lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;My Application&lt;/span&gt;
 &lt;span class="na"&gt;Comment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Example App&lt;/span&gt;
@@ -634,8 +686,7 @@ should look like this:&lt;/p&gt;
 &lt;span class="na"&gt;Icon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;my-app&lt;/span&gt;
 &lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Application&lt;/span&gt;
 &lt;span class="na"&gt;Categories&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Utility;Application;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Note that &lt;code&gt;Version&lt;/code&gt; above refers to the version of the &lt;code&gt;.desktop&lt;/code&gt; format (and
 not the version of the app), and should always be "1.0". The &lt;code&gt;Icon&lt;/code&gt; entry does
@@ -646,7 +697,12 @@ not need a full path or extension. Ubuntu will look for your icon in
 &lt;p&gt;To distribute your &lt;code&gt;.deb&lt;/code&gt; file to end users, you will want to set up an APT
 repository, which must be signed with a GPG key if you want to allow for
 programatic installation or automatic updates.&lt;/p&gt;
-&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</summary><category term="kivy"></category><category term="linux"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</content><category term="python"></category><category term="kivy"></category><category term="linux"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+packages to end users. You will want to create a signed repository, so
+that users can perform automated updates of your software (e.g. using
+&lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;There are &lt;a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types"&gt;two kinds of repositories&lt;/a&gt;,
+"official" and "trivial". Trivial …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
 packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
 &lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
@@ -662,57 +718,69 @@ well-documented. Here are instructions on how to set up your own repo:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;The repository is a simply a directory hierarchy. It can be local (e.g. on a usb stick) or
 published to a web server. Here is what it should look like when we are done:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Packages&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gpg&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;- apt-repo/
+    - foo.deb
+    - Packages
+    - Release
+    - Release.gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Start by creating the hierarchy above with empty directories. Place &lt;code&gt;foo.deb&lt;/code&gt; in the
 &lt;code&gt;apt-repo&lt;/code&gt; directory, and then follow these instructions to create the signed files:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#sign the .deb file&lt;/span&gt;
-&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#sign the .deb file&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; apt-repo
 dpkg-sig --sign builder foo.deb
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 
-&lt;span class="c"&gt;#create the Packages.gz file&lt;/span&gt;
-&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+&lt;span class="c1"&gt;#create the Packages.gz file&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; apt-repo
 apt-ftparchive packages . &amp;gt; Packages
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 
-&lt;span class="c"&gt;#create the Release file&lt;/span&gt;
+&lt;span class="c1"&gt;#create the Release file&lt;/span&gt;
 apt-ftparchive release apt-repo &amp;gt; apt-repo/Release
 
-&lt;span class="c"&gt;#create a detached ascii signature of the Release file&lt;/span&gt;
+&lt;span class="c1"&gt;#create a detached ascii signature of the Release file&lt;/span&gt;
 gpg --armor --sign --detach-sign apt-repo/Release.gpg apt-repo/Release
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you can upload the &lt;code&gt;apt-repo&lt;/code&gt; directory to a webserver. If the repo
 path is &lt;code&gt;http://example.com/foo/apt-repo&lt;/code&gt;, then end users will have to
 add a file named &lt;code&gt;my-repo.list&lt;/code&gt; to the &lt;code&gt;/etc/apt/sources.list.d&lt;/code&gt; directory
 that contains this line:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;deb http://example.com/foo/apt-repo /
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;deb http://example.com/foo/apt-repo /
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You now need to distribute your public key to end users, who will need to add it to their
 apt keychain. To export the public key to a text file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;gpg --armor --export foo@example.com --output foo-public-key
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg --armor --export foo@example.com --output foo-public-key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then upload &lt;code&gt;foo-public-key&lt;/code&gt; to a webserver. End users can install the key like so:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl http://example.com/foo-public-key | sudo apt-key add -
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl http://example.com/foo-public-key &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install foo
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="ops"></category><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+    tbody td {font-size: 75%;}
+&lt;/style&gt;
+
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;
+    Ubuntu
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;style type="text/css"&gt;
     tbody td {font-size: 75%;}
 &lt;/style&gt;
 
@@ -764,7 +832,16 @@ sudo apt-get install foo
     &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</summary><category term="osx"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump July 2014</title><link href="/tronix-linkdump-july-2014.html" rel="alternate"></link><updated>2014-08-05T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-08-05:tronix-linkdump-july-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/div&gt;</content><category term="ops"></category><category term="osx"></category><category term="ubuntu"></category></entry><entry><title>Tronix Linkdump July 2014</title><link href="/tronix-linkdump-july-2014.html" rel="alternate"></link><published>2014-08-05T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-08-05:/tronix-linkdump-july-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://kadrey.tumblr.com/post/90723596427/haruki-murakami-bingo"&gt;Haruki Murakami Bingo • Richard Kadrey's Damn Tumblr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.mikeash.com/pyblog/friday-qa-2014-07-04-secrets-of-swifts-speed.html"&gt;mikeash.com: Friday Q&amp;amp;A 2014-07-04: Secrets of Swift's Speed&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.theatlantic.com/video/archive/2013/11/the-pimps-and-prostitutes-of-1970s-times-square/281130/"&gt;The Pimps and Prostitutes of 1970s Times Square - The Atlantic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.dadhacker.com/blog/?p=2233"&gt;Patching the Newton | Dadhacker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://en.wikipedia.org/wiki/Hedy_Lamarr"&gt;Hedy Lamarr - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.radiolab.org/story/9-volt-nirvana/"&gt;9-Volt Nirvana - Radiolab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pley.com"&gt;Pley | Rent LEGO® sets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.orukayak.com/oru-kayak#packages"&gt;Oru Kayak&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://spacecollege.org/isee3/additional-isee-3-spin-up-confirmation.html"&gt;Additional ISEE-3 Spin-up Confirmation …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://kadrey.tumblr.com/post/90723596427/haruki-murakami-bingo"&gt;Haruki Murakami Bingo • Richard Kadrey's Damn Tumblr&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.mikeash.com/pyblog/friday-qa-2014-07-04-secrets-of-swifts-speed.html"&gt;mikeash.com: Friday Q&amp;amp;A 2014-07-04: Secrets of Swift's Speed&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.theatlantic.com/video/archive/2013/11/the-pimps-and-prostitutes-of-1970s-times-square/281130/"&gt;The Pimps and Prostitutes of 1970s Times Square - The Atlantic&lt;/a&gt;&lt;/li&gt;
@@ -838,16 +915,13 @@ sudo apt-get install foo
 &lt;li&gt;&lt;a href="http://www.sanfrancisco.travel/sf-essentials/Oldest-Bars-in-San-Francisco-by-Neighborhood.html"&gt;Oldest Bars by Neighborhood | San Francisco, CA | sanfrancisco.travel&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://reclaimingquarterly.org/web/redwoodmagic/"&gt;Redwood Magic Family Camp&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/rhettg/dmc"&gt;dmc is python library for date and time manipulation.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Adding a `git hub` alias</title><link href="/adding-a-git-hub-alias.html" rel="alternate"></link><updated>2014-07-07T22:38:08-07:00</updated><author><name>raj</name></author><id>tag:,2014-07-07:adding-a-git-hub-alias.html</id><summary type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
-type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
-&lt;p&gt;For OS X:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;For Linux:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="git"></category><category term="github"></category></entry><entry><title>Tronix Linkdump June 2014</title><link href="/tronix-linkdump-june-2014.html" rel="alternate"></link><updated>2014-07-03T00:00:00-07:00</updated><author><name>tronixchat</name></author><id>tag:,2014-07-03:tronix-linkdump-june-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Tronix Linkdump June 2014</title><link href="/tronix-linkdump-june-2014.html" rel="alternate"></link><published>2014-07-03T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>tronixchat</name></author><id>tag:None,2014-07-03:/tronix-linkdump-june-2014.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.facebook.com/photo.php?fbid=10152040307727130"&gt;Raj tries OSX 10.9 | Facebook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Mojibake"&gt;Mojibake - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/540535/managing-large-binary-files-with-git"&gt;version control - Managing large binary files with git - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://git-annex.branchable.com/tips/Internet_Archive_via_S3/"&gt;Git Annex: Internet Archive via S3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://laughingsquid.com/the-mad-painter-a-silent-comic-graffiti-artist-on-sesame-street-who-painted-numbers-in-unusual-locations/"&gt;The Mad Painter, A Silent Comic Graffiti Artist on ‘Sesame Street’ Who Painted Numbers In Unusual Locations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blogs.seattletimes.com/brierdudley/2014/05/30/google-loon-balloon-crashes-near-yakima/"&gt;Google Loon balloon crashes near Yakima …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.facebook.com/photo.php?fbid=10152040307727130"&gt;Raj tries OSX 10.9 | Facebook&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Mojibake"&gt;Mojibake - Wikipedia, the free encyclopedia&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/540535/managing-large-binary-files-with-git"&gt;version control - Managing large binary files with git - Stack Overflow&lt;/a&gt;&lt;/li&gt;
@@ -929,17 +1003,20 @@ type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&
 &lt;li&gt;&lt;a href="https://www.kickstarter.com/projects/612530753/gitchain"&gt;Gitchain by Yurii Rashkovskii — Kickstarter&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/gitchain/gitchain"&gt;gitchain/gitchain · GitHub&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://djcpi.blogspot.ca/2014/07/cpi-setting-aside-day.html"&gt;Caitlyn can rock a todo list.: CPI - Setting Aside The Day&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="tronix"></category></entry><entry><title>Adding gphoto support for the Canon 1DS</title><link href="/adding-gphoto-support-for-the-canon-1ds.html" rel="alternate"></link><updated>2008-08-09T16:23:00-07:00</updated><author><name>shag</name></author><id>tag:,2008-08-09:adding-gphoto-support-for-the-canon-1ds.html</id><summary type="html">&lt;p&gt;Canon 1Ds HackiWiki!!&lt;/p&gt;
+&lt;/ul&gt;</content><category term="links"></category><category term="tronix"></category></entry><entry><title>Adding gphoto support for the Canon 1DS</title><link href="/adding-gphoto-support-for-the-canon-1ds.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>shag</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-1ds.html</id><summary type="html">&lt;p&gt;Canon 1Ds HackiWiki!!&lt;/p&gt;
 &lt;h2&gt;2007 Aug 20: Raj and I discovered some interesting stuff!!!&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;606527&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60a8&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;606527&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
 
-&lt;span class="nt"&gt;606554&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffc30000&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt;&lt;span class="nx"&gt;bf2000&lt;/span&gt;
- &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="nx"&gt;a98000e&lt;/span&gt; &lt;span class="mi"&gt;28000000&lt;/span&gt; &lt;span class="mi"&gt;000000&lt;/span&gt;&lt;span class="nx"&gt;ff&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
+&lt;span class="mf"&gt;606554&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Canon 1Ds HackiWiki!!&lt;/p&gt;
+&lt;h2&gt;2007 Aug 20: Raj and I discovered some interesting stuff!!!&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;606527&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="mf"&gt;606554&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffc30000&lt;/span&gt; &lt;span class="mf"&gt;04&lt;/span&gt;&lt;span class="n"&gt;bf2000&lt;/span&gt;
+ &lt;span class="mf"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a98000e&lt;/span&gt; &lt;span class="mf"&gt;28000000&lt;/span&gt; &lt;span class="mf"&gt;000000&lt;/span&gt;&lt;span class="n"&gt;ff&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
 
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
 &lt;li&gt;bytes 0-3 are always(?) ffffffff&lt;/li&gt;
@@ -952,148 +1029,142 @@ type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&
 &lt;li&gt;byte 17 &amp;amp; mask 0x08: if true, then apparently means 'S/G list' - "counter packet" below byte 17 is 0x90&lt;/li&gt;
 &lt;li&gt;byte 19 (base 10) [0xe] above is the number of entries in the "S/G list" ...&lt;/li&gt;
 &lt;/ul&gt;
-&lt;hr /&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;608909&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x1c&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004bf2000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0070&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
+&lt;hr&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;608909&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x1c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004bf2000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0070&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
 
-&lt;span class="nt"&gt;608951&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x1c&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0070&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;fb00000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b23f050&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b48d000&lt;/span&gt;
- &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;afe7000&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b468000&lt;/span&gt;
- &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b449000&lt;/span&gt; &lt;span class="mi"&gt;20000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b4ba000&lt;/span&gt;
- &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a3fc000&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a3dd000&lt;/span&gt;
- &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a9de000&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b437000&lt;/span&gt;
- &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b488000&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b461000&lt;/span&gt;
- &lt;span class="mi"&gt;20000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a3ea000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;f500000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;b48e000&lt;/span&gt;
+&lt;span class="mf"&gt;608951&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x1c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0070&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;fb00000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b23f050&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b48d000&lt;/span&gt;
+ &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;afe7000&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b468000&lt;/span&gt;
+ &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b449000&lt;/span&gt; &lt;span class="mf"&gt;20000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b4ba000&lt;/span&gt;
+ &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a3fc000&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a3dd000&lt;/span&gt;
+ &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a9de000&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b437000&lt;/span&gt;
+ &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b488000&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b461000&lt;/span&gt;
+ &lt;span class="mf"&gt;20000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a3ea000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;f500000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b48e000&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;First two bytes are length of transfer; next two bytes apparently are ignored; next four bytes is
 address on WINDOZE to transfer to.  After this the JPEG data starts.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;These wacky packets (wackets?) are from a completely different part of the file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;507816&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffc30000&lt;/span&gt; &lt;span class="mi"&gt;172&lt;/span&gt;&lt;span class="nx"&gt;e6380&lt;/span&gt;
- &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="nx"&gt;a90005c&lt;/span&gt; &lt;span class="mi"&gt;28000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nx"&gt;c000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;507816&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffc30000&lt;/span&gt; &lt;span class="mf"&gt;172&lt;/span&gt;&lt;span class="n"&gt;e6380&lt;/span&gt;
+ &lt;span class="mf"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a90005c&lt;/span&gt; &lt;span class="mf"&gt;28000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;5&lt;/span&gt;&lt;span class="n"&gt;c000000&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Above we see that byte 17 &amp;amp; mask 0x08 is false.  So something is up.  Byte 19 [0x5c] happens to represent the number of bytes in the response packet.  Interesting...&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;521267&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;WINDOZE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x15&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;CAMERA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000172e6380&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x005c&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;10000020&lt;/span&gt; &lt;span class="mi"&gt;42000000&lt;/span&gt; &lt;span class="mi"&gt;02000000&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="nx"&gt;d001022&lt;/span&gt;
- &lt;span class="mi"&gt;42000000&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="nx"&gt;ced2501&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="nx"&gt;e000100&lt;/span&gt;
- &lt;span class="mi"&gt;00010002&lt;/span&gt; &lt;span class="mi"&gt;00030004&lt;/span&gt; &lt;span class="mi"&gt;00050006&lt;/span&gt; &lt;span class="mi"&gt;00070008&lt;/span&gt;
- &lt;span class="mi"&gt;0009000&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="mi"&gt;000&lt;/span&gt;&lt;span class="nx"&gt;b000c&lt;/span&gt; &lt;span class="mi"&gt;000&lt;/span&gt;&lt;span class="nx"&gt;d000e&lt;/span&gt; &lt;span class="mi"&gt;000&lt;/span&gt;&lt;span class="nx"&gt;f0010&lt;/span&gt;
- &lt;span class="mi"&gt;00110012&lt;/span&gt; &lt;span class="mi"&gt;00130014&lt;/span&gt; &lt;span class="mi"&gt;00150200&lt;/span&gt; &lt;span class="nx"&gt;ff0100ff&lt;/span&gt;
- &lt;span class="mi"&gt;0200&lt;/span&gt;&lt;span class="nx"&gt;ff01&lt;/span&gt; &lt;span class="mi"&gt;05&lt;/span&gt;&lt;span class="nx"&gt;ff0200&lt;/span&gt; &lt;span class="nx"&gt;ff0106ff&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;521267&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000172e6380&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x005c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;10000020&lt;/span&gt; &lt;span class="mf"&gt;42000000&lt;/span&gt; &lt;span class="mf"&gt;02000000&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="n"&gt;d001022&lt;/span&gt;
+ &lt;span class="mf"&gt;42000000&lt;/span&gt; &lt;span class="mf"&gt;7&lt;/span&gt;&lt;span class="n"&gt;ced2501&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="n"&gt;e000100&lt;/span&gt;
+ &lt;span class="mf"&gt;00010002&lt;/span&gt; &lt;span class="mf"&gt;00030004&lt;/span&gt; &lt;span class="mf"&gt;00050006&lt;/span&gt; &lt;span class="mf"&gt;00070008&lt;/span&gt;
+ &lt;span class="mf"&gt;0009000&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="mf"&gt;000&lt;/span&gt;&lt;span class="n"&gt;b000c&lt;/span&gt; &lt;span class="mf"&gt;000&lt;/span&gt;&lt;span class="n"&gt;d000e&lt;/span&gt; &lt;span class="mf"&gt;000&lt;/span&gt;&lt;span class="n"&gt;f0010&lt;/span&gt;
+ &lt;span class="mf"&gt;00110012&lt;/span&gt; &lt;span class="mf"&gt;00130014&lt;/span&gt; &lt;span class="mf"&gt;00150200&lt;/span&gt; &lt;span class="n"&gt;ff0100ff&lt;/span&gt;
+ &lt;span class="mf"&gt;0200&lt;/span&gt;&lt;span class="n"&gt;ff01&lt;/span&gt; &lt;span class="mf"&gt;05&lt;/span&gt;&lt;span class="n"&gt;ff0200&lt;/span&gt; &lt;span class="n"&gt;ff0106ff&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;What's interesting is that the middle of the packet counts from 0x0001 to 0x0015 in 16-bit words.  Then after that there appear to be six 3-byte strings: 0x0200ff, 0x0100ff, 0x0200ff, 0x0105ff, 0x0106ff.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;Okay I'm pretty interested in this 0x5c thing.  That is a magic number that I remember from the gphoto2 Canon USB driver.  0x5c is the number of bytes in a 'release params' data structure from the camera.  Release params are things like shutter speed, ISO, etc.  Let's look at the gphoto2 usb source and see if anything matches up.   I think this picture was captured at ISO 640... (looks at camlibs/canon source) ... let's see, for the EOS 5D, that would be a value of 0x5d, offset 0x1a bytes into the packet .... doh, doesn't match.  false alarm...  XXX Turns out this is because I'm looking in the wrong place!  See below!&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;Camera idle loop:&lt;/p&gt;
 &lt;p&gt;This sequence occurs every second under Windows.  0xffc3 is WINDOZE, 0xffc0 is CAMERA.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;363034&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x2a&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xfffff0010810&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000000f&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;363064&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x2a&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;363090&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60d0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;363117&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt;&lt;span class="nx"&gt;da60a8&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;363762&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60a8&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;363788&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffc30000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;cf5ed20&lt;/span&gt;
- &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="nx"&gt;a900054&lt;/span&gt; &lt;span class="mi"&gt;03000000&lt;/span&gt; &lt;span class="mi"&gt;54000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;363034&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x2a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xfffff0010810&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000000f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;363064&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x2a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;363090&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;363117&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;04&lt;/span&gt;&lt;span class="n"&gt;da60a8&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;363762&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;363788&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffc30000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;cf5ed20&lt;/span&gt;
+ &lt;span class="mf"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a900054&lt;/span&gt; &lt;span class="mf"&gt;03000000&lt;/span&gt; &lt;span class="mf"&gt;54000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;364702&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x16&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x00000cf5ed20&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0054&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;70000900&lt;/span&gt; &lt;span class="mi"&gt;00000058&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;80000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;365127&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0b&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000900000020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;41000000&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt;&lt;span class="nx"&gt;da60a8&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;364702&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x00000cf5ed20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0054&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;70000900&lt;/span&gt; &lt;span class="mf"&gt;00000058&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;80000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;365127&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000900000020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;41000000&lt;/span&gt; &lt;span class="mf"&gt;04&lt;/span&gt;&lt;span class="n"&gt;da60a8&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;Aha! Byte diff for an F-stop setting change&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;325342&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x09&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xfffff0010810&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000000f&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;325368&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x09&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;325393&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60a8&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;325419&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt;&lt;span class="nx"&gt;da60d0&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;325751&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60d0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;325780&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffc30000&lt;/span&gt; &lt;span class="mi"&gt;0775&lt;/span&gt;&lt;span class="nx"&gt;f480&lt;/span&gt;
- &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="nx"&gt;a900054&lt;/span&gt; &lt;span class="mi"&gt;28000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;54000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;325342&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x09&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xfffff0010810&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000000f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;325368&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x09&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;325393&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;325419&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;04&lt;/span&gt;&lt;span class="n"&gt;da60d0&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;325751&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;325780&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffc30000&lt;/span&gt; &lt;span class="mf"&gt;0775&lt;/span&gt;&lt;span class="n"&gt;f480&lt;/span&gt;
+ &lt;span class="mf"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a900054&lt;/span&gt; &lt;span class="mf"&gt;28000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;54000000&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;343041&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x15&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x00000775f480&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0054&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;10000020&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="nx"&gt;c000000&lt;/span&gt; &lt;span class="mi"&gt;02000000&lt;/span&gt; &lt;span class="mi"&gt;25001022&lt;/span&gt;
- &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="nx"&gt;c000000&lt;/span&gt; &lt;span class="mi"&gt;38&lt;/span&gt;&lt;span class="nx"&gt;e92501&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a000000&lt;/span&gt;
- &lt;span class="mi"&gt;30000000&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="nx"&gt;ff0100&lt;/span&gt; &lt;span class="mi"&gt;0000&lt;/span&gt;&lt;span class="nx"&gt;ffff&lt;/span&gt; &lt;span class="mi"&gt;04010000&lt;/span&gt;
- &lt;span class="mi"&gt;03020000&lt;/span&gt; &lt;span class="mi"&gt;09030000&lt;/span&gt; &lt;span class="mi"&gt;007&lt;/span&gt;&lt;span class="nx"&gt;f7f7f&lt;/span&gt; &lt;span class="mi"&gt;70005800&lt;/span&gt;
- &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="nx"&gt;d007800&lt;/span&gt; &lt;span class="mi"&gt;0000&lt;/span&gt;&lt;span class="nx"&gt;ff00&lt;/span&gt; &lt;span class="mi"&gt;20005800&lt;/span&gt; &lt;span class="mi"&gt;64006400&lt;/span&gt;
- &lt;span class="mi"&gt;64000100&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;343041&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x00000775f480&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0054&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;10000020&lt;/span&gt; &lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="n"&gt;c000000&lt;/span&gt; &lt;span class="mf"&gt;02000000&lt;/span&gt; &lt;span class="mf"&gt;25001022&lt;/span&gt;
+ &lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="n"&gt;c000000&lt;/span&gt; &lt;span class="mf"&gt;38&lt;/span&gt;&lt;span class="n"&gt;e92501&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a000000&lt;/span&gt;
+ &lt;span class="mf"&gt;30000000&lt;/span&gt; &lt;span class="mf"&gt;20&lt;/span&gt;&lt;span class="n"&gt;ff0100&lt;/span&gt; &lt;span class="mf"&gt;0000&lt;/span&gt;&lt;span class="n"&gt;ffff&lt;/span&gt; &lt;span class="mf"&gt;04010000&lt;/span&gt;
+ &lt;span class="mf"&gt;03020000&lt;/span&gt; &lt;span class="mf"&gt;09030000&lt;/span&gt; &lt;span class="mf"&gt;007&lt;/span&gt;&lt;span class="n"&gt;f7f7f&lt;/span&gt; &lt;span class="mf"&gt;70005800&lt;/span&gt;
+ &lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="n"&gt;d007800&lt;/span&gt; &lt;span class="mf"&gt;0000&lt;/span&gt;&lt;span class="n"&gt;ff00&lt;/span&gt; &lt;span class="mf"&gt;20005800&lt;/span&gt; &lt;span class="mf"&gt;64006400&lt;/span&gt;
+ &lt;span class="mf"&gt;64000100&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Take a look at byte 64 [0x2d] in the above packet.  That was with one particular aperture setting -- not sure if it's 4.5 or 5.0.  Diffing this against traffic from changing the wheel back changed byte 64 to 0x2b.  Woo hoo!&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;One other thing from that last aperture wheel setting change.  How did the computer know that the camera settings had changed, and that it should query them?  Take a look at the write_block_request in the idle loop packets above.  Then check this out (scroll down to the write_block_request pkt):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;289212&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x05&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xfffff0010810&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000000f&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;289242&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x05&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;289269&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60a8&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;289296&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x38&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0008&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt;&lt;span class="nx"&gt;da60d0&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;289881&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x000004da60d0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_pending&lt;/span&gt;
-&lt;span class="nt"&gt;289908&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x39&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;read_block_response&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;complete&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0020&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="nx"&gt;ffc30000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;cf5ed20&lt;/span&gt;
- &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="nx"&gt;a900054&lt;/span&gt; &lt;span class="mi"&gt;03000000&lt;/span&gt; &lt;span class="mi"&gt;54000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;289212&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x05&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_quadlet_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xfffff0010810&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000000f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;289242&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x05&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;289269&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;289296&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x38&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0008&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;04&lt;/span&gt;&lt;span class="n"&gt;da60d0&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;289881&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
+&lt;span class="mf"&gt;289908&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="n"&gt;ffc30000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;cf5ed20&lt;/span&gt;
+ &lt;span class="mf"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a900054&lt;/span&gt; &lt;span class="mf"&gt;03000000&lt;/span&gt; &lt;span class="mf"&gt;54000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt;
 
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;span class="nt"&gt;290452&lt;/span&gt;  &lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x11&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;write_block_request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0xffc0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x00000cf5ed20&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0054&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;0x0000&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;
- &lt;span class="mi"&gt;70000900&lt;/span&gt; &lt;span class="mi"&gt;00000058&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;80000000&lt;/span&gt;
- &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;02000000&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;a000000&lt;/span&gt; &lt;span class="mi"&gt;10000000&lt;/span&gt;
- &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="nx"&gt;b000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00000000&lt;/span&gt; &lt;span class="mi"&gt;00845400&lt;/span&gt;
- &lt;span class="nx"&gt;f4ff9500&lt;/span&gt; &lt;span class="nx"&gt;d17b4100&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;f05ffff&lt;/span&gt; &lt;span class="nx"&gt;ffff0106&lt;/span&gt;
- &lt;span class="nx"&gt;ffffffff&lt;/span&gt; &lt;span class="mi"&gt;0102&lt;/span&gt;&lt;span class="nx"&gt;ffff&lt;/span&gt; &lt;span class="nx"&gt;ffff0200&lt;/span&gt; &lt;span class="nx"&gt;ff0100ff&lt;/span&gt;
- &lt;span class="mi"&gt;0200&lt;/span&gt;&lt;span class="nx"&gt;ff01&lt;/span&gt;
-&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ack_complete&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;span class="mf"&gt;290452&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;write_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffc0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x00000cf5ed20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0054&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;
+ &lt;span class="mf"&gt;70000900&lt;/span&gt; &lt;span class="mf"&gt;00000058&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;80000000&lt;/span&gt;
+ &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;02000000&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a000000&lt;/span&gt; &lt;span class="mf"&gt;10000000&lt;/span&gt;
+ &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="n"&gt;b000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00000000&lt;/span&gt; &lt;span class="mf"&gt;00845400&lt;/span&gt;
+ &lt;span class="n"&gt;f4ff9500&lt;/span&gt; &lt;span class="n"&gt;d17b4100&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;f05ffff&lt;/span&gt; &lt;span class="n"&gt;ffff0106&lt;/span&gt;
+ &lt;span class="n"&gt;ffffffff&lt;/span&gt; &lt;span class="mf"&gt;0102&lt;/span&gt;&lt;span class="n"&gt;ffff&lt;/span&gt; &lt;span class="n"&gt;ffff0200&lt;/span&gt; &lt;span class="n"&gt;ff0100ff&lt;/span&gt;
+ &lt;span class="mf"&gt;0200&lt;/span&gt;&lt;span class="n"&gt;ff01&lt;/span&gt;
+&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_complete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;See all that junk at the end?  I think that's how the computer knows to follow up queries.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;Okay, just changed ISO and did the same thing as the aperture thing.  Changed ISO 250 to 320.  Byte 66 changed to 0x7b.  Changed back.  Byte 66 changed to 0x78.  Those two values match exactly with the shutter speed table in gphoto2 camlibs/canon.  Shutter speed offset is 0x1e, and aperture offset is 0x1c in the gphoto USB code; this seems to jive with those defines if we consider the 'start' of the release params payload to start at byte 36 of the packet.&lt;/p&gt;
 &lt;p&gt;It's interesting that the capture.log.txt that we took has 0xff for both of these parameters.  Perhaps that is because we took those shots in full-auto mode?&lt;/p&gt;
 &lt;p&gt;Anyway, it looks like the magic hex string to search for to find get-release-param commands is '8a900054 28'.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;libraw1394&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I'll bet this is what we'd need to use to start testing these commands out: &lt;a href="http://www.linux1394.org/doc/libraw1394/"&gt;http://www.linux1394.org/doc/libraw1394/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;XXX On the other hand, if this device really just speaks SCSI, then we don't need libraw1394 at all..&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;h2&gt;Arrrr!&lt;/h2&gt;
-&lt;p&gt;&lt;img alt="paul_and_raj_r0xx0rs" src="/images/paul_and_raj_r0xx0rs.jpg" /&gt;&lt;/p&gt;
-&lt;hr /&gt;
+&lt;p&gt;&lt;img alt="paul_and_raj_r0xx0rs" src="/images/paul_and_raj_r0xx0rs.jpg"&gt;&lt;/p&gt;
+&lt;hr&gt;
 &lt;h2&gt;2007 Aug 24: SBP and SCSI and Wireshark oh my&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;SCSI and SBP2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;So today Raj and shag had an interesting thought.  We noticed that when we plugged in the camera to our Linux box that &lt;a href="http://t10.org/ftp/t10/drafts/sbp2/sbp2r04.pdf"&gt;SBP-2&lt;/a&gt; kicked in and the SCSI layer identified the camera and decided it was a scanner (at least in terms of SCSI).  This made us think, "Selves, what if we nosy'd the Linux-&amp;gt;camera communication upon initial plugin and compared that the communication on the Windows side to see if that was using SBP-2 also?"  So we did.  And guess what?  We found a lot of similar packets!  So now we think that the Canon software is just sending down SCSI commands over SBP-2 over Firewire to get the camera to do things.&lt;/p&gt;
 &lt;p&gt;So then the question became, well, how do we snoop SCSI?  And it turns out that we could not find any SCSI snoopers that were not hardware based and therefore cost a gazillion dollars and probably did not have any Firewire ports on them anyway.  ... at least until we discovered that Wireshark nee Ethereal had an interesting thingamabob called packet-scsi.c written by some dude at Cicsoc who probably got paid to write that thing for iSCSI.  but maybe we can use that too!!! all wee need to do is to write something where Wireshark can load up nosy-dump files, then we need to write a dissector thingie for SBP-2 (since that does not appear to exist).  Then in the best of all possible worlds, packet-scsi would then magically parse all of the data.&lt;/p&gt;
 &lt;p&gt;yeah.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;So we think we'll also probably have to write a basic Firewire -- really, a nosy-dump file format -- dissector.  The traces we've read look pretty simple so far in terms of commands - there aren't any isochronous transfers, all we should need are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;self id&lt;/li&gt;
@@ -1104,7 +1175,7 @@ address on WINDOZE to transfer to.  After this the JPEG data starts.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Wireshark Developer's Guide: &lt;a href="http://www.wireshark.org/download/docs/developer-guide-us.pdf"&gt;PDF&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;So to write a new file format importer for Wireshark, one must modify this library that comes with it called Wiretap.  unfortunately the current format of nosy-dump files doesn't have any magic numbers that can be used to identify them, so probably the best thing to do is to prepend some magic number/string with an external tool, and modify nosy-dump to prepend these itself for future revs.&lt;/p&gt;
 &lt;h2&gt;2007 Nov 1: nosy-dump file format&lt;/h2&gt;
 &lt;p&gt;So the current rev of nosy-dump has a really simple file format: PASCAL strings (basically).  It writes exactly what nosy-dump receives from the kernel: an int, representing the number of bytes to follow, and then writes the bytes.&lt;/p&gt;
@@ -1112,90 +1183,90 @@ address on WINDOZE to transfer to.  After this the JPEG data starts.&lt;/p&gt;
 &lt;p&gt;Probably the best thing to do is to hack FireWire sniffing support into libpcap.  libpcap already has Bluetooth and USB sniffing support in it...&lt;/p&gt;
 &lt;h2&gt;2007 Late November: adding FireWire support to Wireshark&lt;/h2&gt;
 &lt;p&gt;Shelved the libpcap idea for the time being.  Wrote a basic nosydump wiretap reader, and hacked up basic Firewire phy &amp;amp; link protocol dissectors to Wireshark.  Next step is to hack up something for SBP2.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="wireshark" src="/images/wireshark1.jpg" /&gt;&lt;/p&gt;</summary><category term="gphoto"></category><category term="canon"></category><category term="1DS"></category></entry><entry><title>Adding gphoto support for the Canon 5D</title><link href="/adding-gphoto-support-for-the-canon-5d.html" rel="alternate"></link><updated>2008-08-09T16:23:00-07:00</updated><author><name>raj</name></author><id>tag:,2008-08-09:adding-gphoto-support-for-the-canon-5d.html</id><summary type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="wireshark" src="/images/wireshark1.jpg"&gt;&lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category><category term="canon"></category><category term="1DS"></category></entry><entry><title>Adding gphoto support for the Canon 5D</title><link href="/adding-gphoto-support-for-the-canon-5d.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-5d.html</id><summary type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
 &lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
 &lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
+&lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory&lt;/span&gt;
 svn co https://gphoto.svn.sourceforge.net/svnroot/gphoto/trunk gphoto
-&lt;span class="nb"&gt;cd &lt;/span&gt;gphoto
-&lt;span class="c"&gt;#fix broken checkout:&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; gphoto
+&lt;span class="c1"&gt;#fix broken checkout:&lt;/span&gt;
 svn up bindings/ gphoto2/ gphoto2-manual/ gphotofs/ gphoto-import/ gphoto-suite/ gtkam/ libgphoto2/ m4/ playground/ project-3/ website/
 
-&lt;span class="c"&gt;#build libgphoto2&lt;/span&gt;
-&lt;span class="nb"&gt;cd &lt;/span&gt;libgphoto2
+&lt;span class="c1"&gt;#build libgphoto2&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; libgphoto2
 autoreconf -is
 ./configure --with-camlibs&lt;span class="o"&gt;=&lt;/span&gt;canon --prefix&lt;span class="o"&gt;=&lt;/span&gt;/scribe
 make
 sudo make install
 
-&lt;span class="c"&gt;#build gphoto2&lt;/span&gt;
+&lt;span class="c1"&gt;#build gphoto2&lt;/span&gt;
 &lt;span class="nb"&gt;cd&lt;/span&gt; ../gphoto2
 autoreconf -is
 ./configure --with-libgphoto2&lt;span class="o"&gt;=&lt;/span&gt;/scribe --prefix&lt;span class="o"&gt;=&lt;/span&gt;/scribe
 make
 sudo make install
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;linux kernel issues&lt;/h3&gt;
 &lt;p&gt;The kernel used by default in Ubuntu 7.04 (feisty) contains usb autosuspend code. Unfortunately, the Canon EOS 5D does not wake back up properly, which makes capturing images impossible. &lt;a href="http://lkml.org/lkml/2007/8/16/330"&gt;A patch has been submitted&lt;/a&gt;, but until it is accepted, you will have to compile a kernel with USB autosuspend turned off. &lt;strong&gt;Update&lt;/strong&gt;: patch &lt;a href="http://sourceforge.net/mailarchive/message.php?msg_id=20070822220805.GB30603%40kroah.com"&gt;accepted&lt;/a&gt;, should be in 2.6.23 kernel. Instructions on how we compiled the kernel are below.&lt;/p&gt;
 &lt;p&gt;The kernel used by default in Ubuntu 6.10 (edgy) contains a bug that causes a spinlock in the jbd layer. This bug will cause a machine to hang in a completely unresponsive state, although you can use a serial console to see assertions firing in jbd. One workaround is to use a newer version of Ubuntu (7.04) with autosuspend turned off. Another is to use ext2 intead of ext3.&lt;/p&gt;
 &lt;h4&gt;Compiling a custom linux kernel&lt;/h4&gt;
 &lt;p&gt;We copied the .config file for the 2.6.17 kernel used by Ubuntu and slightly modified it to turn off usb autosuspend and include the nvidia sata driver.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Install kernel build pre-reqs&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Install kernel build pre-reqs&lt;/span&gt;
 sudo apt-get install linux-kernel-devel initrd-tools libncurses-dev
 
 &lt;span class="nb"&gt;cd&lt;/span&gt; ~
 mkdir linux
-&lt;span class="nb"&gt;cd &lt;/span&gt;linux
+&lt;span class="nb"&gt;cd&lt;/span&gt; linux
 
-&lt;span class="c"&gt;# Download stable kernel tree from www.kernel.org (&amp;#39;F&amp;#39; link)&lt;/span&gt;
+&lt;span class="c1"&gt;# Download stable kernel tree from www.kernel.org (&amp;#39;F&amp;#39; link)&lt;/span&gt;
 wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.22.2.tar.bz2
 
 tar xjvf linux-2.6.22.2.tar.bz2
 
-&lt;span class="nb"&gt;cd &lt;/span&gt;linux-2.6.22.2
+&lt;span class="nb"&gt;cd&lt;/span&gt; linux-2.6.22.2
 
-&lt;span class="c"&gt;# Copy the Ubuntu kernel .config file into your source tree:&lt;/span&gt;
+&lt;span class="c1"&gt;# Copy the Ubuntu kernel .config file into your source tree:&lt;/span&gt;
 cp /usr/src/linux-headers-2.6.17-12-generic/.config .
 
-&lt;span class="c"&gt;# Update the .config with any new entries between 2.6.17 and the current kernel&lt;/span&gt;
+&lt;span class="c1"&gt;# Update the .config with any new entries between 2.6.17 and the current kernel&lt;/span&gt;
 rev
-&lt;span class="c"&gt;# (You just want to wail on the ENTER key here to select all of the defaults)&lt;/span&gt;
-yes &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; | make oldconfig
+&lt;span class="c1"&gt;# (You just want to wail on the ENTER key here to select all of the defaults)&lt;/span&gt;
+yes &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; make oldconfig
 
-&lt;span class="c"&gt;# Edit the .config to disable CONFIG_USB_SUSPEND&lt;/span&gt;
+&lt;span class="c1"&gt;# Edit the .config to disable CONFIG_USB_SUSPEND&lt;/span&gt;
 perl -p -i.orig -e &lt;span class="s1"&gt;&amp;#39;s/CONFIG_USB_SUSPEND=y/CONFIG_USB_SUSPEND=n/&amp;#39;&lt;/span&gt; .config
 
-&lt;span class="c"&gt;# Enable the Nvidia SATA driver&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_ATA&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
-&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_ATA_ACPI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;y &amp;gt;&amp;gt; .config
-&lt;span class="nb"&gt;echo &lt;/span&gt;&lt;span class="nv"&gt;CONFIG_SATA_NV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
+&lt;span class="c1"&gt;# Enable the Nvidia SATA driver&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;CONFIG_ATA&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;CONFIG_ATA_ACPI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;y &amp;gt;&amp;gt; .config
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;CONFIG_SATA_NV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;m &amp;gt;&amp;gt; .config
 
-&lt;span class="c"&gt;# Build kernel (dual-cpu system)&lt;/span&gt;
+&lt;span class="c1"&gt;# Build kernel (dual-cpu system)&lt;/span&gt;
 make -j3 all
 
-&lt;span class="c"&gt;# Install modules &amp;amp; kernel&lt;/span&gt;
+&lt;span class="c1"&gt;# Install modules &amp;amp; kernel&lt;/span&gt;
 sudo make install modules_install
 
-&lt;span class="c"&gt;# Build the boot-time ramdisk of loadable modules, etc.&lt;/span&gt;
-sudo mkinitrd -o /boot/initrd.img-2.6.22.2 2.6.22.2
+&lt;span class="c1"&gt;# Build the boot-time ramdisk of loadable modules, etc.&lt;/span&gt;
+sudo mkinitrd -o /boot/initrd.img-2.6.22.2 &lt;span class="m"&gt;2&lt;/span&gt;.6.22.2
 
-&lt;span class="c"&gt;# Add grub boot section&lt;/span&gt;
+&lt;span class="c1"&gt;# Add grub boot section&lt;/span&gt;
 &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Now edit /boot/grub/menu.lst to add a section for the new kernel&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;Install custom linux kernel and new nvidia drivers&lt;/h4&gt;
 &lt;p&gt;On homeserver:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~pjw
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~pjw
 sudo ssh root@host &lt;span class="s1"&gt;&amp;#39;cd /;tar -xjvf -&amp;#39;&lt;/span&gt; &amp;lt; new-kernel.tar.bz2
 sudo ssh root@host &lt;span class="s1"&gt;&amp;#39;cd /home/scribe;tar -xzvf -&amp;#39;&lt;/span&gt; &amp;lt; new-kernel-source.tar.gz
 scp NVIDIA-Linux-x86-100.14.11-pkg1.run scribe@host:
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now on the scribe node:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo /etc/init.d/gdm stop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo /etc/init.d/gdm stop
 sudo sh NVIDIA-Linux-x86-100.14.11-pkg1.run
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="gphoto"></category><category term="canon"></category><category term="5D"></category></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="bookscanning"></category><category term="gphoto"></category><category term="canon"></category><category term="5D"></category></entry></feed>

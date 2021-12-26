@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -31,9 +30,44 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html">Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</a></h1> 
+                    <h1 class="entry-title"><a href="/adding-a-git-hub-alias.html">Adding a `git hub` alias</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2016-03-01T00:00:00">
+        <abbr class="published" title="2021-12-26T07:50:41.306513-08:00">
+                Sun 26 December 2021
+        </abbr>
+
+        <address class="vcard author">
+                by <a class="url fn" href="/author/raj.html">raj</a>
+        </address>
+in <a href="/category/commandline.html">commandline</a>.
+Tags:
+<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
+</footer><!-- /.post-info --><p>This git alias will open a web browser and take you to a project's github page when you
+type <code>git hub</code> in a checked-out project directory.</p>
+<p>For OS X:</p>
+<div class="highlight"><pre><span></span><code>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</code></pre></div>
+
+<p>For Linux:</p>
+<div class="highlight"><pre><span></span><code>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</code></pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article class="hentry">    
+                <header>
+                    <h1><a href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="bookmark"
+                           title="Permalink to Using Logspout and Papertrail to collect logs from containers running in Amazon ECS">Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</a></h1>
+                </header>
+                
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-03-01T00:00:00-08:00">
                 Tue 01 March 2016
         </abbr>
 
@@ -43,82 +77,13 @@
 in <a href="/category/ops.html">ops</a>.
 Tags:
 <a href="/tag/logspout.html">logspout</a>, <a href="/tag/aws.html">aws</a>, <a href="/tag/ecs.html">ecs</a>, <a href="/tag/docker.html">docker</a>, <a href="/tag/papertrail.html">papertrail</a>
-</footer><!-- /.post-info --><p>Amazon <a href="https://aws.amazon.com/ecs/">ECS</a> is a container management service that makes it
+</footer><!-- /.post-info -->                <p>Amazon <a href="https://aws.amazon.com/ecs/">ECS</a> is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.</p>
-<p>Centralized log collection is quite easy to set up with the <a href="https://github.com/gliderlabs/logspout">Logspout</a>
-Docker container and the <a href="https://papertrailapp.com">Papertrail</a> log management service.</p>
-<p>Logspout is a docker container that attaches to all the other docker containers running
-on a host and forwards the docker logs somewhere.</p>
-<p>Papertrail is a log aggregator that provides a remote syslog endpoint. It has a nice
-web console and a fast search engine that lets you tail logs in realtime and
-filter by syslog priority, machine name, program name, or search string.
-Papertrail also has integrations for sending alerts to many services, such as PagerDuty,
-Amazon SNS, and Slack.</p>
-<p>Log aggregation for ECS is easily achieved by running one Logspout container on
-each EC2 node in your ECS cluster, which will forward logs for all docker containers
-running on the EC2 node to Papertrail using syslog. This lets us see and analyze
-logs in a centralized place, but also leaves the logs on the EC2 nodes in case
-something goes wrong with log forwarding and we need to analyze the logs
-directly on the host.</p>
-<p>We can deploy Logspout in ECS using the standard ECS scheduler, but by default, we can't
-tell ECS to schedule exactly one Logspout container per EC2 node. However, if we launch
-the same number of Logspout containers as EC2 nodes in the cluster, and we tell ECS to
-attach an unused port to Logspout, then the scheduler will launch exactly one Logspout
-container per EC2 node.</p>
-<p>You can use the <code>boto</code> python library with the code below to create a Task Definition and
-an ECS Service for Logspout in your ECS cluster:</p>
-<div class="highlight"><pre><span class="c"># Create ECS Task Definition</span>
-
-<span class="n">task_def</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;image&#39;</span><span class="p">:</span> <span class="s">&#39;gliderlabs/logspout&#39;</span><span class="p">,</span>
-    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;logspout&#39;</span><span class="p">,</span>
-    <span class="s">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-    <span class="s">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="s">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>   <span class="c"># trick ECS into only scheduling one container per node</span>
-        <span class="s">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>        <span class="c"># by mapping a dummy port to our logspout container</span>
-        <span class="s">&#39;protocol&#39;</span><span class="p">:</span> <span class="s">&#39;tcp&#39;</span>
-    <span class="p">}],</span>
-    <span class="s">&#39;mountPoints&#39;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="s">&#39;containerPath&#39;</span><span class="p">:</span> <span class="s">&#39;/tmp/docker.sock&#39;</span><span class="p">,</span>    <span class="c"># logspout uses the docker unix socket</span>
-        <span class="s">&#39;sourceVolume&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>            <span class="c"># to gather logs from the other containers</span>
-    <span class="p">}],</span>
-    <span class="s">&#39;command&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;syslog://HOST.papertrailapp.com:PORT&quot;</span><span class="p">]</span>     <span class="c">#replace HOST and PORT with your account&#39;s config</span>
-<span class="p">}</span>
-
-<span class="n">volume</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;host&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;sourcePath&#39;</span><span class="p">:</span> <span class="s">&#39;/var/run/docker.sock&#39;</span><span class="p">},</span>
-    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;dockersock&#39;</span>
-<span class="p">}</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s">&#39;ecs&#39;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
-
-<span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
-    <span class="n">family</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span><span class="p">,</span>
-    <span class="n">containerDefinitions</span> <span class="o">=</span> <span class="p">[</span><span class="n">task_def</span><span class="p">],</span>
-    <span class="n">volumes</span> <span class="o">=</span> <span class="p">[</span><span class="n">volume</span><span class="p">]</span>
-<span class="p">)</span>
-
-
-<span class="c"># Create ECS Service</span>
-
-<span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span>
-    <span class="n">desiredCount</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="c">#replace with number of EC2 nodes in your cluster</span>
-    <span class="n">cluster</span> <span class="o">=</span> <span class="s">&#39;my-cluster-name&#39;</span><span class="p">,</span>
-    <span class="n">serviceName</span> <span class="o">=</span> <span class="s">&#39;logspout-service&#39;</span><span class="p">,</span>
-    <span class="n">taskDefinition</span> <span class="o">=</span> <span class="s">&#39;my-task-def&#39;</span>
-<span class="p">)</span>
-</pre></div>
-
-
-<p>After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>Centralized log collection is quite easy to set up …</p>
+                <a class="readmore" href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  
@@ -130,7 +95,7 @@ an ECS Service for Logspout in your ECS cluster:</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2015-01-14T00:00:00">
+        <abbr class="published" title="2015-01-14T00:00:00-08:00">
                 Wed 14 January 2015
         </abbr>
 
@@ -143,7 +108,7 @@ Tags:
 </footer><!-- /.post-info -->                <p>Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running <code>iostat -xm 1</code>)</p>
-<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard ...</p>
+<p>We use <code>softdog</code>, the nonhardware assisted watchdog driver to hard …</p>
                 <a class="readmore" href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -158,7 +123,7 @@ running <code>iostat -xm 1</code>)</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-12-12T14:45:00">
+        <abbr class="published" title="2014-12-12T14:45:00-08:00">
                 Fri 12 December 2014
         </abbr>
 
@@ -169,13 +134,13 @@ in <a href="/category/bookscanning.html">bookscanning</a>.
 Tags:
 <a href="/tag/gphoto.html">gphoto</a>
 </footer><!-- /.post-info -->                <p>Here are instructions on how to compile and install the latest version of gphoto, from SVN.</p>
-<div class="highlight"><pre><span class="c"># install dependencies (for Ubuntu 14.04)</span>
-<span class="nv">$ </span>sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
-<span class="nv">$ </span>mkdir gphoto
-<span class="nv">$ </span><span class="nb">cd </span>gphoto
+<div class="highlight"><pre><span></span><code><span class="c1"># install dependencies (for Ubuntu 14.04)</span>
+$ sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
+$ mkdir gphoto
+$ <span class="nb">cd</span> gphoto
 
-<span class="c"># compile libphoto2 and install into /usr/local/lib</span>
-<span class="nv">$ </span>svn co https://svn.code.sf ...</pre></div>
+<span class="c1"># compile libphoto2 and install into /usr/local/lib</span>
+$ svn co https://svn.code.sf …</code></pre></div>
                 <a class="readmore" href="/compiling-and-installing-gphoto.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -190,7 +155,7 @@ Tags:
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
+        <abbr class="published" title="2014-08-16T00:00:00-07:00">
                 Sat 16 August 2014
         </abbr>
 
@@ -203,7 +168,7 @@ Tags:
 </footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
+<h2>1. Use a Vagrantfile to bootstrap a development environment …</h2>
                 <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -218,7 +183,7 @@ Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -233,7 +198,7 @@ packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
 <code>apt-get install -y</code>).</p>
 <p>There are <a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types">two kinds of repositories</a>,
-"official" and "trivial". Trivial ...</p>
+"official" and "trivial". Trivial …</p>
                 <a class="readmore" href="/creating-a-trivial-signed-apt-repository.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -248,7 +213,7 @@ that users can perform automated updates of your software (e.g. using
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -275,36 +240,8 @@ Tags:
         <tr><td>Ubuntu 7.04</td><td>Feisty Fawn</td></tr>
         <tr><td>Ubuntu 7.10</td><td>Gutsy Gibbon</td></tr>
         <tr><td>Ubuntu 8.04 LTS</td><td>Hardy Heron</td></tr>
-        <tr><td>Ubuntu 8.10 ...</td></tr></tbody></table></div></div>
+        <tr><td>Ubuntu 8.10 …</td></tr></tbody></table></div></div>
                 <a class="readmore" href="/os-x-and-ubuntu-codenames.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article class="hentry">    
-                <header>
-                    <h1><a href="/adding-a-git-hub-alias.html" rel="bookmark"
-                           title="Permalink to Adding a `git hub` alias">Adding a `git hub` alias</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-07T22:38:08">
-                Mon 07 July 2014
-        </abbr>
-
-        <address class="vcard author">
-                by <a class="url fn" href="/author/raj.html">raj</a>
-        </address>
-in <a href="/category/commandline.html">commandline</a>.
-Tags:
-<a href="/tag/git.html">git</a>, <a href="/tag/github.html">github</a>
-</footer><!-- /.post-info -->                <p>This git alias will open a web browser and take you to a project's github page when you
-type <code>git hub</code> in a checked-out project directory.</p>
-<p>For OS X:</p>
-<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https ...</span></pre></div>
-                <a class="readmore" href="/adding-a-git-hub-alias.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
         
@@ -318,7 +255,7 @@ type <code>git hub</code> in a checked-out project directory.</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2008-08-09T16:23:00">
+        <abbr class="published" title="2008-08-09T16:23:00-07:00">
                 Sat 09 August 2008
         </abbr>
 
@@ -331,7 +268,7 @@ Tags:
 </footer><!-- /.post-info -->                <h3>gphoto for Canon EOS 5D compilation instructions</h3>
 <h4>you MUST use svn rev 10595 or greater. We tested with 10597</h4>
 <p>Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)</p>
-<div class="highlight"><pre><span class="c">#check out trunk. The checkout will fail when trying to pull the libusb directory ...</span></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">#check out trunk. The checkout will fail when trying to pull the libusb directory …</span></code></pre></div>
                 <a class="readmore" href="/adding-gphoto-support-for-the-canon-5d.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>

@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -33,8 +32,8 @@
                 <article>
                     <h1 class="entry-title"><a href="/adding-a-git-hub-alias.html">Adding a `git hub` alias</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2014-07-07T22:38:08">
-                Mon 07 July 2014
+        <abbr class="published" title="2021-12-26T07:50:41.306513-08:00">
+                Sun 26 December 2021
         </abbr>
 
         <address class="vcard author">
@@ -46,13 +45,12 @@ Tags:
 </footer><!-- /.post-info --><p>This git alias will open a web browser and take you to a project's github page when you
 type <code>git hub</code> in a checked-out project directory.</p>
 <p>For OS X:</p>
-<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>git config --global alias.hub <span class="s1">&#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</code></pre></div>
 
 <p>For Linux:</p>
-<div class="highlight"><pre>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
-</pre></div>                </article>
+<div class="highlight"><pre><span></span><code>git config --global alias.hub <span class="s1">&#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &quot;s|git\@github\.com:|https://github.com/|&quot;)&#39;</span>
+</code></pre></div>                </article>
 <p class="paginator">
     Page 1 / 1
 </p>

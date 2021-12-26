@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/ops.atom.xml" rel="self"></link><id>/</id><updated>2016-03-01T00:00:00-08:00</updated><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><updated>2016-03-01T00:00:00-08:00</updated><author><name>raj</name></author><id>tag:,2016-03-01:using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io - ops</title><link href="/" rel="alternate"></link><link href="/feeds/ops.atom.xml" rel="self"></link><id>/</id><updated>2021-12-26T07:50:41-08:00</updated><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><published>2016-03-01T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2016-03-01:/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+easy to deploy Docker containers on AWS. However, once you scale to many containers running
+on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
+&lt;p&gt;Centralized log collection is quite easy to set up …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
 &lt;p&gt;Centralized log collection is quite easy to set up with the &lt;a href="https://github.com/gliderlabs/logspout"&gt;Logspout&lt;/a&gt;
@@ -24,65 +27,71 @@ attach an unused port to Logspout, then the scheduler will launch exactly one Lo
 container per EC2 node.&lt;/p&gt;
 &lt;p&gt;You can use the &lt;code&gt;boto&lt;/code&gt; python library with the code below to create a Task Definition and
 an ECS Service for Logspout in your ECS cluster:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Create ECS Task Definition&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Create ECS Task Definition&lt;/span&gt;
 
 &lt;span class="n"&gt;task_def&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;image&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;gliderlabs/logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;essential&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;memory&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;128&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;portMappings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;containerPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="c"&gt;# trick ECS into only scheduling one container per node&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;hostPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="c"&gt;# by mapping a dummy port to our logspout container&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;protocol&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tcp&amp;#39;&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;image&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gliderlabs/logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;logspout&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;essential&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;memory&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;128&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;portMappings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;containerPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="c1"&gt;# trick ECS into only scheduling one container per node&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;hostPort&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="c1"&gt;# by mapping a dummy port to our logspout container&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;protocol&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tcp&amp;#39;&lt;/span&gt;
     &lt;span class="p"&gt;}],&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;mountPoints&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;containerPath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/tmp/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="c"&gt;# logspout uses the docker unix socket&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;#39;sourceVolume&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;            &lt;span class="c"&gt;# to gather logs from the other containers&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;mountPoints&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;containerPath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/tmp/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="c1"&gt;# logspout uses the docker unix socket&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;sourceVolume&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;            &lt;span class="c1"&gt;# to gather logs from the other containers&lt;/span&gt;
     &lt;span class="p"&gt;}],&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;command&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;syslog://HOST.papertrailapp.com:PORT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;     &lt;span class="c"&gt;#replace HOST and PORT with your account&amp;#39;s config&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;command&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;syslog://HOST.papertrailapp.com:PORT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;     &lt;span class="c1"&gt;#replace HOST and PORT with your account&amp;#39;s config&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;host&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sourcePath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/var/run/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;host&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;sourcePath&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/var/run/docker.sock&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dockersock&amp;#39;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;boto3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ecs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;region_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;xxx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;boto3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ecs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;region_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;xxx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_task_definition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="n"&gt;containerDefinitions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;task_def&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
     &lt;span class="n"&gt;volumes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
 
 
-&lt;span class="c"&gt;# Create ECS Service&lt;/span&gt;
+&lt;span class="c1"&gt;# Create ECS Service&lt;/span&gt;
 
 &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_service&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;desiredCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;#replace with number of EC2 nodes in your cluster&lt;/span&gt;
-    &lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-cluster-name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;serviceName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;logspout-service&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;taskDefinition&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;desiredCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c1"&gt;#replace with number of EC2 nodes in your cluster&lt;/span&gt;
+    &lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-cluster-name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;serviceName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;logspout-service&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;taskDefinition&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-task-def&amp;#39;&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</summary><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><updated>2015-01-14T00:00:00-08:00</updated><author><name>raj</name></author><id>tag:,2015-01-14:rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</content><category term="ops"></category><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><published>2015-01-14T00:00:00-08:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2015-01-14:/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+device. In our case, we had a devicemanager device that had hung (which you could see by
+running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
 &lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard reset the
 machine if needed. &lt;code&gt;softdog&lt;/code&gt; will hard reset the machine if it doesn't receive
 data every 60 seconds, so we open &lt;code&gt;/dev/watchdog&lt;/code&gt; for write and then issue a
 &lt;code&gt;shutdown -r&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;modprobe softdog
-sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quot;&lt;/span&gt; &amp;amp;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;modprobe softdog
+sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
 shutdown -r now
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;Thanks, Sam!&lt;/p&gt;</summary><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+&lt;p&gt;Thanks, Sam!&lt;/p&gt;</content><category term="ops"></category><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+packages to end users. You will want to create a signed repository, so
+that users can perform automated updates of your software (e.g. using
+&lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;There are &lt;a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types"&gt;two kinds of repositories&lt;/a&gt;,
+"official" and "trivial". Trivial …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
 packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
 &lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
@@ -98,57 +107,69 @@ well-documented. Here are instructions on how to set up your own repo:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;The repository is a simply a directory hierarchy. It can be local (e.g. on a usb stick) or
 published to a web server. Here is what it should look like when we are done:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Packages&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Release&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gpg&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;- apt-repo/
+    - foo.deb
+    - Packages
+    - Release
+    - Release.gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Start by creating the hierarchy above with empty directories. Place &lt;code&gt;foo.deb&lt;/code&gt; in the
 &lt;code&gt;apt-repo&lt;/code&gt; directory, and then follow these instructions to create the signed files:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#sign the .deb file&lt;/span&gt;
-&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#sign the .deb file&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; apt-repo
 dpkg-sig --sign builder foo.deb
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 
-&lt;span class="c"&gt;#create the Packages.gz file&lt;/span&gt;
-&lt;span class="nb"&gt;cd &lt;/span&gt;apt-repo
+&lt;span class="c1"&gt;#create the Packages.gz file&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; apt-repo
 apt-ftparchive packages . &amp;gt; Packages
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 
-&lt;span class="c"&gt;#create the Release file&lt;/span&gt;
+&lt;span class="c1"&gt;#create the Release file&lt;/span&gt;
 apt-ftparchive release apt-repo &amp;gt; apt-repo/Release
 
-&lt;span class="c"&gt;#create a detached ascii signature of the Release file&lt;/span&gt;
+&lt;span class="c1"&gt;#create a detached ascii signature of the Release file&lt;/span&gt;
 gpg --armor --sign --detach-sign apt-repo/Release.gpg apt-repo/Release
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you can upload the &lt;code&gt;apt-repo&lt;/code&gt; directory to a webserver. If the repo
 path is &lt;code&gt;http://example.com/foo/apt-repo&lt;/code&gt;, then end users will have to
 add a file named &lt;code&gt;my-repo.list&lt;/code&gt; to the &lt;code&gt;/etc/apt/sources.list.d&lt;/code&gt; directory
 that contains this line:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;deb http://example.com/foo/apt-repo /
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;deb http://example.com/foo/apt-repo /
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You now need to distribute your public key to end users, who will need to add it to their
 apt keychain. To export the public key to a text file:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;gpg --armor --export foo@example.com --output foo-public-key
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg --armor --export foo@example.com --output foo-public-key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then upload &lt;code&gt;foo-public-key&lt;/code&gt; to a webserver. End users can install the key like so:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl http://example.com/foo-public-key | sudo apt-key add -
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl http://example.com/foo-public-key &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install foo
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><updated>2014-08-13T00:00:00-07:00</updated><author><name>raj</name></author><id>tag:,2014-08-13:os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="ops"></category><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:50:41-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+    tbody td {font-size: 75%;}
+&lt;/style&gt;
+
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;
+    Ubuntu
+    &lt;table class="table-striped"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;style type="text/css"&gt;
     tbody td {font-size: 75%;}
 &lt;/style&gt;
 
@@ -200,4 +221,4 @@ sudo apt-get install foo
     &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</summary><category term="osx"></category><category term="ubuntu"></category></entry></feed>
+&lt;/div&gt;</content><category term="ops"></category><category term="osx"></category><category term="ubuntu"></category></entry></feed>

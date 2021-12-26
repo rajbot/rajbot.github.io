@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -33,7 +32,7 @@
                 <article>
                     <h1 class="entry-title"><a href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html">Rebooting a linux node, even if shutdown hangs on a stuck device.</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2015-01-14T00:00:00">
+        <abbr class="published" title="2015-01-14T00:00:00-08:00">
                 Wed 14 January 2015
         </abbr>
 
@@ -50,11 +49,10 @@ running <code>iostat -xm 1</code>)</p>
 machine if needed. <code>softdog</code> will hard reset the machine if it doesn't receive
 data every 60 seconds, so we open <code>/dev/watchdog</code> for write and then issue a
 <code>shutdown -r</code>:</p>
-<div class="highlight"><pre>modprobe softdog
-sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> &amp;
+<div class="highlight"><pre><span></span><code>modprobe softdog
+sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> <span class="p">&amp;</span>
 shutdown -r now
-</pre></div>
-
+</code></pre></div>
 
 <p>Thanks, Sam!</p>                </article>
             </aside><!-- /#featured -->
@@ -73,7 +71,7 @@ shutdown -r now
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
+        <abbr class="published" title="2014-08-16T00:00:00-07:00">
                 Sat 16 August 2014
         </abbr>
 
@@ -86,7 +84,7 @@ Tags:
 </footer><!-- /.post-info -->                <p>The <a href="http://kivy.org">Kivy library</a> can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
-<h2>1. Use a Vagrantfile to bootstrap a development environment ...</h2>
+<h2>1. Use a Vagrantfile to bootstrap a development environment …</h2>
                 <a class="readmore" href="/packaging-and-distributing-a-kivy-application-on-linux.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -101,7 +99,7 @@ Kivy apps on Linux is not well-supported. Here is how to get it to work:</p>
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -116,7 +114,7 @@ packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
 <code>apt-get install -y</code>).</p>
 <p>There are <a href="https://wiki.debian.org/HowToSetupADebianRepository#APT_Archive_Types">two kinds of repositories</a>,
-"official" and "trivial". Trivial ...</p>
+"official" and "trivial". Trivial …</p>
                 <a class="readmore" href="/creating-a-trivial-signed-apt-repository.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -131,7 +129,7 @@ that users can perform automated updates of your software (e.g. using
                 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2014-08-13T00:00:00">
+        <abbr class="published" title="2014-08-13T00:00:00-07:00">
                 Wed 13 August 2014
         </abbr>
 
@@ -158,7 +156,7 @@ Tags:
         <tr><td>Ubuntu 7.04</td><td>Feisty Fawn</td></tr>
         <tr><td>Ubuntu 7.10</td><td>Gutsy Gibbon</td></tr>
         <tr><td>Ubuntu 8.04 LTS</td><td>Hardy Heron</td></tr>
-        <tr><td>Ubuntu 8.10 ...</td></tr></tbody></table></div></div>
+        <tr><td>Ubuntu 8.10 …</td></tr></tbody></table></div></div>
                 <a class="readmore" href="/os-x-and-ubuntu-codenames.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>

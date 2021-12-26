@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -33,7 +32,7 @@
                 <article>
                     <h1 class="entry-title"><a href="/packaging-and-distributing-a-kivy-application-on-linux.html">Packaging and Distributing a Kivy application on Linux</a></h1> 
 <footer class="post-info">
-        <abbr class="published" title="2014-08-16T00:00:00">
+        <abbr class="published" title="2014-08-16T00:00:00-07:00">
                 Sat 16 August 2014
         </abbr>
 
@@ -68,9 +67,8 @@ will show you how to install Kivy in a virtualenv so that you can use the PyInst
 <p>If you follow the setup instructions above, you will end up an executable that works only
 on the machine it was built. If you try to copy it to another linux box, kivy will often
 segfault on startup with this error message:</p>
-<div class="highlight"><pre><span class="n">Fatal</span> <span class="n">Python</span> <span class="n">Error</span><span class="o">:</span> <span class="p">(</span><span class="n">pygame</span> <span class="n">parachute</span><span class="p">)</span> <span class="n">Segmentation</span> <span class="n">Fault</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>Fatal Python Error: (pygame parachute) Segmentation Fault
+</code></pre></div>
 
 <p>To ensure the executable can run on as many different flavors of linux as possible, we
 are going to strip out all binaries provided by system packages. We will distribute the
@@ -78,7 +76,7 @@ application in a <code>.deb</code> file and and use <code>.deb</code> dependenci
 are installed on the target machine.</p>
 <p>Here is a copy of a PyInstaller <code>.spec</code> file that installs Kivy hooks and strips out all
 binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
-<div class="highlight"><pre><span class="c"># -*- mode: python -*-</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># -*- mode: python -*-</span>
 <span class="kn">from</span> <span class="nn">kivy.tools.packaging.pyinstaller_hooks</span> <span class="kn">import</span> <span class="n">install_hooks</span>
 <span class="n">install_hooks</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
 
@@ -101,34 +99,34 @@ binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
 <span class="sd">    pyinstaller-frozen executable to work, and any of the python-* packages.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">print</span> <span class="s">&#39;Excluding system libraries&#39;</span>
+    <span class="nb">print</span> <span class="s1">&#39;Excluding system libraries&#39;</span>
     <span class="kn">import</span> <span class="nn">subprocess</span>
     <span class="n">excluded_pkgs</span>  <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">excluded_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">whitelist_prefixes</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;libpython2.7&#39;</span><span class="p">,</span> <span class="s">&#39;python-&#39;</span><span class="p">)</span>
+    <span class="n">whitelist_prefixes</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;libpython2.7&#39;</span><span class="p">,</span> <span class="s1">&#39;python-&#39;</span><span class="p">)</span>
     <span class="n">binaries</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">all_binaries</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;dpkg&#39;</span><span class="p">,</span> <span class="s">&#39;-S&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">))</span>
-            <span class="n">p</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;dpkg&#39;</span><span class="p">,</span> <span class="s1">&#39;-S&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">))</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">whitelist_prefixes</span><span class="p">):</span>
                 <span class="n">excluded_pkgs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
                 <span class="n">excluded_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">print</span> <span class="s">&#39; excluding {f} from package {p}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="s1">&#39; excluding </span><span class="si">{f}</span><span class="s1"> from package </span><span class="si">{p}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
 
-    <span class="k">print</span> <span class="s">&#39;Your exe will depend on the following packages:&#39;</span>
-    <span class="k">print</span> <span class="n">excluded_pkgs</span>
+    <span class="nb">print</span> <span class="s1">&#39;Your exe will depend on the following packages:&#39;</span>
+    <span class="nb">print</span> <span class="n">excluded_pkgs</span>
 
-    <span class="n">inc_libs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;libpython2.7.so.1.0&#39;</span><span class="p">])</span>
+    <span class="n">inc_libs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;libpython2.7.so.1.0&#39;</span><span class="p">])</span>
     <span class="n">binaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_binaries</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_files</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">binaries</span>
 
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">([</span><span class="s">&#39;scribe.py&#39;</span><span class="p">],</span>
-             <span class="n">pathex</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;.&#39;</span><span class="p">],</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">([</span><span class="s1">&#39;scribe.py&#39;</span><span class="p">],</span>
+             <span class="n">pathex</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">],</span>
              <span class="n">hiddenimports</span><span class="o">=</span><span class="p">[],</span>
             <span class="p">)</span>
 <span class="n">pyz</span> <span class="o">=</span> <span class="n">PYZ</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">pure</span><span class="p">)</span>
@@ -136,18 +134,17 @@ binaries that <code>dpkg -S</code> finds in a system-installed library:</p>
 <span class="n">binaries</span> <span class="o">=</span> <span class="n">filter_binaries</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">binaries</span><span class="p">)</span>
 
 <span class="n">exe</span> <span class="o">=</span> <span class="n">EXE</span><span class="p">(</span><span class="n">pyz</span><span class="p">,</span>
-          <span class="p">[(</span><span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s">&#39;DATA&#39;</span><span class="p">)],</span>
+          <span class="p">[(</span><span class="s1">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s1">&#39;scribe.kv&#39;</span><span class="p">,</span> <span class="s1">&#39;DATA&#39;</span><span class="p">)],</span>
           <span class="n">a</span><span class="o">.</span><span class="n">scripts</span><span class="p">,</span>
-          <span class="n">binaries</span><span class="p">,</span> <span class="c">#a.binaries,</span>
+          <span class="n">binaries</span><span class="p">,</span> <span class="c1">#a.binaries,</span>
           <span class="n">a</span><span class="o">.</span><span class="n">zipfiles</span><span class="p">,</span>
           <span class="n">a</span><span class="o">.</span><span class="n">datas</span><span class="p">,</span>
-          <span class="n">name</span><span class="o">=</span><span class="s">&#39;ia-scribe&#39;</span><span class="p">,</span>
-          <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-          <span class="n">strip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-          <span class="n">upx</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-          <span class="n">console</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
-</pre></div>
-
+          <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ia-scribe&#39;</span><span class="p">,</span>
+          <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+          <span class="n">strip</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">upx</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">console</span><span class="o">=</span><span class="kc">False</span> <span class="p">)</span>
+</code></pre></div>
 
 <p><br/></p>
 <h2>4. Package your executable in a <code>.deb</code> file</h2>
@@ -162,25 +159,24 @@ from step #1 above. At minimum, your <code>.deb</code> package should:</p>
 </ul>
 <p>Debian version numbers are in the form {major}.{minor}-{patchlevel}. To make the <code>.deb</code>,
 first create the directory structure below:</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app_1</span><span class="mf">.0</span><span class="o">-</span><span class="mi">1</span>
-    <span class="o">-</span> <span class="n">DEBIAN</span>
-        <span class="o">-</span> <span class="n">control</span>
-    <span class="o">-</span> <span class="n">usr</span>
-        <span class="o">-</span> <span class="n">local</span>
-            <span class="o">-</span> <span class="n">bin</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
-        <span class="o">-</span> <span class="n">share</span>
-            <span class="o">-</span> <span class="n">applications</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">desktop</span>
-            <span class="o">-</span> <span class="n">pixmaps</span>
-                <span class="o">-</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span><span class="p">.</span><span class="n">png</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>- my-app_1.0-1
+    - DEBIAN
+        - control
+    - usr
+        - local
+            - bin
+                - my-app
+        - share
+            - applications
+                - my-app.desktop
+            - pixmaps
+                - my-app.png
+</code></pre></div>
 
 <p>Now you can package your app by typing <code>dpkg-deb --build myapp_1.0-0</code>. You can then
 install the resulting package by typing <code>sudo dpkg -i myapp_1.0-0.deb</code>.</p>
 <p>The <code>DEBIAN/control</code> file should look like this:</p>
-<div class="highlight"><pre><span class="n">Source</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
+<div class="highlight"><pre><span></span><code><span class="n">Source</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">app</span>
 <span class="n">Priority</span><span class="o">:</span> <span class="n">extra</span>
 <span class="n">Maintainer</span><span class="o">:</span> <span class="n">raj</span> <span class="o">&lt;</span><span class="n">raj</span><span class="err">@</span><span class="n">unknown</span><span class="o">&gt;</span>
 <span class="n">Build</span><span class="o">-</span><span class="n">Depends</span><span class="o">:</span> <span class="n">debhelper</span> <span class="o">(&gt;=</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span>
@@ -190,13 +186,12 @@ install the resulting package by typing <code>sudo dpkg -i myapp_1.0-0.deb</code
 <span class="n">Architecture</span><span class="o">:</span> <span class="n">i386</span>
 <span class="n">Description</span><span class="o">:</span> <span class="n">Should</span> <span class="n">description</span>
  <span class="n">Long</span> <span class="n">description</span> <span class="n">string</span> <span class="o">(</span><span class="n">starts</span> <span class="k">with</span> <span class="n">a</span> <span class="n">whitespace</span><span class="o">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>To give your executable a first-class Ubuntu application, you will need to create a
 <code>.desktop</code> file, which will tell Ubuntu about its icon, version, and name. <code>my-app.desktop</code>
 should look like this:</p>
-<div class="highlight"><pre><span class="k">[Desktop Entry]</span>
+<div class="highlight"><pre><span></span><code><span class="k">[Desktop Entry]</span>
 <span class="na">Version</span><span class="o">=</span><span class="s">1.0</span>
 <span class="na">Name</span><span class="o">=</span><span class="s">My Application</span>
 <span class="na">Comment</span><span class="o">=</span><span class="s">Example App</span>
@@ -204,8 +199,7 @@ should look like this:</p>
 <span class="na">Icon</span><span class="o">=</span><span class="s">my-app</span>
 <span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
 <span class="na">Categories</span><span class="o">=</span><span class="s">Utility;Application;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Note that <code>Version</code> above refers to the version of the <code>.desktop</code> format (and
 not the version of the app), and should always be "1.0". The <code>Icon</code> entry does

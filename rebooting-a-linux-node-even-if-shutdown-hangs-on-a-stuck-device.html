@@ -18,7 +18,6 @@
         <header id="banner" class="body">
                 <h1><a href="/">bitstream.io </a></h1>
                 <nav><ul>
-                    <li><a href="/">bitstream.io</a></li>
                     <li ><a href="/category/bookscanning.html">bookscanning</a></li>
                     <li ><a href="/category/commandline.html">commandline</a></li>
                     <li ><a href="/category/links.html">links</a></li>
@@ -36,7 +35,7 @@
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2015-01-14T00:00:00">
+        <abbr class="published" title="2015-01-14T00:00:00-08:00">
                 Wed 14 January 2015
         </abbr>
 
@@ -53,11 +52,10 @@ running <code>iostat -xm 1</code>)</p>
 machine if needed. <code>softdog</code> will hard reset the machine if it doesn't receive
 data every 60 seconds, so we open <code>/dev/watchdog</code> for write and then issue a
 <code>shutdown -r</code>:</p>
-<div class="highlight"><pre>modprobe softdog
-sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> &amp;
+<div class="highlight"><pre><span></span><code>modprobe softdog
+sudo bash -c <span class="s2">&quot;cat &gt; /dev/watchdog&quot;</span> <span class="p">&amp;</span>
 shutdown -r now
-</pre></div>
-
+</code></pre></div>
 
 <p>Thanks, Sam!</p>
     </div><!-- /.entry-content -->
