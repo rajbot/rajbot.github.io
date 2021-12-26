@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>bitstream.io - raj</title><link>/</link><description></description><lastBuildDate>Sun, 26 Dec 2021 07:52:16 -0800</lastBuildDate><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+<rss version="2.0"><channel><title>bitstream.io - raj</title><link>/</link><description></description><lastBuildDate>Sun, 26 Dec 2021 08:10:51 -0800</lastBuildDate><item><title>Adding a `git hub` alias</title><link>/adding-a-git-hub-alias.html</link><description>&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
 type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
 &lt;p&gt;For OS X:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Sun, 26 Dec 2021 07:52:16 -0800</pubDate><guid isPermaLink="false">tag:None,2021-12-26:/adding-a-git-hub-alias.html</guid><category>commandline</category><category>git</category><category>github</category></item><item><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link>/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</link><description>&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Sun, 26 Dec 2021 08:10:51 -0800</pubDate><guid isPermaLink="false">tag:None,2021-12-26:/adding-a-git-hub-alias.html</guid><category>commandline</category><category>git</category><category>github</category></item><item><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link>/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</link><description>&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
 &lt;p&gt;Centralized log collection is quite easy to set up …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate><guid isPermaLink="false">tag:None,2016-03-01:/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</guid><category>ops</category><category>logspout</category><category>aws</category><category>ecs</category><category>docker</category><category>papertrail</category></item><item><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link>/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</link><description>&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
@@ -29,18 +29,18 @@ that users can perform automated updates of your software (e.g. using
 
 &lt;div class="row"&gt;
 &lt;div class="col-md-6"&gt;
-    Ubuntu
+    &lt;h2&gt;Ubuntu&lt;/h2&gt;
     &lt;table class="table-striped"&gt;
     &lt;tbody&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</guid><category>ops</category><category>osx</category><category>ubuntu</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.10&lt;/td&gt;&lt;td&gt;Impish Indri&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.04&lt;/td&gt;&lt;td&gt;Hirsute Hippo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.10&lt;/td&gt;&lt;td&gt;Groovy Gorilla&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.04 LTS&lt;/td&gt;&lt;td&gt;Focal Fossa&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.10&lt;/td&gt;&lt;td&gt;Eoan Ermine&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.04&lt;/td&gt;&lt;td&gt;Disco Dingo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.10&lt;/td&gt;&lt;td&gt;Cosmic Cuttlefish&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.04 LTS&lt;/td&gt;&lt;td&gt;Bionic Beaver&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 17.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 -0700</pubDate><guid isPermaLink="false">tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</guid><category>ops</category><category>osx</category><category>ubuntu</category></item><item><title>Adding gphoto support for the Canon 5D</title><link>/adding-gphoto-support-for-the-canon-5d.html</link><description>&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
 &lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
 &lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raj</dc:creator><pubDate>Sat, 09 Aug 2008 16:23:00 -0700</pubDate><guid isPermaLink="false">tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-5d.html</guid><category>bookscanning</category><category>gphoto</category><category>canon</category><category>5D</category></item></channel></rss>

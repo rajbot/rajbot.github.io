@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2021-12-26T07:52:16-08:00</updated><entry><title>Adding a `git hub` alias</title><link href="/adding-a-git-hub-alias.html" rel="alternate"></link><published>2021-12-26T07:52:16-08:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2021-12-26:/adding-a-git-hub-alias.html</id><summary type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
+<feed xmlns="http://www.w3.org/2005/Atom"><title>bitstream.io</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2021-12-26T08:10:51-08:00</updated><entry><title>Adding a `git hub` alias</title><link href="/adding-a-git-hub-alias.html" rel="alternate"></link><published>2021-12-26T08:10:51-08:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2021-12-26:/adding-a-git-hub-alias.html</id><summary type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
 type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&gt;
 &lt;p&gt;For OS X:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!open $(echo $(git config --get remote.origin.url) | perl -pe &amp;quot;s|git\@github\.com:|https://github …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;This git alias will open a web browser and take you to a project's github page when you
@@ -10,7 +10,7 @@ type &lt;code&gt;git hub&lt;/code&gt; in a checked-out project directory.&lt;/p&
 
 &lt;p&gt;For Linux:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git config --global alias.hub &lt;span class="s1"&gt;&amp;#39;!xdg-open $(echo $(git config --get remote.origin.url) |perl -pe &amp;quot;s|git\@github\.com:|https://github.com/|&amp;quot;)&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="commandline"></category><category term="git"></category><category term="github"></category></entry><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><published>2016-03-01T00:00:00-08:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2016-03-01:/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="commandline"></category><category term="git"></category><category term="github"></category></entry><entry><title>Using Logspout and Papertrail to collect logs from containers running in Amazon ECS</title><link href="/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html" rel="alternate"></link><published>2016-03-01T00:00:00-08:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2016-03-01:/using-logspout-and-papertrail-to-collect-logs-from-containers-running-in-amazon-ecs.html</id><summary type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
 easy to deploy Docker containers on AWS. However, once you scale to many containers running
 on many EC2 nodes, you will need a centralized service to collect and analyze docker logs.&lt;/p&gt;
 &lt;p&gt;Centralized log collection is quite easy to set up …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Amazon &lt;a href="https://aws.amazon.com/ecs/"&gt;ECS&lt;/a&gt; is a container management service that makes it
@@ -82,7 +82,7 @@ an ECS Service for Logspout in your ECS cluster:&lt;/p&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</content><category term="ops"></category><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><published>2015-01-14T00:00:00-08:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2015-01-14:/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
+&lt;p&gt;After ECS launches the logspout containers, your docker logs will start appearing in Papertrail.&lt;/p&gt;</content><category term="ops"></category><category term="logspout"></category><category term="aws"></category><category term="ecs"></category><category term="docker"></category><category term="papertrail"></category></entry><entry><title>Rebooting a linux node, even if shutdown hangs on a stuck device.</title><link href="/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html" rel="alternate"></link><published>2015-01-14T00:00:00-08:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2015-01-14:/rebooting-a-linux-node-even-if-shutdown-hangs-on-a-stuck-device.html</id><summary type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
 device. In our case, we had a devicemanager device that had hung (which you could see by
 running &lt;code&gt;iostat -xm 1&lt;/code&gt;)&lt;/p&gt;
 &lt;p&gt;We use &lt;code&gt;softdog&lt;/code&gt;, the nonhardware assisted watchdog driver to hard …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Sam showed me how to force a linux box to reboot, even if shutdown gets wedged on a stuck
@@ -97,7 +97,7 @@ sudo bash -c &lt;span class="s2"&gt;&amp;quot;cat &amp;gt; /dev/watchdog&amp;quo
 shutdown -r now
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Thanks, Sam!&lt;/p&gt;</content><category term="ops"></category><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Compiling and installing gphoto</title><link href="/compiling-and-installing-gphoto.html" rel="alternate"></link><published>2014-12-12T14:45:00-08:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2014-12-12:/compiling-and-installing-gphoto.html</id><summary type="html">&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
+&lt;p&gt;Thanks, Sam!&lt;/p&gt;</content><category term="ops"></category><category term="linux"></category><category term="watchdog"></category><category term="softdog"></category><category term="ubuntu"></category></entry><entry><title>Compiling and installing gphoto</title><link href="/compiling-and-installing-gphoto.html" rel="alternate"></link><published>2014-12-12T14:45:00-08:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2014-12-12:/compiling-and-installing-gphoto.html</id><summary type="html">&lt;p&gt;Here are instructions on how to compile and install the latest version of gphoto, from SVN.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# install dependencies (for Ubuntu 14.04)&lt;/span&gt;
 $ sudo apt-get install automake autopoint gettext libtool libusb-dev libpopt-dev subversion
 $ mkdir gphoto
@@ -145,7 +145,7 @@ libgphoto2      &lt;span class="m"&gt;2&lt;/span&gt;.5.5.3        all camlibs, g
 libgphoto2_port &lt;span class="m"&gt;0&lt;/span&gt;.12.0         gcc, ltdl, USB, serial without locking
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category></entry><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><published>2014-08-16T00:00:00-07:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-16:/packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
+&lt;p&gt;These instructions were tested on Ubuntu 14.04, and will compile all camera drivers. &lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category></entry><entry><title>Packaging and Distributing a Kivy application on Linux</title><link href="/packaging-and-distributing-a-kivy-application-on-linux.html" rel="alternate"></link><published>2014-08-16T00:00:00-07:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-16:/packaging-and-distributing-a-kivy-application-on-linux.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
 mobile apps that can be distributed on Linux, OS X, Windows, iOS, and Android. Packaging
 Kivy apps on Linux is not well-supported. Here is how to get it to work:&lt;/p&gt;
 &lt;h2&gt;1. Use a Vagrantfile to bootstrap a development environment …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="http://kivy.org"&gt;Kivy library&lt;/a&gt; can be used to create cross-platform desktop and
@@ -316,7 +316,7 @@ not need a full path or extension. Ubuntu will look for your icon in
 &lt;p&gt;To distribute your &lt;code&gt;.deb&lt;/code&gt; file to end users, you will want to set up an APT
 repository, which must be signed with a GPG key if you want to allow for
 programatic installation or automatic updates.&lt;/p&gt;
-&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</content><category term="python"></category><category term="kivy"></category><category term="linux"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
+&lt;p&gt;Instructions for &lt;a href="/creating-a-trivial-signed-apt-repository.html"&gt;setting up a signed trivial repo are provided here&lt;/a&gt;.&lt;/p&gt;</content><category term="python"></category><category term="kivy"></category><category term="linux"></category><category term="ubuntu"></category></entry><entry><title>Creating a Trivial, Signed APT Repository</title><link href="/creating-a-trivial-signed-apt-repository.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/creating-a-trivial-signed-apt-repository.html</id><summary type="html">&lt;p&gt;Setting up an APT repository is a reasonable way to distribute &lt;code&gt;.deb&lt;/code&gt;
 packages to end users. You will want to create a signed repository, so
 that users can perform automated updates of your software (e.g. using
 &lt;code&gt;apt-get install -y&lt;/code&gt;).&lt;/p&gt;
@@ -382,59 +382,73 @@ apt keychain. To export the public key to a text file:&lt;/p&gt;
 &lt;p&gt;Once the key has been added, end users can install your software using &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install foo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="ops"></category><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="ops"></category><category term="apt"></category><category term="debian"></category><category term="ubuntu"></category></entry><entry><title>OS X and Ubuntu Codenames</title><link href="/os-x-and-ubuntu-codenames.html" rel="alternate"></link><published>2014-08-13T00:00:00-07:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2014-08-13:/os-x-and-ubuntu-codenames.html</id><summary type="html">&lt;style type="text/css"&gt;
     tbody td {font-size: 75%;}
 &lt;/style&gt;
 
 &lt;div class="row"&gt;
 &lt;div class="col-md-6"&gt;
-    Ubuntu
+    &lt;h2&gt;Ubuntu&lt;/h2&gt;
     &lt;table class="table-striped"&gt;
     &lt;tbody&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;style type="text/css"&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.10&lt;/td&gt;&lt;td&gt;Impish Indri&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.04&lt;/td&gt;&lt;td&gt;Hirsute Hippo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.10&lt;/td&gt;&lt;td&gt;Groovy Gorilla&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.04 LTS&lt;/td&gt;&lt;td&gt;Focal Fossa&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.10&lt;/td&gt;&lt;td&gt;Eoan Ermine&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.04&lt;/td&gt;&lt;td&gt;Disco Dingo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.10&lt;/td&gt;&lt;td&gt;Cosmic Cuttlefish&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.04 LTS&lt;/td&gt;&lt;td&gt;Bionic Beaver&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 17.10 …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;style type="text/css"&gt;
     tbody td {font-size: 75%;}
 &lt;/style&gt;
 
 &lt;div class="row"&gt;
 &lt;div class="col-md-6"&gt;
-    Ubuntu
+    &lt;h2&gt;Ubuntu&lt;/h2&gt;
     &lt;table class="table-striped"&gt;
     &lt;tbody&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10&lt;/td&gt;&lt;td&gt;Intrepid Ibex&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 9.04&lt;/td&gt;&lt;td&gt;Jaunty Jackalope&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 9.10&lt;/td&gt;&lt;td&gt;Karmic Koala&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 10.04 LTS&lt;/td&gt;&lt;td&gt;Lucid Lynx&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 10.10&lt;/td&gt;&lt;td&gt;Maverick Meerkat&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 11.04&lt;/td&gt;&lt;td&gt;Natty Narwhal&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 11.10&lt;/td&gt;&lt;td&gt;Oneiric Ocelot&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 12.04 LTS&lt;/td&gt;&lt;td&gt;Precise Pangolin&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 12.10&lt;/td&gt;&lt;td&gt;Quantal Quetzal&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 13.04&lt;/td&gt;&lt;td&gt;Raring Ringtail&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 13.10&lt;/td&gt;&lt;td&gt;Saucy Salamander&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Ubuntu 14.04 LTS&lt;/td&gt;&lt;td&gt;Trusty Tahr&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.10&lt;/td&gt;&lt;td&gt;Impish Indri&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 21.04&lt;/td&gt;&lt;td&gt;Hirsute Hippo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.10&lt;/td&gt;&lt;td&gt;Groovy Gorilla&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 20.04 LTS&lt;/td&gt;&lt;td&gt;Focal Fossa&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.10&lt;/td&gt;&lt;td&gt;Eoan Ermine&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 19.04&lt;/td&gt;&lt;td&gt;Disco Dingo&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.10&lt;/td&gt;&lt;td&gt;Cosmic Cuttlefish&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 18.04 LTS&lt;/td&gt;&lt;td&gt;Bionic Beaver&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 17.10&lt;/td&gt;&lt;td&gt;Artful Aardvark&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 17.04&lt;/td&gt;&lt;td&gt;Zesty Zapus&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 16.10&lt;/td&gt;&lt;td&gt;Yakkety Yak&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 16.04 LTS&lt;/td&gt;&lt;td&gt;Xenial Xerus&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 15.10&lt;/td&gt;&lt;td&gt;Wily Werewolf&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 15.04&lt;/td&gt;&lt;td&gt;Vivid Vervet&lt;/td&gt;&lt;/tr&gt;
         &lt;tr&gt;&lt;td&gt;Ubuntu 14.10&lt;/td&gt;&lt;td&gt;Utopic Unicorn&lt;/td&gt;&lt;/tr&gt;
-    &lt;/tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 14.04 LTS&lt;/td&gt;&lt;td&gt;Trusty Tahr&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.10&lt;/td&gt;&lt;td&gt;Saucy Salamander&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 13.04&lt;/td&gt;&lt;td&gt;Raring Ringtail&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.10&lt;/td&gt;&lt;td&gt;Quantal Quetzal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 12.04 LTS&lt;/td&gt;&lt;td&gt;Precise Pangolin&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.10&lt;/td&gt;&lt;td&gt;Oneiric Ocelot&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 11.04&lt;/td&gt;&lt;td&gt;Natty Narwhal&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.10&lt;/td&gt;&lt;td&gt;Maverick Meerkat&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 10.04 LTS&lt;/td&gt;&lt;td&gt;Lucid Lynx&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.10&lt;/td&gt;&lt;td&gt;Karmic Koala&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 9.04&lt;/td&gt;&lt;td&gt;Jaunty Jackalope&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.10&lt;/td&gt;&lt;td&gt;Intrepid Ibex&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 8.04 LTS&lt;/td&gt;&lt;td&gt;Hardy Heron&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.10&lt;/td&gt;&lt;td&gt;Gutsy Gibbon&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 7.04&lt;/td&gt;&lt;td&gt;Feisty Fawn&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.10&lt;/td&gt;&lt;td&gt;Edgy Eft&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 6.06 LTS&lt;/td&gt;&lt;td&gt;Dapper Drake&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.10&lt;/td&gt;&lt;td&gt;Breezy Badger&lt;/td&gt;&lt;/tr&gt;        
+        &lt;tr&gt;&lt;td&gt;Ubuntu 5.04&lt;/td&gt;&lt;td&gt;Hoary Hedgehog&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Ubuntu 4.10&lt;/td&gt;&lt;td&gt;Warty Warthog&lt;/td&gt;&lt;/tr&gt;
     &lt;/table&gt;
     Ubuntu version numbers are also release dates: Ubuntu 14.04 was released in April 2014.
 &lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
 &lt;div class="col-md-6"&gt;
-    OSX
+    &lt;h2&gt;OSX&lt;/h2&gt;
     &lt;table class="table-striped"&gt;
     &lt;tbody&gt;
         &lt;tr&gt;&lt;td&gt;OS X 10.0&lt;/td&gt;&lt;td&gt;Cheetah&lt;/td&gt;&lt;td&gt;March 24, 2001&lt;/td&gt;&lt;/tr&gt;
@@ -451,7 +465,7 @@ sudo apt-get install foo
     &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</content><category term="ops"></category><category term="osx"></category><category term="ubuntu"></category></entry><entry><title>Adding gphoto support for the Canon 1DS</title><link href="/adding-gphoto-support-for-the-canon-1ds.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>shag</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-1ds.html</id><summary type="html">&lt;p&gt;Canon 1Ds HackiWiki!!&lt;/p&gt;
+&lt;/div&gt;</content><category term="ops"></category><category term="osx"></category><category term="ubuntu"></category></entry><entry><title>Adding gphoto support for the Canon 1DS</title><link href="/adding-gphoto-support-for-the-canon-1ds.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>shag</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-1ds.html</id><summary type="html">&lt;p&gt;Canon 1Ds HackiWiki!!&lt;/p&gt;
 &lt;h2&gt;2007 Aug 20: Raj and I discovered some interesting stuff!!!&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;606527&lt;/span&gt;  &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;WINDOZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;read&lt;/span&gt;&lt;span class="n"&gt;_block_request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;CAMERA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;offs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000004da60a8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;data&lt;/span&gt;&lt;span class="n"&gt;_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extended_tcode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ack_pending&lt;/span&gt;
 
@@ -631,7 +645,7 @@ address on WINDOZE to transfer to.  After this the JPEG data starts.&lt;/p&gt;
 &lt;p&gt;Probably the best thing to do is to hack FireWire sniffing support into libpcap.  libpcap already has Bluetooth and USB sniffing support in it...&lt;/p&gt;
 &lt;h2&gt;2007 Late November: adding FireWire support to Wireshark&lt;/h2&gt;
 &lt;p&gt;Shelved the libpcap idea for the time being.  Wrote a basic nosydump wiretap reader, and hacked up basic Firewire phy &amp;amp; link protocol dissectors to Wireshark.  Next step is to hack up something for SBP2.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="wireshark" src="/images/wireshark1.jpg"&gt;&lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category><category term="canon"></category><category term="1DS"></category></entry><entry><title>Adding gphoto support for the Canon 5D</title><link href="/adding-gphoto-support-for-the-canon-5d.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T07:52:16-08:00</updated><author><name>raj</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-5d.html</id><summary type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="wireshark" src="/images/wireshark1.jpg"&gt;&lt;/p&gt;</content><category term="bookscanning"></category><category term="gphoto"></category><category term="canon"></category><category term="1DS"></category></entry><entry><title>Adding gphoto support for the Canon 5D</title><link href="/adding-gphoto-support-for-the-canon-5d.html" rel="alternate"></link><published>2008-08-09T16:23:00-07:00</published><updated>2021-12-26T08:10:51-08:00</updated><author><name>raj</name></author><id>tag:None,2008-08-09:/adding-gphoto-support-for-the-canon-5d.html</id><summary type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
 &lt;h4&gt;you MUST use svn rev 10595 or greater. We tested with 10597&lt;/h4&gt;
 &lt;p&gt;Building gphoto on Ubuntu 6.10 (note that default 2.6.17 kernel spinlocks, use custom kernel)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;#check out trunk. The checkout will fail when trying to pull the libusb directory …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h3&gt;gphoto for Canon EOS 5D compilation instructions&lt;/h3&gt;
